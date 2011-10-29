@@ -3,8 +3,7 @@
   <head>
     <title>Learn You a Haskell for Great Good! - Types and Typeclasses</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <base href="http://learnyouahaskell.com/">
-    <style type="text/css">
+    <base href="http://learnyouahaskell.com/"> <style type="text/css">
 	@import url('reset.css');
 	@import url('style.css');
 </style><link rel="shortcut icon" href="favicon.png" type="image/png">
@@ -17,6 +16,7 @@
         <div class="footdiv" style="margin-bottom:25px;">
           <ul>
             <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
+
                 Out</a> </li>
             <li style="text-align:center"> <a href="chapters">Table of
                 contents</a> </li>
@@ -31,25 +31,20 @@
         <h2></h2>
         <img src="http://s3.amazonaws.com/lyah/cow.png" alt="moo" class="left"
           height="127" width="180">
-        <p>전에 하스켈은 정적 타입 시스템을 지녔다고 언급하였습니다. 모든 표현식의 타입은 컴파일 타임에 판명나며, 이는
-          보다 안전한
-          코드로 이끌어 줍니다.&nbsp;부울대수를 숫자로 나누려는 프로그램을 작성한다면, 컴파일이 되지 않을 것입니다.
-          이는 좋은
-          방법인데, 나중에 프로그램이 망처지는 것보다 컴파일 타임에 이러한 종류의 에러를 잡는 것이 낫기때문입니다.
-          하스켈에서 모든것은
-          타입을 지녔으므로, 컴파일 하기전에 컴파일러는 프로그램에 대해 상당수를 판단할 수 있습니다.</p>
-        <p>Java와 Pascal과는 달리, 하스켈은 타입추론(type inference)을 지녔습니다. 예를들어,
-          숫자를
-          작성하였다면 하스켈에게 숫자라고 말해줄 필요가 없습니다. 이는 스스로 추론이 가능하므로, 명시적으로 함수와
-          표현식의 타입을
-          명시적으로 작성할 필요는 없습니다. 저희는 지금까지 하스켈의 타입에 관해 몇몇 기본적이며 매우 피상적인것을
+        <p>전에 제가 하스켈은 정적 타입 시스템을 지녔다고 언급하였습니다. 모든 표현식의 타입은 컴파일 타임에 판명나며,
+          이는 보다 안전한 코드로 이끌어 줍니다.&nbsp;부울대수를 숫자로 나누려는 프로그램을 작성한다면, 컴파일이
+          되지 않을 것입니다. 이게 좋은게, 나중에 프로그램이 멈추어 버리는 것보다 컴파일 타임에 이러한 종류의 에러를
+          잡는 것이 낫기 때문입니다. 하스켈에서 모든것은 타입을 지니므로, 컴파일 하기전 컴파일러는 프로그램에 대해
+          상당수를 판별할 수 있습니다.</p>
+        <p>Java및 Pascal과는 달리, 하스켈은 타입추론(type inference)을 지녔습니다. 예를들어,
+          숫자를 썼다면 하스켈에게 숫자라고 말해줄 필요가 없습니다. 스스로 추론할 수 있어, 명시적으로 함수와 표현식의
+          타입을 작성할 필요는 없습니다. 저희는 지금까지 하스켈의 타입에 관해 몇몇 기본적이며 매우 피상적인것을
           다루었습니다.&nbsp; 하지만, 타입 시스템의 이해는 하스켈을 배우는 단계에서 가장 중요합니다.</p>
         <p>타입은 모든 표현식이 갖고있는 이름표입니다. 이는 표현식에 맞는 범주가 어느것인지 알려줍니다. 표현식 <span
             class="fixed">True</span> 는 부울대수이며, <span class="fixed">"hello"</span>는
           문자열, 등등이 있습니다.</p>
         <p>이제 저희는 GHCI를 이용하여 표현식의 타입을 밝혀낼 것입니다. 이를 :t 명령어와 타입을 알려주는 유효한
-          표현식을
-          이용하여 할 수 있습니다. 한번 돌려 봅시다.</p>
+          표현식을 이용하여 할 수 있습니다. 한번 돌려 봅시다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t 'a'
 'a' :: Char
 ghci&gt; :t True
@@ -61,86 +56,62 @@ ghci&gt; :t (True, 'a')
 ghci&gt; :t 4 == 5
 4 == 5 :: Bool
 </pre>
-        <p>
-          <img src="http://s3.amazonaws.com/lyah/bomb.png" alt="bomb" class="right"
-            height="144" width="171"> 여기서 저희는 표현식에 대해 :t가 수행하는 일이, '표현
-          식 <span class="fixed">::</span> 타입'을 출력하는 것이라는 것을 알 수 있습니다. <span
-            class="fixed">::</span>를 "타입을 지녔다"라고 읽습니다. 명시적 타입은 항상 첫번째
-          문자를 대문자로
-          표시합니다. <span class="fixed">'a'</span>는 &nbsp;<span class="fixed">Char</span>타
-          입을 지녔습니다. 이는 문자를 대표한다는 것을 판단하는 것은 어렵지 않습니다. <span class="fixed">True</span>는
-          <span class="fixed">Bool</span>타입입니다. 그래야 맞습니다. 하지만 이건 무엇일까요?
-          <span class="fixed">"HELLO!"</span>의 타입이&nbsp;<span class="fixed">[Char]</span>라
-          는 것을 살펴보시기 바랍니다. 사각 괄호는 리스트를 나타냅니다. So we
-          read that as it being <i>a list of characters</i>. Unlike
-          lists, each
-          tuple length has its own type. So the expression of <span class="fixed">(True,
-            'a')</span> has a type of <span class="fixed">(Bool, Char)</span>,
-          whereas an expression such as <span class="fixed">('a','b','c')</span>
-          would have the type of <span class="fixed">(Char, Char, Char)</span>.
-          <span class="fixed">4 == 5</span> will always return <span class="fixed">False</span>,
-          so its type is <span class="fixed">Bool</span>.
-        </p>
-        <p>
-          Functions also have types. When writing our own functions, we
-          can choose to give them an explicit type declaration. This is
-          generally considered to be good practice except when writing
-          very short functions. From here on, we'll give all the
-          functions that we make type declarations. Remember the list
-          comprehension we made previously that filters a string so that
-          only caps remain? Here's how it looks like with a type
-          declaration.
-        </p>
+        <p> <img src="http://s3.amazonaws.com/lyah/bomb.png" alt="bomb"
+            class="right" height="144" width="171"> 여기서 저희는 표현식에 대해
+          :t가&nbsp; '표현 식 <span class="fixed">::</span> 타입'을 출력한다는 것을 알
+          수 있습니다. <span class="fixed">::</span>를 "타입을 지녔다"라고 읽습니다. 명시적
+          타입은 항상 첫번째 문자를 대문자로 표시합니다. <span class="fixed">'a'</span>는
+          &nbsp;<span class="fixed">Char</span>타입을 지녔습니다. 문자를 대표한다는 것을
+          쉽게 알 수 있습니다. <span class="fixed">True</span>는 <span class="fixed">Bool</span>타
+          입 입니다. 뭐 맞는 말입니다. 하지만 이건 무엇일까요? <span class="fixed">"HELLO!"</span>의
+          타입이&nbsp;<span class="fixed">[Char]</span>라 는 것을 살펴보시기 바랍니다.
+          사각 괄호는 리스트를 나타냅니다. 따라서 저희는 이것을 문자 리스트라 읽을 수 있습니다. 리스트와 달리, 튜플의
+          길이 각각은 자신만의 고유한 타입을 지닙니다. 따라서 표현식<span class="fixed">(True,
+            'a')</span> 는 타입 <span class="fixed">(Bool, Char)</span> 을
+          지니며, 표현식 <span class="fixed">('a','b','c')</span>은 타입<span class="fixed">(Char,
+            Char, Char)</span>을 지닐 것입니다. <span class="fixed">4 == 5</span>는
+          항상 <span class="fixed">False</span>를 반환하기에, 이것의 타입은 <span class="fixed">Bool</span>입
+          니다. </p>
+        <p>함수 또한 타입을 갖습니다. 함수를 작성할 때, 명시적 타입 선언을 할 수 있습니다. 매우 짧은 함수를 작성할
+          때를 제외하면 이는 보통 괜찮은 행동입니다. 여기선, 저희는 모든 함수에 타입 선언을 할것입니다. 1장에서
+          작성한 문자열에서 소문자로된 것을 걸러내는 list comprehension가 기억나십니까? 여기 타입 선언
+          하는 법이 나와있습니다: </p>
         <pre name="code" class="haskell: hs">removeNonUppercase :: [Char] -&gt; [Char]
 removeNonUppercase st = [ c | c &lt;- st, c `elem` ['A'..'Z']] 
 </pre>
-        <p>
-          <span class="fixed">removeNonUppercase</span> has a type of <span
-            class="fixed">[Char] -&gt; [Char]</span>, meaning that it
-          maps from a string to a string. That's because it takes one
-          string as a parameter and returns another as a result. The <span
-            class="fixed">[Char]</span> type is synonymous with <span class="fixed">String</span>
-          so it's clearer if we write <span class="fixed">removeNonUppercase
-            :: String -&gt; String</span>. We didn't have to give this
-          function a type declaration because the compiler can infer by
-          itself that it's a function from a string to a string but we
-          did anyway. But how do we write out the type of a function
-          that takes several parameters? Here's a simple function that
-          takes three integers and adds them together:
-        </p>
+        <p> <span class="fixed">removeNonUppercase</span>는 문자열과 문자열을
+          연결한 타입 <span class="fixed">[Char] -&gt; [Char]</span>을 지녔습니다.
+          문자열을 인자로 받아 결과로 또다른 문자열을 반환하기 때문입니다. <span class="fixed">[Char]</span>타
+          입은 <span class="fixed">String</span>(문자열)과 동의어이므로, <span class="fixed">removeNonUppercase
+
+            :: String -&gt; String</span>라 작성해도 됩니다. 저희가 타입 선언하든 않하든,
+          컴파일러 스스로 이 함수가 문자열에서 문자열로 가는걸 알기에, 딱히 타입 선언을 할 필요는 없습니다. 그치만
+          여러 인자를 취하는 함수의 타입을 작성하려면 어떻게 해야할까요? 여기 3개의 정수를 받아 더하는, 간단한 함수가
+          있습니다: </p>
         <pre name="code" class="haskell: hs">addThree :: Int -&gt; Int -&gt; Int -&gt; Int
 addThree x y z = x + y + z
 </pre>
-        <p>The parameters are separated with <span class="fixed">-&gt;</span>
-          and there's no special distinction between the parameters and
-          the return type. The return type is the last item in the
-          declaration and the parameters are the first three. Later on
-          we'll see why they're all just separated with <span class="fixed">-&gt;</span>
-          instead of having some more explicit distinction between the
-          return types and the parameters like <span class="fixed">Int,
-            Int, Int -&gt; Int</span> or something.
-        </p>
-        <p>If you want to give your function a type declaration but are
-          unsure as to what it should be, you can always just write the
-          function without it and then check it with <span class="fixed">:t</span>.
-          Functions are expressions too, so <span class="fixed">:t</span>
-          works on them without a problem.</p>
-        <p>Here's an overview of some common types.</p>
-        <p>
-          <span class="label type">Int</span> stands for integer. It's
-          used for whole numbers. <span class="fixed">7</span> can be
-          an <span class="fixed">Int</span> but <span class="fixed">7.2</span>
+        <p>인자는&nbsp; <span class="fixed">-&gt;</span>로 구분되었으며, 인자와 반환
+          타입간에 딱히 다른 점은 없습니다. 반환 타입은 선언의 마지막 항목이며, 인자는 처음 3개의 항목입니다. 후에
+          <span class="fixed">Int, Int, Int -&gt; Int</span> 처럼 명확하게
+          구분하는 대신, 왜 다 <span class="fixed">-&gt;</span>로 분리해 놨는지를 살펴볼
+          것입니다. </p>
+        <p>함수에 타입 선언을 하고자 하지만, 함수가 무엇을 하는지 확신할 수 없다면, 타입선언이 없는 함수를 작성한
+          다음 <span class="fixed">:t</span>로 확인할 수 있습니다. 함수 역시 표현식이므로, <span
+            class="fixed">:t</span> 도 문제없이 동작합니다.</p>
+        <p>여기 몇몇 common 타입의 개요가 있습니다.</p>
+        <p> <span class="label type">Int</span>는 정수를 대변합니다. It's used
+          for whole numbers. <span class="fixed">7</span> can be an <span
+            class="fixed">Int</span> but <span class="fixed">7.2</span>
           cannot. <span class="fixed">Int</span> is bounded, which
           means that it has a minimum and a maximum value. Usually on
           32-bit machines the maximum possible <span class="fixed">Int</span>
-          is 2147483647 and the minimum is -2147483648.
-        </p>
+          is 2147483647 and the minimum is -2147483648. </p>
         <p><span class="label type">Integer</span> stands for, er … also
           integer. The main difference is that it's not bounded so it
           can be used to represent really really big numbers. I mean
           like really big. <span class="fixed">Int</span>, however, is
-          more efficient.
-        </p>
+          more efficient. </p>
         <pre name="code" class="haskell: hs">factorial :: Integer -&gt; Integer
 factorial n = product [1..n]
 </pre>
@@ -163,16 +134,12 @@ circumference' r = 2 * pi * r
         <pre name="code" class="haskell: ghci">ghci&gt; circumference' 4.0
 25.132741228718345
 </pre>
-        <p>
-          <span class="label type">Bool</span> is a boolean type. It can
-          have only two values: <span class="fixed">True</span> and <span
-            class="fixed">False</span>.
-        </p>
-        <p>
-          <span class="label type">Char</span> represents a character.
-          It's denoted by single quotes. A list of characters is a
-          string.
-        </p>
+        <p> <span class="label type">Bool</span> is a boolean type. It
+          can have only two values: <span class="fixed">True</span> and
+          <span class="fixed">False</span>. </p>
+        <p> <span class="label type">Char</span> represents a
+          character. It's denoted by single quotes. A list of characters
+          is a string. </p>
         <p>Tuples are types but they are dependent on their length as
           well as the types of their components, so there is
           theoretically an infinite number of tuple types, which is too
@@ -181,21 +148,17 @@ circumference' r = 2 * pi * r
           have a single value: <span class="fixed">()</span></p>
         <a name="type-variables"></a>
         <h2>Type variables</h2>
-        <p>
-          What do you think is the type of the <span class="fixed">head</span>
+        <p> What do you think is the type of the <span class="fixed">head</span>
           function? Because <span class="fixed">head</span> takes a
           list of any type and returns the first element, so what could
-          it be? Let's check!
-        </p>
+          it be? Let's check! </p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t head
 head :: [a] -&gt; a
 </pre>
-        <p>
-          <img src="http://s3.amazonaws.com/lyah/box.png" alt="box" class="left"
-            height="93" width="130">
-          Hmmm! What is this <span class="fixed">a</span>? Is it a
-          type? Remember that we previously stated that types are
-          written in capital case, so it can't exactly be a type.
+        <p> <img src="http://s3.amazonaws.com/lyah/box.png" alt="box" class="left"
+            height="93" width="130"> Hmmm! What is this <span class="fixed">a</span>?
+          Is it a type? Remember that we previously stated that types
+          are written in capital case, so it can't exactly be a type.
           Because it's not in capital case it's actually a <em>type
             variable</em>. That means that <span class="fixed">a</span>
           can be of any type. This is much like generics in other
@@ -205,8 +168,7 @@ head :: [a] -&gt; a
           have type variables are called <em>polymorphic functions</em>.
           The type declaration of <span class="fixed">head</span>
           states that it takes a list of any type and returns one
-          element of that type.
-        </p>
+          element of that type. </p>
         <p>Although type variables can have names longer than one
           character, we usually give them names of a, b, c, d …</p>
         <p>Remember <span class="fixed">fst</span>? It returns the
@@ -214,8 +176,7 @@ head :: [a] -&gt; a
         <pre name="code" class="haskell: ghci">ghci&gt; :t fst
 fst :: (a, b) -&gt; a
 </pre>
-        <p>
-          We see that <span class="fixed">fst</span> takes a tuple
+        <p> We see that <span class="fixed">fst</span> takes a tuple
           which contains two types and returns an element which is of
           the same type as the pair's first component. That's why we can
           use <span class="fixed">fst</span> on a pair that contains
@@ -223,8 +184,7 @@ fst :: (a, b) -&gt; a
           and <span class="fixed">b</span> are different type
           variables, they don't have to be different types. It just
           states that the first component's type and the return value's
-          type are the same.
-        </p>
+          type are the same. </p>
         <a name="typeclasses-101"></a>
         <h2>Typeclasses 101</h2>
         <img src="http://s3.amazonaws.com/lyah/classes.png" alt="class"
@@ -235,8 +195,7 @@ fst :: (a, b) -&gt; a
           describes. A lot of people coming from OOP get confused by
           typeclasses because they think they are like classes in object
           oriented languages. Well, they're not. You can think of them
-          kind of as Java interfaces, only better.
-        </p>
+          kind of as Java interfaces, only better. </p>
         <p>What's the type signature of the <span class="fixed">==</span>
           function?</p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t (==)
@@ -290,15 +249,13 @@ True
 ghci&gt; 3.432 == 3.432
 True
 </pre>
-        <p>
-          <span class="label class">Ord</span> is for types that have an
-          ordering.</p>
+        <p> <span class="label class">Ord</span> is for types that have
+          an ordering.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t (&gt;)
 (&gt;) :: (Ord a) =&gt; a -&gt; a -&gt; Bool
 </pre>
-        <p>
-          All the types we covered so far except for functions are part
-          of <span class="fixed">Ord</span>. <span class="fixed">Ord</span>
+        <p> All the types we covered so far except for functions are
+          part of <span class="fixed">Ord</span>. <span class="fixed">Ord</span>
           covers all the standard comparing functions such as <span class="fixed">&gt;</span>,
           <span class="fixed">&lt;</span>, <span class="fixed">&gt;=</span>
           and <span class="fixed">&lt;=</span>. The <span class="fixed">compare</span>
@@ -348,6 +305,7 @@ ghci&gt; read "[1,2,3,4]" ++ [3]
 </pre>
         <p>So far so good. Again, all types covered so far are in this
           typeclass. But what happens if we try to do just <span class="fixed">read
+
             "4"</span>?</p>
         <pre name="code" class="haskell: ghci">ghci&gt; read "4"
 &lt;interactive&gt;:1:0:
@@ -367,15 +325,14 @@ ghci&gt; read "[1,2,3,4]" ++ [3]
         <pre name="code" class="haskell: ghci">ghci&gt; :t read
 read :: (Read a) =&gt; String -&gt; a
 </pre>
-        <p>
-          See? It returns a type that's part of <span class="fixed">Read</span>
+        <p> See? It returns a type that's part of <span class="fixed">Read</span>
           but if we don't try to use it in some way later, it has no way
           of knowing which type. That's why we can use explicit <em>type
+
             annotations</em>. Type annotations are a way of explicitly
           saying what the type of an expression should be. We do that by
           adding <span class="fixed">::</span> at the end of the
-          expression and then specifying a type. Observe:
-        </p>
+          expression and then specifying a type. Observe: </p>
         <pre name="code" class="haskell: ghci">ghci&gt; read "5" :: Int
 5
 ghci&gt; read "5" :: Float
@@ -393,6 +350,7 @@ ghci&gt; read "(3, 'a')" :: (Int, Char)
           or <span class="fixed">Float</span> for an expression like <span
             class="fixed">read "5"</span>. To see what the type is,
           Haskell would have to actually evaluate <span class="fixed">read
+
             "5"</span>. But since Haskell is a statically typed
           language, it has to know all the types before the code is
           compiled (or in the case of GHCI, evaluated). So we have to
@@ -431,6 +389,7 @@ False
 </pre>
         <p><span class="fixed">minBound</span> and <span class="fixed">maxBound</span>
           are interesting because they have a type of <span class="fixed">(Bounded
+
             a) =&gt; a</span>. In a sense they are polymorphic
           constants.</p>
         <p>All tuples are also part of <span class="fixed">Bounded</span>
@@ -462,15 +421,13 @@ ghci&gt; 20 :: Double
         <pre name="code" class="haskell: ghci">ghci&gt; :t (*)
 (*) :: (Num a) =&gt; a -&gt; a -&gt; a
 </pre>
-        <p>
-          It takes two numbers of the same type and returns a number of
-          that type. That's why <span class="fixed">(5 :: Int) * (6 ::
-            Integer)</span> will result in a type error whereas <span class="fixed">5
-            * (6 :: Integer)</span> will work just fine and produce an <span
-            class="fixed">Integer</span> because <span class="fixed">5</span>
-          can act like an <span class="fixed">Integer</span> or an <span
-            class="fixed">Int</span>.
-        </p>
+        <p> It takes two numbers of the same type and returns a number
+          of that type. That's why <span class="fixed">(5 :: Int) * (6
+            :: Integer)</span> will result in a type error whereas <span
+            class="fixed">5 * (6 :: Integer)</span> will work just fine
+          and produce an <span class="fixed">Integer</span> because <span
+            class="fixed">5</span> can act like an <span class="fixed">Integer</span>
+          or an <span class="fixed">Int</span>. </p>
         <p>To join <span class="fixed">Num</span>, a type must already
           be friends with <span class="fixed">Show</span> and <span class="fixed">Eq</span>.</p>
         <p><span class="class label">Integral</span> is also a numeric
@@ -490,6 +447,7 @@ ghci&gt; 20 :: Double
           instance, the <span class="fixed">length</span> function has
           a type declaration of <span class="fixed">length :: [a] -&gt;
             Int</span> instead of having a more general type of <span class="fixed">(Num
+
             b) =&gt; length :: [a] -&gt; b</span>. I think that's there
           for historical reasons or something, although in my opinion,
           it's pretty stupid. Anyway, if we try to get a length of a
@@ -505,6 +463,7 @@ ghci&gt; 20 :: Double
         <div class="footdiv">
           <ul>
             <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
+
                 Out</a> </li>
             <li style="text-align:center"> <a href="chapters">Table of
                 contents</a> </li>
@@ -519,15 +478,12 @@ ghci&gt; 20 :: Double
       <script type="text/javascript">
     dp.SyntaxHighlighter.ClipboardSwf = '/sh/Scripts/clipboard.swf';
     dp.SyntaxHighlighter.HighlightAll('code', false, false, false, 1, false);
-    </script>
-    </div>
+    </script> </div>
     <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-    <script type="text/javascript">
+</script> <script type="text/javascript">
 var pageTracker = _gat._getTracker("UA-4461592-3");
 pageTracker._trackPageview();
-</script>
-  </body>
+</script> </body>
 </html>
