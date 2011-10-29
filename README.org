@@ -1,1 +1,20 @@
-[[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/][translate-page]]
+#+TITLE: Learn You a Haskell
+
+* 재미있는 하스켈을 배워보세요
+** [[http://learnyouahaskell.com][learnyouahaskell.com]] 에서 나온 온라인 책을 번역중입니다.
+
+* 진행상황 [7%]
+1. [X] [[http://ensky0.egloos.com/5511527][머리말]]
+2. [ ] [[http://ensky0.egloos.com/5518698][시작]]
+3. [ ] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/types-and-typeclasses.html][타입과 타입클래스]]
+4. [ ] Syntax in Functions
+5. [ ] Recursion
+6. [ ] Higher Order Functions
+7. [ ] Modules
+8. [ ] Making Our Own Types and Typeclasses
+9. [ ] Input and Output
+10. [ ] Functionally Solving Problems
+11. [ ] Functors, Applicative Functors and Monoids
+12. [ ] A Fistful of Monads
+13. [ ] For a Few Monads More
+14. [ ] Zippers
