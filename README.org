@@ -1,12 +1,12 @@
 #+TITLE: Learn You a Haskell
 
-* Àç¹ÌÀÖ´Â ÇÏ½ºÄÌÀ» ¹è¿öº¸¼¼¿ä
-** [[http://learnyouahaskell.com][learnyouahaskell.com]] ¿¡¼­ ³ª¿Â ¿Â¶óÀÎ Ã¥À» ¹ø¿ªÁßÀÔ´Ï´Ù.
+* ì¬ë¯¸ìˆëŠ” í•˜ìŠ¤ì¼ˆì„ ë°°ì›Œë³´ì„¸ìš”
+** [[http://learnyouahaskell.com][learnyouahaskell.com]] ì—ì„œ ë‚˜ì˜¨ ì˜¨ë¼ì¸ ì±…ì„ ë²ˆì—­ì¤‘ì…ë‹ˆë‹¤.
 
-* ÁøÇà»óÈ² [7%]
-1. [X] [[http://ensky0.egloos.com/5511527][¸Ó¸®¸»]]
-2. [ ] [[http://ensky0.egloos.com/5518698][½ÃÀÛ]]
-3. [ ] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/types-and-typeclasses.html][Å¸ÀÔ°ú Å¸ÀÔÅ¬·¡½º]]
+* ì§„í–‰ìƒí™© [7%]
+1. [X] [[http://ensky0.egloos.com/5511527][ë¨¸ë¦¬ë§]]
+2. [ ] [[http://ensky0.egloos.com/5518698][ì‹œì‘]]
+3. [ ] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/types-and-typeclasses.html][íƒ€ì…ê³¼ íƒ€ì…í´ë˜ìŠ¤]]
 4. [ ] Syntax in Functions
 5. [ ] Recursion
 6. [ ] Higher Order Functions
