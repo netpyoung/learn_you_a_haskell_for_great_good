@@ -1,0 +1,1 @@
+[[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/][translate-page]]
