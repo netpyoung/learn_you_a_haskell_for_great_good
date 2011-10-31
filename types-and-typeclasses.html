@@ -15,13 +15,9 @@
       <div id="content">
         <div class="footdiv" style="margin-bottom:25px;">
           <ul>
-            <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
-
-
-
-                Out</a> </li>
-            <li style="text-align:center"> <a href="chapters">Table of
-                contents</a> </li>
+            <li style="text-align:left"> <a href="starting-out" class="prevlink">시
+                작</a> </li>
+            <li style="text-align:center"> <a href="chapters">목차</a> </li>
             <li style="text-align:right"> <a href="syntax-in-functions"
                 class="nxtlink">Syntax in Functions</a> </li>
           </ul>
@@ -385,32 +381,23 @@ ghci&gt; 20 :: Double
         <p>숫자를 다루는데 있어 매우 유용한 함수는 <span class="label function">fromIntegral</span>입
           니다. 이는 <span class="fixed">fromIntegral :: (Num b, Integral
             a) =&gt; a -&gt; b</span> 타입 선언을 지녔습니다. 이의 타입서명으로부터 저희는 정수형
-          숫자를 받아 더욱 일반적인(general) 숫자로 바꾼다는 것을 확인할 수 있습니다. That's useful
-          when you want integral and floating point types to work
-          together nicely. For instance, the <span class="fixed">length</span>
-          function has a type declaration of <span class="fixed">length
-            :: [a] -&gt; Int</span> instead of having a more general
-          type of <span class="fixed">(Num b) =&gt; length :: [a] -&gt;
-            b</span>. I think that's there for historical reasons or
-          something, although in my opinion, it's pretty stupid. Anyway,
-          if we try to get a length of a list and then add it to <span
-            class="fixed">3.2</span>, we'll get an error because we
-          tried to add together an <span class="fixed">Int</span> and a
-          floating point number. So to get around this, we do <span class="fixed">fromIntegral
-            (length [1,2,3,4]) + 3.2</span> and it all works out.</p>
-        <p>Notice that <span class="fixed">fromIntegral</span> has
-          several class constraints in its type signature. That's
-          completely valid and as you can see, the class constraints are
-          separated by commas inside the parentheses.</p>
+          숫자를 받아 더욱 일반적인(general) 숫자로 바꾼다는 것을 확인할 수 있습니다. 이는 정수와 부동 소수의
+          타입을 동시에 만족하는 작업을 수행할때 매우 유용합니다. 예를들어, <span class="fixed">length</span>함
+          수는 더욱 일반적인 타입 <span class="fixed">(Num b) =&gt; length :: [a]
+            -&gt; b</span>을 갖는 대신,&nbsp; <span class="fixed">length ::
+            [a] -&gt; Int</span>라는 타입 선언을 지녔습니다. 여기에는 역사적인 이유나 먼가가 있겠지만,
+          제 생각엔 이건 매우 어리석게 보입니다. 어찌됬든Anyway, 리스트의 길이를 얻어 그것에 <span class="fixed">3.2</span>를
+          더하려 한다면, <span class="fixed">Int</span>와 부동소숫점 숫자를 더하려 했기에
+          에러를 얻게 될 것입니다. 따라서 이걸 피하려면, <span class="fixed">fromIntegral
+            (length [1,2,3,4]) + 3.2</span>라고 해야 제대로 동작 할 것입니다.</p>
+        <p>&nbsp;<span class="fixed">fromIntegral</span>은 이의 타입선언에 여러개의
+          클래스 제약을 지니고 있다는 것을 주목하시기 바랍니다. 여러분이 보시는 것처럼, 이는 여전히 유효하며, 다수의
+          클래스 제약들은 괄호 안에서 쉼표로 분리됩니다.</p>
         <div class="footdiv">
           <ul>
-            <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
-
-
-
-                Out</a> </li>
-            <li style="text-align:center"> <a href="chapters">Table of
-                contents</a> </li>
+            <li style="text-align:left"> <a href="starting-out" class="prevlink">시
+                작</a> </li>
+            <li style="text-align:center"> <a href="chapters">목차</a> </li>
             <li style="text-align:right"> <a href="syntax-in-functions"
                 class="nxtlink">Syntax in Functions</a> </li>
           </ul>
