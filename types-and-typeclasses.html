@@ -18,6 +18,7 @@
             <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
 
 
+
                 Out</a> </li>
             <li style="text-align:center"> <a href="chapters">Table of
                 contents</a> </li>
@@ -38,7 +39,7 @@
           잡는 것이 낫기 때문입니다. 하스켈에서 모든것은 타입을 지니므로, 컴파일 하기전 컴파일러는 프로그램에 대해
           상당수를 판별할 수 있습니다.</p>
         <p>Java및 Pascal과는 달리, 하스켈은 <strong>타입추론(type inference)</strong>을
-          지녔습니다. 예를들어, 숫자를 썼다면 하스켈에게 숫자라고 말해줄 필요가 없습니다. 스스로 추론할 수 있어,
+          지녔습니다. 예를들어, 숫자를 썼다면 하스켈에게 숫자라고 알려줄 필요가 없습니다. 스스로 추론할 수 있어,
           명시적으로 함수와 표현식의 타입을 작성할 필요는 없습니다. 저희는 지금까지 하스켈의 타입에 관해 몇몇 기본적이며
           매우 피상적인것을 다루었습니다.&nbsp; 하지만, 타입 시스템의 이해는 하스켈을 배우는 단계에서 가장
           중요합니다.</p>
@@ -72,6 +73,7 @@ ghci&gt; :t 4 == 5
             'a')</span> 는 타입 <span class="fixed">(Bool, Char)</span> 을
           지니며, 표현식 <span class="fixed">('a','b','c')</span>은 타입<span class="fixed">(Char,
 
+
             Char, Char)</span>을 지닐 것입니다. <span class="fixed">4 == 5</span>는
           항상 <span class="fixed">False</span>를 반환하기에, 이것의 타입은 <span class="fixed">Bool</span>입
           니다. </p>
@@ -88,8 +90,9 @@ removeNonUppercase st = [ c | c &lt;- st, c `elem` ['A'..'Z']]
           입은 <span class="fixed">String</span>(문자열)과 동의어이므로, <span class="fixed">removeNonUppercase
 
 
+
             :: String -&gt; String</span>라 작성해도 됩니다. 저희가 타입 선언하든 않하든,
-          컴파일러 스스로 이 함수가 문자열에서 문자열로 가는걸 알기에, 딱히 타입 선언을 할 필요는 없습니다. 그치만
+          컴파일러 스스로 이 함수가 문자열에서 문자열로 가는걸 알기에, 딱히 타입 선언을 할 필요는 없습니다. 하지만
           여러 인자를 취하는 함수의 타입을 작성하려면 어떻게 해야할까요? 여기 3개의 정수를 받아 더하는, 간단한 함수가
           있습니다: </p>
         <pre name="code" class="haskell: hs">addThree :: Int -&gt; Int -&gt; Int -&gt; Int
@@ -98,14 +101,14 @@ addThree x y z = x + y + z
         <p>인자는&nbsp; <span class="fixed">-&gt;</span>로 구분되었으며, 인자와 반환
           타입간에 딱히 다른 점은 없습니다. 반환 타입은 선언의 마지막 항목이며, 인자는 처음 3개의 항목입니다. 후에
           <span class="fixed">Int, Int, Int -&gt; Int</span> 처럼 명확하게
-          구분하는 대신, 왜 다 <span class="fixed">-&gt;</span>로 분리해 놨는지를 살펴볼
+          구분하는 대신, 왜 모두 <span class="fixed">-&gt;</span>로 분리해 놨는지를 살펴볼
           것입니다. </p>
         <p>함수에 타입 선언을 하고자 하지만, 함수가 무엇을 하는지 확신할 수 없다면, 타입선언이 없는 함수를 작성한
           다음 <span class="fixed">:t</span>로 확인할 수 있습니다. 함수 역시 표현식이므로, <span
             class="fixed">:t</span> 도 문제없이 동작합니다.</p>
-        <p>여기 몇몇 common 타입의 개요가 있습니다.</p>
-        <p> <span class="label type">Int</span>는 정수를 대변합니다. It's used
-          for whole numbers. <span class="fixed">7</span>은<span class="fixed">Int</span>가
+        <p>여기 몇몇 커먼(common) 타입의 개요가 있습니다.</p>
+        <p> <span class="label type">Int</span>는 정수를 대변합니다. 이는 모든 숫자에
+          사용됩니다. <span class="fixed">7</span>은<span class="fixed">Int</span>가
           될 수 있지만 <span class="fixed">7.2</span>은 되지 못합니다. <span class="fixed">Int</span>는
           제한되었으며, 이는 최소값과 최대값을 지닌다는 것을 의미합니다. 보통 32비트 머신에서 가능한 <span class="fixed">Int</span>의
           최대값은 2147483647이며 최소값은 -2147483648입니다. </p>
@@ -154,10 +157,10 @@ head :: [a] -&gt; a
         <p> <img src="http://s3.amazonaws.com/lyah/box.png" alt="box" class="left"
             height="93" width="130"> 흠! 이 <span class="fixed">a</span>가
           뭘까요? 타입인가요? 이전에 타입이 대문자로 시작한다는 것을 기억한다면, 이것은 분명 타입이 아닙니다. 대문자로
-          시작하지 않기에 이것은 <em>타입 변수</em>입니다. 이는 <span class="fixed">a</span>가
+          시작하지 않기에 이것은 <em>타입 변수(Type Variables)</em>입니다. 이는 <span class="fixed">a</span>가
           어떠한 타입이라도 될 수 있다는 것을 의미합니다. 이는 다른 언어에서의 generic과 매우 유사하지만,
           하스켈에선 타입의 행동을 명시하지 않더라도, 쉽게 general한 함수를 작성할 수 있기에 더욱 강력합니다.
-          타입 변수를 지닌 함수를 <em>ㄷ다형(polymorphic)함수</em>라 부릅니다. <span class="fixed">head</span>의
+          타입 변수를 지닌 함수를 <em>다형(polymorphic)함수</em>라 부릅니다. <span class="fixed">head</span>의
           타입 선언은 어떤 타입의 리스트를 받아 그 타입의 원소 하나를 반환한다고 명시되었습니다. </p>
         <p>타입 변수의 이름을 하나 이상의 문자로 구성할 수 있지만, 보통 a, b, c, d ...로 합니다.</p>
         <p>pair에서 첫번째 항목을 반환하는 <span class="fixed">fst</span>를
@@ -299,30 +302,21 @@ ghci&gt; read "[1,2,3,4]" :: [Int]
 ghci&gt; read "(3, 'a')" :: (Int, Char)
 (3, 'a')
 </pre>
-        <p>Most expressions are such that the compiler can infer what
-          their type is by itself. But sometimes, the compiler doesn't
-          know whether to return a value of type <span class="fixed">Int</span>
-          or <span class="fixed">Float</span> for an expression like <span
-            class="fixed">read "5"</span>. To see what the type is,
-          Haskell would have to actually evaluate <span class="fixed">read
-
-
-            "5"</span>. But since Haskell is a statically typed
-          language, it has to know all the types before the code is
-          compiled (or in the case of GHCI, evaluated). So we have to
-          tell Haskell: "Hey, this expression should have this type, in
-          case you don't know!".</p>
-        <p><span class="label class">Enum</span> members are
-          sequentially ordered types — they can be enumerated. The main
-          advantage of the <span class="fixed">Enum</span> typeclass is
-          that we can use its types in list ranges. They also have
-          defined successors and predecesors, which you can get with the
-          <span class="fixed">succ</span> and <span class="fixed">pred</span>
-          functions. Types in this class: <span class="fixed">()</span>,
+        <p>이와 같이 컴파일러는 표현식의 타입 대부분을 스스로 추론할 수 있습니다. . 그러나, 때때로 컴파일러는 <span
+            class="fixed">read "5"</span>와 같은 표현식의 반환값의 타입이 <span class="fixed">Int</span>인
+          지 <span class="fixed">Float</span>인지를 알지 못합니다. 타입이 무엇인지 확인하기
+          위해선, 하스켈은 실제로 <span class="fixed">read "5"</span>를 평가해야만 합니다.
+          그러나 하스켈은 정적 타입 언어이기에, 코드가 컴파일 되기 전에 (혹은 GHCi인 경우, 평가하여)모든 타입을
+          알아야만 합니다. 따라서 저희는 "이 표현식은 이러한 타입을 갖는다고!"라고 하스켈에게 알려줘야 합니다.</p>
+        <p><span class="label class">Enum</span> 맴버는 연속적인 순서를 지닌 타입입니다 —
+          열거할 수 있습니다.&nbsp; <span class="fixed">Enum</span> 타입 클래스의 주요한
+          이점은 리스트 범위에 이 값들을 사용할 수 있다는 것입니다. 또한 이는 <span class="fixed">succ</span>와
+          <span class="fixed">pred</span>함수로 얻을 수 있는 계승자(successor)와
+          선구자(predecessor)를 지닙니다. 이 클래스에 속한 타입들: <span class="fixed">()</span>,
           <span class="fixed">Bool</span>, <span class="fixed">Char</span>,
           <span class="fixed">Ordering</span>, <span class="fixed">Int</span>,
-          <span class="fixed">Integer</span>, <span class="fixed">Float</span>
-          and <span class="fixed">Double</span>.</p>
+          <span class="fixed">Integer</span>, <span class="fixed">Float</span>,
+          <span class="fixed">Double</span>.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; ['a'..'e']
 "abcde"
 ghci&gt; [LT .. GT]
@@ -332,8 +326,7 @@ ghci&gt; [3 .. 5]
 ghci&gt; succ 'B'
 'C'
 </pre>
-        <p><span class="label class">Bounded</span> members have an
-          upper and a lower bound.</p>
+        <p><span class="label class">Bounded</span>맴버는 상한와 하한을 지닙니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; minBound :: Int
 -2147483648
 ghci&gt; maxBound :: Char
@@ -343,26 +336,22 @@ True
 ghci&gt; minBound :: Bool
 False
 </pre>
-        <p><span class="fixed">minBound</span> and <span class="fixed">maxBound</span>
-          are interesting because they have a type of <span class="fixed">(Bounded
-
-
-            a) =&gt; a</span>. In a sense they are polymorphic
-          constants.</p>
-        <p>All tuples are also part of <span class="fixed">Bounded</span>
-          if the components are also in it.</p>
+        <p>&nbsp;<span class="fixed">(Bounded a) =&gt; a</span>란 타입을 갖는
+          <span class="fixed">minBound</span>와 <span class="fixed">maxBound</span>함
+          수는 흥미롭습니다. 이러한 경우, 이는 <strong>다형 상수(polymorphic constants)</strong>입
+          니다.</p>
+        <p>구성물들이 모두 <span class="fixed">Bounded</span>된 튜플 또한 <span class="fixed">Bounded</span>의
+          한 부분입니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; maxBound :: (Bool, Int, Char)
 (True,2147483647,'\1114111')
 </pre>
-        <p><span class="label class">Num</span> is a numeric typeclass.
-          Its members have the property of being able to act like
-          numbers. Let's examine the type of a number.</p>
+        <p><span class="label class">Num</span>은 숫자형 타입클래스입니다. 이것의 맴버는
+          숫자처럼 행동 할 수 있는 속성을 갖습니다. 숫자형 타입을 실험해 봅시다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t 20
 20 :: (Num t) =&gt; t
 </pre>
-        <p>It appears that whole numbers are also polymorphic constants.
-          They can act like any type that's a member of the <span class="fixed">Num</span>
-          typeclass.</p>
+        <p>이것은 모든 숫자 또한 다형 상수라는 것을 보여주고 있습니다. 숫자는 <span class="fixed">Num</span>타
+          입클래스 맴버의 어떠한 타입처럼 행동 할 수 있습니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; 20 :: Int
 20
 ghci&gt; 20 :: Integer
@@ -372,48 +361,43 @@ ghci&gt; 20 :: Float
 ghci&gt; 20 :: Double
 20.0
 </pre>
-        <p>Those are types that are in the <span class="fixed">Num</span>
-          typeclass. If we examine the type of <span class="fixed">*</span>,
-          we'll see that it accepts all numbers.</p>
+        <p>이 타입들은 <span class="fixed">Num</span>타입클래스에 포함됩니다.&nbsp; <span
+            class="fixed">*</span>의 타입을 알아본다면, 이것이 모든 숫자를 받아들인다는 것을 발견할
+          것입니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t (*)
 (*) :: (Num a) =&gt; a -&gt; a -&gt; a
 </pre>
-        <p> It takes two numbers of the same type and returns a number
-          of that type. That's why <span class="fixed">(5 :: Int) * (6
-            :: Integer)</span> will result in a type error whereas <span
-            class="fixed">5 * (6 :: Integer)</span> will work just fine
-          and produce an <span class="fixed">Integer</span> because <span
-            class="fixed">5</span> can act like an <span class="fixed">Integer</span>
-          or an <span class="fixed">Int</span>. </p>
-        <p>To join <span class="fixed">Num</span>, a type must already
-          be friends with <span class="fixed">Show</span> and <span class="fixed">Eq</span>.</p>
-        <p><span class="class label">Integral</span> is also a numeric
-          typeclass. <span class="fixed">Num</span> includes all
-          numbers, including real numbers and integral numbers, <span class="fixed">Integral</span>
-          includes only integral (whole) numbers. In this typeclass are
-          <span class="fixed">Int</span> and <span class="fixed">Integer</span>.</p>
-        <p><span class="class label">Floating</span> includes only
-          floating point numbers, so <span class="fixed">Float</span>
-          and <span class="fixed">Double</span>.</p>
-        <p>A very useful function for dealing with numbers is <span class="label function">fromIntegral</span>.
-          It has a type declaration of <span class="fixed">fromIntegral
-            :: (Num b, Integral a) =&gt; a -&gt; b</span>. From its type
-          signature we see that it takes an integral number and turns it
-          into a more general number. That's useful when you want
-          integral and floating point types to work together nicely. For
-          instance, the <span class="fixed">length</span> function has
-          a type declaration of <span class="fixed">length :: [a] -&gt;
-            Int</span> instead of having a more general type of <span class="fixed">(Num
-
-
-            b) =&gt; length :: [a] -&gt; b</span>. I think that's there
-          for historical reasons or something, although in my opinion,
-          it's pretty stupid. Anyway, if we try to get a length of a
-          list and then add it to <span class="fixed">3.2</span>, we'll
-          get an error because we tried to add together an <span class="fixed">Int</span>
-          and a floating point number. So to get around this, we do <span
-            class="fixed">fromIntegral (length [1,2,3,4]) + 3.2</span>
-          and it all works out.</p>
+        <p> 이는 동일한 타입의 두 숫자를 받아 그 타입의 숫자를 반환합니다.&nbsp;<span class="fixed">(5
+            :: Int) * (6 :: Integer)</span>는 타입 에러를 내는 반면,&nbsp; <span
+            class="fixed">5 * (6 :: Integer)</span>는 제대로 동작하여&nbsp; <span
+            class="fixed">Integer</span>를 생성하는건,&nbsp; <span class="fixed">5</span>가
+          <span class="fixed">Integer</span>나 <span class="fixed">Int</span>처
+          럼 행동할 수 있기 때문입니다. </p>
+        <p><span class="fixed">Num</span>에 끼기 위해선, 타입은 먼저 <span class="fixed">Show</span>와
+          <span class="fixed">Eq</span>랑 친해져야 합니다.</p>
+        <p><span class="class label">Integral</span> 또한 숫자형 타입클래스입니다. <span
+            class="fixed">Num</span>이 실수를 포함하여 모든 숫자를 포괄하는 반면, <span class="fixed">Integral</span>은
+          오직 (모든)정수만을 포함합니다. 이 타입클래스에는 <span class="fixed">Int</span>와
+          <span class="fixed">Integer</span>가 있습니다.</p>
+        <p><span class="class label">Floating</span>은 오직 부동 소숫점 숫자만
+          포함하며, <span class="fixed">Float</span>과 <span class="fixed">Double</span>이
+          있습니다.</p>
+        <p>숫자를 다루는데 있어 매우 유용한 함수는 <span class="label function">fromIntegral</span>입
+          니다. 이는 <span class="fixed">fromIntegral :: (Num b, Integral
+            a) =&gt; a -&gt; b</span> 타입 선언을 지녔습니다. 이의 타입서명으로부터 저희는 정수형
+          숫자를 받아 더욱 일반적인(general) 숫자로 바꾼다는 것을 확인할 수 있습니다. That's useful
+          when you want integral and floating point types to work
+          together nicely. For instance, the <span class="fixed">length</span>
+          function has a type declaration of <span class="fixed">length
+            :: [a] -&gt; Int</span> instead of having a more general
+          type of <span class="fixed">(Num b) =&gt; length :: [a] -&gt;
+            b</span>. I think that's there for historical reasons or
+          something, although in my opinion, it's pretty stupid. Anyway,
+          if we try to get a length of a list and then add it to <span
+            class="fixed">3.2</span>, we'll get an error because we
+          tried to add together an <span class="fixed">Int</span> and a
+          floating point number. So to get around this, we do <span class="fixed">fromIntegral
+            (length [1,2,3,4]) + 3.2</span> and it all works out.</p>
         <p>Notice that <span class="fixed">fromIntegral</span> has
           several class constraints in its type signature. That's
           completely valid and as you can see, the class constraints are
@@ -421,6 +405,7 @@ ghci&gt; 20 :: Double
         <div class="footdiv">
           <ul>
             <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
+
 
 
                 Out</a> </li>
