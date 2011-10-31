@@ -17,6 +17,7 @@
           <ul>
             <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
 
+
                 Out</a> </li>
             <li style="text-align:center"> <a href="chapters">Table of
                 contents</a> </li>
@@ -36,10 +37,11 @@
           되지 않을 것입니다. 이게 좋은게, 나중에 프로그램이 멈추어 버리는 것보다 컴파일 타임에 이러한 종류의 에러를
           잡는 것이 낫기 때문입니다. 하스켈에서 모든것은 타입을 지니므로, 컴파일 하기전 컴파일러는 프로그램에 대해
           상당수를 판별할 수 있습니다.</p>
-        <p>Java및 Pascal과는 달리, 하스켈은 타입추론(type inference)을 지녔습니다. 예를들어,
-          숫자를 썼다면 하스켈에게 숫자라고 말해줄 필요가 없습니다. 스스로 추론할 수 있어, 명시적으로 함수와 표현식의
-          타입을 작성할 필요는 없습니다. 저희는 지금까지 하스켈의 타입에 관해 몇몇 기본적이며 매우 피상적인것을
-          다루었습니다.&nbsp; 하지만, 타입 시스템의 이해는 하스켈을 배우는 단계에서 가장 중요합니다.</p>
+        <p>Java및 Pascal과는 달리, 하스켈은 <strong>타입추론(type inference)</strong>을
+          지녔습니다. 예를들어, 숫자를 썼다면 하스켈에게 숫자라고 말해줄 필요가 없습니다. 스스로 추론할 수 있어,
+          명시적으로 함수와 표현식의 타입을 작성할 필요는 없습니다. 저희는 지금까지 하스켈의 타입에 관해 몇몇 기본적이며
+          매우 피상적인것을 다루었습니다.&nbsp; 하지만, 타입 시스템의 이해는 하스켈을 배우는 단계에서 가장
+          중요합니다.</p>
         <p>타입은 모든 표현식이 갖고있는 이름표입니다. 이는 표현식에 맞는 범주가 어느것인지 알려줍니다. 표현식 <span
             class="fixed">True</span> 는 부울대수이며, <span class="fixed">"hello"</span>는
           문자열, 등등이 있습니다.</p>
@@ -69,6 +71,7 @@ ghci&gt; :t 4 == 5
           길이 각각은 자신만의 고유한 타입을 지닙니다. 따라서 표현식<span class="fixed">(True,
             'a')</span> 는 타입 <span class="fixed">(Bool, Char)</span> 을
           지니며, 표현식 <span class="fixed">('a','b','c')</span>은 타입<span class="fixed">(Char,
+
             Char, Char)</span>을 지닐 것입니다. <span class="fixed">4 == 5</span>는
           항상 <span class="fixed">False</span>를 반환하기에, 이것의 타입은 <span class="fixed">Bool</span>입
           니다. </p>
@@ -83,6 +86,7 @@ removeNonUppercase st = [ c | c &lt;- st, c `elem` ['A'..'Z']]
           연결한 타입 <span class="fixed">[Char] -&gt; [Char]</span>을 지녔습니다.
           문자열을 인자로 받아 결과로 또다른 문자열을 반환하기 때문입니다. <span class="fixed">[Char]</span>타
           입은 <span class="fixed">String</span>(문자열)과 동의어이므로, <span class="fixed">removeNonUppercase
+
 
             :: String -&gt; String</span>라 작성해도 됩니다. 저희가 타입 선언하든 않하든,
           컴파일러 스스로 이 함수가 문자열에서 문자열로 가는걸 알기에, 딱히 타입 선언을 할 필요는 없습니다. 그치만
@@ -105,9 +109,9 @@ addThree x y z = x + y + z
           될 수 있지만 <span class="fixed">7.2</span>은 되지 못합니다. <span class="fixed">Int</span>는
           제한되었으며, 이는 최소값과 최대값을 지닌다는 것을 의미합니다. 보통 32비트 머신에서 가능한 <span class="fixed">Int</span>의
           최대값은 2147483647이며 최소값은 -2147483648입니다. </p>
-        <p><span class="label type">Integer</span>는 음... 또 정수를 대변합니다. 주된
-          차이점은 제한되지 않아, 매우 매우 큰 숫자를 표현하는데 사용할 수 있습니다. 하지만 <span class="fixed">Int</span>가
-          더 효율적입니다. </p>
+        <p><span class="label type">Integer</span> 또한 정수를 대변합니다. 주된 차이점은
+          제한되지 않아, 매우 매우 큰 숫자를 표현하는데 이용할 수 있습니다. 하지만 효율은 <span class="fixed">Int</span>가
+          더 좋습니다. </p>
         <pre name="code" class="haskell: hs">factorial :: Integer -&gt; Integer
 factorial n = product [1..n]
 </pre>
@@ -180,41 +184,29 @@ fst :: (a, b) -&gt; a
 </pre>
         <div class="hintbox"><em>Note</em>: 등위 연산자 <span class="fixed">==</span>
           은 함수입니다.&nbsp; <span class="fixed">+</span>, <span class="fixed">*</span>,
-          <span class="fixed">-</span>, <span class="fixed">/</span>와 수
-          많은 연산자들도 그러합니다. If a function is comprised only of special
-          characters, it's considered an infix function by default. If
-          we want to examine its type, pass it to another function or
-          call it as a prefix function, we have to surround it in
-          parentheses.</div>
-        <p>Interesting. We see a new thing here, the <span class="fixed">=&gt;</span>
-          symbol. Everything before the <span class="fixed">=&gt;</span>
-          symbol is called a <em>class constraint</em>. We can read the
-          previous type declaration like this: the equality function
-          takes any two values that are of the same type and returns a <span
-            class="fixed">Bool</span>. The type of those two values must
-          be a member of the <span class="fixed">Eq</span> class (this
-          was the class constraint).</p>
-        <p>The <span class="fixed">Eq</span> typeclass provides an
-          interface for testing for equality. Any type where it makes
-          sense to test for equality between two values of that type
-          should be a member of the <span class="fixed">Eq</span>
-          class. All standard Haskell types except for IO (the type for
-          dealing with input and output) and functions are a part of the
-          <span class="fixed">Eq</span> typeclass.</p>
-        <p>The <span class="fixed">elem</span> function has a type of <span
-            class="fixed">(Eq a) =&gt; a -&gt; [a] -&gt; Bool</span>
-          because it uses <span class="fixed">==</span> over a list to
-          check whether some value we're looking for is in it.</p>
-        <p>Some basic typeclasses:</p>
-        <p><span class="label class">Eq</span> is used for types that
-          support equality testing. The functions its members implement
-          are <span class="fixed">==</span> and <span class="fixed">/=</span>.
-          So if there's an <span class="fixed">Eq</span> class
-          constraint for a type variable in a function, it uses <span class="fixed">==</span>
-          or <span class="fixed">/=</span> somewhere inside its
-          definition. All the types we mentioned previously except for
-          functions are part of <span class="fixed">Eq</span>, so they
-          can be tested for equality.</p>
+          <span class="fixed">-</span>, <span class="fixed">/</span>와
+          다른 수 많은 연산자들도 그러합니다. 함수가 특별한 문자로만 구성되어 있으면, 기본적으로 중위함수라 여겨집니다.
+          타입이 먼지 확인하려면, 다른 함수에 넣어 보거나, 괄호로 둘러싸 전위함수로 호출 해야 합니다.</div>
+        <p>흥미롭군요. 저희는 여기서 새로운&nbsp;<span class="fixed">=&gt;</span>심볼을
+          발견하였습니다. <span class="fixed">=&gt;</span> 심볼 이전의 것을 <em>클래스
+            제약(class constraint)</em>이라 합니다. 타입 선언을 다음과 같이 읽을 수 있습니다:
+          "등위함수는 동일한 타입의 두 값을 취해 <span class="fixed">Bool</span>을 반환한다.
+          그 타입은 클래스 제약에 의해 <span class="fixed">Eq</span>클래스의 멤버여야 한다".</p>
+        <p><span class="fixed">Eq</span> 타입클래스는 동일성을 판별하기 위한 인터페이스를
+          제공합니다.&nbsp; 특정 타입에 두 항목의 같음을 비교할 수 있으면, 그 타입은 <span class="fixed">Eq</span>
+          클래스의 멤버가 될 수 있습니다. 입력과 출력을 담당하는 타입을 제외하면, 표준 하스켈의 모든 타입들은 <span
+            class="fixed">Eq</span> 타입클래스의 한 부분입니다.</p>
+        <p><span class="fixed">elem</span> 함수는 리스트 내부에 있는 값을 찾기위해 <span
+            class="fixed">==</span> 를 이용하므로 <span class="fixed">(Eq a)
+            =&gt; a -&gt; [a] -&gt; Bool</span> 타입을 지닙니다.</p>
+        <p>몇몇 기본 타입클래스들:</p>
+        <p><span class="label class">Eq</span>는 동등성을 검사를 지원하는 타입에 이용됩니다.
+          이의 맴버 구현 함수는 <span class="fixed">==</span>와 <span class="fixed">/=</span>입
+          니다. 함수에 타입 변수에 대한 <span class="fixed">Eq</span> 클래스 제약이
+          있다면,&nbsp; 이 내부 정의 어딘가에는 <span class="fixed">==</span>나 <span
+            class="fixed">/=</span>을 사용할 것입니다. 함수를 제외한 이전에 저희가 언급한 모든
+          타입들은 <span class="fixed">Eq</span>의 한 부분이므로, 이것들로부터 동등성을 검사할
+          수 있습니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; 5 == 5
 True
 ghci&gt; 5 /= 5
@@ -226,24 +218,21 @@ True
 ghci&gt; 3.432 == 3.432
 True
 </pre>
-        <p> <span class="label class">Ord</span> is for types that have
-          an ordering.</p>
+        <p> <span class="label class">Ord</span>는 순서를 가진 타입입니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t (&gt;)
 (&gt;) :: (Ord a) =&gt; a -&gt; a -&gt; Bool
 </pre>
-        <p> All the types we covered so far except for functions are
-          part of <span class="fixed">Ord</span>. <span class="fixed">Ord</span>
-          covers all the standard comparing functions such as <span class="fixed">&gt;</span>,
-          <span class="fixed">&lt;</span>, <span class="fixed">&gt;=</span>
-          and <span class="fixed">&lt;=</span>. The <span class="fixed">compare</span>
-          function takes two <span class="fixed">Ord</span> members of
-          the same type and returns an ordering. <span class="label type">Ordering</span>
-          is a type that can be <span class="fixed">GT</span>, <span class="fixed">LT</span>
-          or <span class="fixed">EQ</span>, meaning <i>greater than</i>,
-          <i>lesser than</i> and <i>equal</i>, respectively. </p>
-        <p>To be a member of <span class="fixed">Ord</span>, a type
-          must first have membership in the prestigious and exclusive <span
-            class="fixed">Eq</span> club.</p>
+        <p> 함수를 제외한, 저희가 다루는 모든 타입들은 <span class="fixed">Ord</span>의 한
+          부분입니다. <span class="fixed">Ord</span>는 <span class="fixed">&gt;</span>,
+          <span class="fixed">&lt;</span>, <span class="fixed">&gt;=</span>,
+          <span class="fixed">&lt;=</span>와 같은 표준 비교 함수들을 모두 다룹니다. <span
+            class="fixed">compare</span> 함수는 동일한 타입의 두 <span class="fixed">Ord</span>멤
+          버를 받아 순서(ordering)를 반환합니다. <span class="label type">Ordering</span>은
+          각각 보다 큰(greater than), 보다 작은(lesser than), 같음(equal)을 나타내는 <span
+            class="fixed">GT</span>, <span class="fixed">LT</span>, <span
+            class="fixed">EQ</span>가 될 수 있는 타입입니다. </p>
+        <p>&nbsp;<span class="fixed">Ord</span>맴버가 되기 위해선, 우선 명문 <span
+            class="fixed">Eq</span>클럽의 회원이 되어야만 합니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; "Abrakadabra" &lt; "Zebra"
 True
 ghci&gt; "Abrakadabra" `compare` "Zebra"
@@ -253,13 +242,11 @@ True
 ghci&gt; 5 `compare` 3
 GT
 </pre>
-        <p>Members of <span class="label class">Show</span> can be
-          presented as strings. All types covered so far except for
-          functions are a part of <span class="fixed">Show</span>. The
-          most used function that deals with the <span class="fixed">Show</span>
-          typeclass is <span class="fixed">show</span>. It takes a
-          value whose type is a member of <span class="fixed">Show</span>
-          and presents it to us as a string.</p>
+        <p>&nbsp;<span class="label class">Show</span>의 맴버는 문자열로 나타낼 수
+          있습니다. 함수를 제외한, 지금까지 다룬 모든 타입들은 <span class="fixed">Show</span>의
+          한 부분입니다. The most used function that deals with the <span class="fixed">Show</span>타
+          입클래스를 다루는데 가장 많이 사용하는 함수는 <span class="fixed">show</span>입니다.
+          이는 <span class="fixed">Show</span>타입의 맴버인 값을 취해 문자열로 표시합니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; show 3
 "3"
 ghci&gt; show 5.334
@@ -267,10 +254,9 @@ ghci&gt; show 5.334
 ghci&gt; show True
 "True"
 </pre>
-        <p><span class="label class">Read</span> is sort of the opposite
-          typeclass of <span class="fixed">Show</span>. The <span class="fixed">read</span>
-          function takes a string and returns a type which is a member
-          of <span class="fixed">Read</span>.</p>
+        <p><span class="label class">Read</span>는 <span class="fixed">Show</span>타
+          입클래스와는 반대입니다. <span class="fixed">read</span>함수는 문자열을 취해 <span
+            class="fixed">Read</span>맴버인 타입을 반환합니다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; read "True" || False
 True
 ghci&gt; read "8.2" + 3.8
@@ -280,36 +266,28 @@ ghci&gt; read "5" - 2
 ghci&gt; read "[1,2,3,4]" ++ [3]
 [1,2,3,4,3]
 </pre>
-        <p>So far so good. Again, all types covered so far are in this
-          typeclass. But what happens if we try to do just <span class="fixed">read
-
-            "4"</span>?</p>
+        <p>머 괜찮게 나왔습니다. 지금까지 다룬 모든 타입들 또한&nbsp; 이 타입클래스안에 있습니다. 그러면 <span
+            class="fixed">read "4"</span>라 입력하면 어떻게 될까요?</p>
         <pre name="code" class="haskell: ghci">ghci&gt; read "4"
 &lt;interactive&gt;:1:0:
     Ambiguous type variable `a' in the constraint:
       `Read a' arising from a use of `read' at &lt;interactive&gt;:1:0-7
     Probable fix: add a type signature that fixes these type variable(s)
 </pre>
-        <p>What GHCI is telling us here is that it doesn't know what we
-          want in return. Notice that in the previous uses of <span class="fixed">read</span>
-          we did something with the result afterwards. That way, GHCI
-          could infer what kind of result we wanted out of our <span class="fixed">read</span>.
-          If we used it as a boolean, it knew it had to return a <span
-            class="fixed">Bool</span>. But now, it knows we want some
-          type that is part of the <span class="fixed">Read</span>
-          class, it just doesn't know which one. Let's take a look at
-          the type signature of <span class="fixed">read</span>.</p>
+        <p>여기서 GHCI가 저희에게 말하는 것은 뭘 반환해야 하는지 모르겠다는 것입니다.&nbsp; 이전 read의
+          사용에서 결과에 무언가를 한 것에 주목하시기 바랍니다. 이러한 방법으로, GHCI는 <span class="fixed">read</span>에
+          서 얻고자 하는 것을 추론할 수 있었습니다. 예를들어, 저희가 부울대수로 이용하였다면, <span class="fixed">Bool</span>을
+          반환할 것입니다. 그러나 지금, <span class="fixed">Read</span>클래스의 어떠한 타입을
+          원하지만, 그 어떠한 것이 무엇인지를 모릅니다. <span class="fixed">read</span>의
+          타입 서명을 살펴봅시다.</p>
         <pre name="code" class="haskell: ghci">ghci&gt; :t read
 read :: (Read a) =&gt; String -&gt; a
 </pre>
-        <p> See? It returns a type that's part of <span class="fixed">Read</span>
-          but if we don't try to use it in some way later, it has no way
-          of knowing which type. That's why we can use explicit <em>type
-
-            annotations</em>. Type annotations are a way of explicitly
-          saying what the type of an expression should be. We do that by
-          adding <span class="fixed">::</span> at the end of the
-          expression and then specifying a type. Observe: </p>
+        <p> 보이십니까? <span class="fixed">Read</span> 타입을 반환하였지만, 만약 저희가
+          다른 방법을 이용한다면, 어떤 타입인지 알 수 없을 것입니다. 이것이 바로 <em>타입 어노테이션(type
+            annotations)</em>을 사용해야 하는 이유입니다. 타입 어노테이션은 표현식의 타입이 무엇인지
+          명시적으로 알려주는 하나의 방법입니다. 표현식 끝에&nbsp; <span class="fixed">::</span>을
+          추가하고 타입을 명시함으로써 이를 행할 수 있습니다. 살펴봅시다: </p>
         <pre name="code" class="haskell: ghci">ghci&gt; read "5" :: Int
 5
 ghci&gt; read "5" :: Float
@@ -327,6 +305,7 @@ ghci&gt; read "(3, 'a')" :: (Int, Char)
           or <span class="fixed">Float</span> for an expression like <span
             class="fixed">read "5"</span>. To see what the type is,
           Haskell would have to actually evaluate <span class="fixed">read
+
 
             "5"</span>. But since Haskell is a statically typed
           language, it has to know all the types before the code is
@@ -366,6 +345,7 @@ False
 </pre>
         <p><span class="fixed">minBound</span> and <span class="fixed">maxBound</span>
           are interesting because they have a type of <span class="fixed">(Bounded
+
 
             a) =&gt; a</span>. In a sense they are polymorphic
           constants.</p>
@@ -425,6 +405,7 @@ ghci&gt; 20 :: Double
           a type declaration of <span class="fixed">length :: [a] -&gt;
             Int</span> instead of having a more general type of <span class="fixed">(Num
 
+
             b) =&gt; length :: [a] -&gt; b</span>. I think that's there
           for historical reasons or something, although in my opinion,
           it's pretty stupid. Anyway, if we try to get a length of a
@@ -440,6 +421,7 @@ ghci&gt; 20 :: Double
         <div class="footdiv">
           <ul>
             <li style="text-align:left"> <a href="starting-out" class="prevlink">Starting
+
 
                 Out</a> </li>
             <li style="text-align:center"> <a href="chapters">Table of
