@@ -17,7 +17,7 @@
           <ul>
             <li style="text-align: left;"> <a href="starting-out" class="prevlink">시
                 작</a> </li>
-            <li style="text-align: center;"> <a href="chapters">목차</a>
+            <li style="text-align: center;"> <a href="chapters">목 차</a>
             </li>
             <li style="text-align: right;"> <a href="syntax-in-functions"
                 class="nxtlink">Syntax in Functions</a> </li>
@@ -37,7 +37,7 @@
           상당수를 판별할 수 있습니다.</p>
         <p>자바 및 파스칼과는 달리, 하스켈은 <strong>타입추론(type inference)</strong>을
           지녔습니다. 예를들어, 숫자를 썼다면 하스켈에게 숫자라고 알려줄 필요가 없습니다. 스스로 추론할 수 있어,
-          명시적으로 함수와 표현식의 타입을 작성할 필요는 없습니다. 지금까지 저희는 하스켈의 타입에 관해 몇몇 기본적이며
+          명시적으로 함수와 표현식의 타입을 작성할 필요는 없습니다. 지금까지 우리는 하스켈의 타입에 관해 몇몇 기본적이며
           매우 피상적인것을 다루었습니다.&nbsp; 하지만, 타입 시스템의 이해는 하스켈을 배우는 단계에서 가장
           중요합니다.</p>
         <p>타입은 모든 표현식이 갖고있는 이름표입니다. 이는 표현식에 맞는 범주가 어느것인지 알려줍니다. 표현식 <span
@@ -95,6 +95,9 @@ removeNonUppercase st = [ c | c &lt;- st, c `elem` ['A'..'Z']]
 
 
 
+
+
+
             :: String -&gt; String</span>라 작성해도 됩니다. 저희가 타입 선언하든 않하든,
           컴파일러 스스로 함수가 문자열이 문자열이 된다는 것을 알기에, 딱히 타입 선언을 할 필요는 없습니다. 하지만
           여러 인자를 취하는 함수의 타입을 작성하려면 어떻게 해야할까요? 여기 3개의 정수를 받아 더하는, 간단한 함수가
@@ -117,7 +120,7 @@ addThree x y z = x + y + z
           제한되었으며, 이는 최소값과 최대값을 지닌다는 것을 의미합니다. 보통 32비트 머신에서 가능한 <span class="fixed">Int</span>의
           최대값은 2147483647이며 최소값은 -2147483648입니다. </p>
         <p><span class="label type">Integer</span> 또한 정수를 대변합니다. 주된 차이점은
-          제한되지 않아, 매우 매우 큰 숫자를 표현하는데 이용할 수 있습니다. 하지만 효율은 <span class="fixed">Int</span>가
+          제한되지 않아, 어마어마하게 큰 숫자를 표현하는데 이용할 수 있습니다. 하지만 효율은 <span class="fixed">Int</span>가
           더 좋습니다. </p>
         <pre name="code" class="haskell: hs">factorial :: Integer -&gt; Integer
 factorial n = product [1..n]
@@ -382,6 +385,9 @@ ghci&gt; 20 :: Double
 
 
 
+
+
+
             :: Int) * (6 :: Integer)</span>는 타입 에러를 내는 반면,&nbsp; <span
             class="fixed">5 * (6 :: Integer)</span>는 제대로 동작하여&nbsp; <span
             class="fixed">Integer</span>를 생성하는건,&nbsp; <span class="fixed">5</span>가
@@ -415,7 +421,7 @@ ghci&gt; 20 :: Double
           <ul>
             <li style="text-align: left;"> <a href="starting-out" class="prevlink">시
                 작</a> </li>
-            <li style="text-align: center;"> <a href="chapters">목차</a>
+            <li style="text-align: center;"> <a href="chapters">목 차</a>
             </li>
             <li style="text-align: right;"> <a href="syntax-in-functions"
                 class="nxtlink">Syntax in Functions</a> </li>
