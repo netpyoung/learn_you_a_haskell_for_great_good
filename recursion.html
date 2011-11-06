@@ -1,45 +1,67 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
-   "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
-<head>
-<title>Learn You a Haskell for Great Good! - Recursion</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<base href="http://learnyouahaskell.com/">
-<style type="text/css">
+  <head>
+    <title>Learn You a Haskell for Great Good! - Recursion</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <base href="http://learnyouahaskell.com/"> <style type="text/css">
 	@import url('reset.css');
 	@import url('style.css');
-</style>
-<link rel="shortcut icon" href="favicon.png" type="image/png">
-<link type="text/css" rel="stylesheet" href="sh/Styles/SyntaxHighlighter.css">
-<link href="rss.php" rel="alternate" type="application/rss+xml" title="Learn You a Haskell for Great Good! feed">
-</head>
-<body class="introcontent">
-<div class="bgwrapper">
-    <div id="content">
-                <div class="footdiv" style="margin-bottom:25px;">
-                <ul>
-                    <li style="text-align:left">
-                                                        <a href="syntax-in-functions" class="prevlink">Syntax in Functions</a>
-                                            </li>
-                    <li style="text-align:center">
-                        <a href="chapters">Table of contents</a>
-                    </li>
-                    <li style="text-align:right">
-                                                        <a href="higher-order-functions" class="nxtlink">Higher Order Functions</a>
-                                            </li>
-                </ul>
-            </div>
-        <h1 style="margin-left:-2px">Recursion</h1>
-<a name="hello-recursion"></a><h2>Hello recursion!</h2>
-<img src="http://s3.amazonaws.com/lyah/recursion.png" alt="SOVIET RUSSIA" class="left" width="250" height="179">
-<p>We mention recursion briefly in the previous chapter. In this chapter, we'll take a closer look at recursion, why it's important to Haskell and how we can work out very concise and elegant solutions to problems by thinking recursively. </p>
-<p>If you still don't know what recursion is, read this sentence. Haha! Just kidding! Recursion is actually a way of defining functions in which the function is applied inside its own definition. Definitions in mathematics are often given recursively. For instance, the fibonacci sequence is defined recursively. First, we define the first two fibonacci numbers non-recursively. We say that <i>F(0) = 0</i> and <i>F(1) = 1</i>, meaning that the 0th and 1st fibonacci numbers are 0 and 1, respectively. Then we say that for any other natural number, that fibonacci number is the sum of the previous two fibonacci numbers. So <i>F(n) = F(n-1) + F(n-2)</i>. That way, <i>F(3)</i> is <i>F(2) + F(1)</i>, which is <i>(F(1) + F(0)) + F(1)</i>. Because we've now come down to only non-recursively defined fibonacci numbers, we can safely say that <i>F(3)</i> is 2. Having an element or two in a recursion definition defined non-recursively (like <i>F(0)</i> and <i>F(1)</i> here) is also called the <em>edge condition</em> and is important if you want your recursive function to terminate. If we hadn't defined <i>F(0)</i> and <i>F(1)</i> non recursively, you'd never get a solution any number because you'd reach 0 and then you'd go into negative numbers. All of a sudden, you'd be saying that <i>F(-2000)</i> is <i>F(-2001) + F(-2002)</i> and there still wouldn't be an end in sight!</p>
-<p>Recursion is important to Haskell because unlike imperative languages, you do computations in Haskell by declaring what something <i>is</i> instead of declaring <i>how</i> you get it. That's why there are no while loops or for loops in Haskell and instead we many times have to use recursion to declare what something is.</p>
-<a name="maximum-awesome"></a><h2>Maximum awesome</h2>
-<p>The <span class="fixed">maximum</span> function takes a list of things that can be ordered (e.g. instances of the <span class="fixed">Ord</span> typeclass) and returns the biggest of them. Think about how you'd implement that in an imperative fashion. You'd probably set up a variable to hold the maximum value so far and then you'd loop through the elements of a list and if an element is bigger than then the current maximum value, you'd replace it with that element. The maximum value that remains at the end is the result. Whew! That's quite a lot of words to describe such a simple algorithm!</p>
-<p>Now let's see how we'd define it recursively. We could first set up an edge condition and say that the maximum of a singleton list is equal to the only element in it. Then we can say that the maximum of a longer list is the head if the head is bigger than the maximum of the tail. If the maximum of the tail is bigger, well, then it's the maximum of the tail. That's it! Now let's implement that in Haskell.</p>
-<pre name="code" class="haskell:hs">
-maximum' :: (Ord a) =&gt; [a] -&gt; a
+</style><link rel="shortcut icon" href="favicon.png" type="image/png">
+    <link type="text/css" rel="stylesheet" href="sh/Styles/SyntaxHighlighter.css">
+    <link href="rss.php" rel="alternate" type="application/rss+xml" title="Learn You a Haskell for Great Good! feed">
+  </head>
+  <body class="introcontent">
+    <div class="bgwrapper">
+      <div id="content">
+        <div class="footdiv" style="margin-bottom: 25px;">
+          <ul>
+            <li style="text-align: left;"> <a href="syntax-in-functions"
+                class="prevlink">Syntax in Functions</a> </li>
+            <li style="text-align: center;"> <a href="chapters">목 차</a>
+            </li>
+            <li style="text-align: right;"> <a href="higher-order-functions"
+                class="nxtlink">Higher Order Functions</a> </li>
+          </ul>
+        </div>
+        <h1 style="margin-left: -2px;">재귀</h1>
+        <a name="hello-recursion"></a>
+        <h2>안녕 재귀!</h2>
+        <img src="http://s3.amazonaws.com/lyah/recursion.png" alt="SOVIET RUSSIA"
+          class="left" height="179" width="250">
+        <p>이전 장에서 간략히 재귀에 대해 언급하였습니다. 이번장에선, 하스켈에서 재귀가 왜 중요하며,&nbsp;
+          재귀적으로 생각함으로써 어떻게 간결하고 우아한 해결책을 내놓을 수 있는지, 재귀에 대해 좀더 자세히 살펴볼
+          것입니다. </p>
+        <p>여러분이 아직 재귀가 무엇인지 알지 못했다면, 이 문장을 다시 읽어보시기 바랍니다. 하하! 농담입니다! 재귀는
+          사실 함수 내부에서 자기 자신을 호출하도록 정의하는 하나의 방법입니다. 수학에서의 정의는 보통 재귀적으로
+          주어집니다. 예를들어, 피보나치 수열이 재귀적으로 정의되었습니다. 저희는 먼저 두 피보나치 수를 재귀적이지 않게
+          정의해야 합니다. 0번째와 1번째의 피보나치 수 각각이 0과 1이라는 것을 의미하는 <i>F(0) = 0</i>과
+          <i>F(1) = 1</i><span style="font-style: italic;"></span>라 합시다.
+          그런 다음 다른 자연수의 피보나치 숫자는 이전 두 피보나치 수의 합이라고 합니다. 따라서 <i>F(n) =
+            F(n-1) + F(n-2)</i> 입니다. 이 공식에선, <i>F(3)</i>은 <i>(F(1) +
+            F(0)) + F(1)</i>인 <i>F(2) + F(1)</i>가 됩니다. 이제 재귀적으로 정의되지 않은
+          피보나치 수가 되었으니, <i>F(3)</i>이 2라고 확실히 말 할 수 있습니다. 여기서 <i>F(0)</i>와
+          <i>F(1)</i>처럼, 재귀의 정의에 있어 재귀적으로 정의되지 않은 하나 혹은 두 원소를 지니는 것을 <em>주
+            변조건(edge condition)</em>라 부르며, 이는 재귀 함수를 종료할때 중요합니다. <i>F(0)</i>과
+          <i>F(1)</i>이 재귀적으로 정의되었으면, 0에 도달해도, 음수로 가게되므로 답을 얻지 못할 것입니다.
+          불현듯, 여러분이 "<i>F(-2000)</i>은 <i>F(-2001) + F(-2002)</i>이다" 라고
+          할 지라도,&nbsp; 결코 끝을 내진 못할 것입니다!</p>
+        <p>&nbsp;imperative 언어와는 달리, 하스켈에선 <span style="font-style: italic;">어
+            떻게</span> 얻을까 대신 <span style="font-style: italic;">무엇</span>일
+          까라고 선언함으로써 계산을 수행할 수 있기에, 하스켈에서의 재귀는 중요합니다. 이것이 하스켈에는 while
+          루프나 for 루프가 없는 대신 무엇인가를 정의하기 위해 재귀를 많이 사용하는 이유입니다.</p>
+        <a name="maximum-awesome"></a>
+        <h2>끝내주는 maximum</h2>
+        <p>&nbsp;<span class="fixed">maximum</span>함수는 순서를 매길수 있는 리스트를
+          받아 그 중 가장 큰 것을 반환합니다 (예. <span class="fixed">Ord</span>타입
+          클래스의 인스턴스). imperative 한 방법으로 이걸 어떻게 구현할지 생각 해 봅시다. 아마 여러분은
+          나중에 최대값을 받을 변수를 설정한 다음 리스트의 원소를 돌면서 현재 최대값보다 크면, 그 원소를 최대값으로
+          교체할 것입니다. 최종적으로 남아있는 최대값이 결과가 됩니다. 휴! 이와 같은 단순한 알고리즘을 기술하는데 너무
+          많은 단어를 썼습니다!</p>
+        <p>이제 이를 어떻게 재귀적으로 정의하는지 살펴봅시다. 우선 싱글톤 리스트의 최대값은 그 안에 있는 단 하나의
+          원소라고 주변조건을 설정합니다. 그런 다음 리스트의 head가 tail의 최대값보다 크면 최대값은 head라 할
+          수 있습니다. tail의 최대값이 크면, 최대값은 tail의 최대값입니다. 끝났습니다! 이제 하스켈로 구현해
+          봅시다.</p>
+        <pre name="code" class="haskell:hs">maximum' :: (Ord a) =&gt; [a] -&gt; a
 maximum' [] = error "maximum of empty list"
 maximum' [x] = x
 maximum' (x:xs) 
@@ -47,126 +69,276 @@ maximum' (x:xs)
     | otherwise = maxTail
     where maxTail = maximum' xs
 </pre>
-<p>As you can see, pattern matching goes great with recursion! Most imperative languages don't have pattern matching so you have to make a lot of if else statements to test for edge conditions. Here, we simply put them out as patterns. So the first edge condition says that if the list is empty, crash! Makes sense because what's the maximum of an empty list? I don't know. The second pattern also lays out an edge condition. It says that if it's the singleton list, just give back the only element.</p>
-<p>Now the third pattern is where the action happens. We use pattern matching to split a list into a head and a tail. This is a very common idiom when doing recursion with lists, so get used to it. We use a <i>where</i> binding to define <span class="fixed">maxTail</span> as the maximum of the rest of the list. Then we check if the head is greater than the maximum of the rest of the list. If it is, we return the head. Otherwise, we return the maximum of the rest of the list.</p>
-<p>Let's take an example list of numbers and check out how this would work on them: <span class="fixed">[2,5,1]</span>. If we call <span class="fixed">maximum'</span> on that, the first two patterns won't match. The third one will and the list is split into <span class="fixed">2</span> and <span class="fixed">[5,1]</span>. The <i>where</i> clause wants to know the maximum of <span class="fixed">[5,1]</span>, so we follow that route. It matches the third pattern again and <span class="fixed">[5,1]</span> is split into <span class="fixed">5</span> and <span class="fixed">[1]</span>. Again, the <span class="fixed">where</span> clause wants to know the maximum of <span class="fixed">[1]</span>. Because that's the edge condition, it returns <span class="fixed">1</span>. Finally! So going up one step, comparing <span class="fixed">5</span> to the maximum of <span class="fixed">[1]</span> (which is <span class="fixed">1</span>), we obviously get back <span class="fixed">5</span>. So now we know that the maximum of <span class="fixed">[5,1]</span> is <span class="fixed">5</span>. We go up one step again where we had <span class="fixed">2</span> and <span class="fixed">[5,1]</span>. Comparing <span class="fixed">2</span> with the maximum of <span class="fixed">[5,1]</span>, which is <span class="fixed">5</span>, we choose <span class="fixed">5</span>.</p>
-<p>An even clearer way to write this function is to use <span class="fixed">max</span>. If you remember, <span class="fixed">max</span> is a function that takes two numbers and returns the bigger of them. Here's how we could rewrite <span class="fixed">maximum'</span> by using <span class="fixed">max</span>:</p>
-<pre name="code" class="haskell:hs">
-maximum' :: (Ord a) =&gt; [a] -&gt; a
+        <p>보시다시피, 패턴 매칭은 커다란 재귀를 돌고 있습니다! 대부분의 imperative 언어들은 패턴매칭을 갖지
+          않으므로, 주변조건을 검사하기 위해 많은 if else 구문을 만들어야만 했습니다. 여기선, 패턴으로
+          표현해냈습니다. 첫번째 주변조건은, "리스트가 비어있으면, 오류가 발생한다!"를 의미합니다. 비어 있는 리스트의
+          최대값은 무엇인지 알 수 없기에 이치에 맞습니다. 두번째 패턴도 하나의 주변조건을 제시합니다. "싱글톤
+          리스트라면, 그 하나만 있는 원소를 반환한다".</p>
+        <p>이제 문제의 세번째 패턴입니다. head와 tail을 나누기 위해 패턴 매칭을 사용하였습니다. 이는 리스트에
+          재귀를 적용할때 매우 흔한 idiom입니다. 리스트의 나머지의 최대값으로써 <span class="fixed">maxTail</span>을
+          정의하기 위해 <i>where</i>바인딩을 사용하였습니다. 그런 다음, head가 나머지 리스트의 최대값보다
+          큰지 확인합니다. 그러하다면, head를 반환합니다. 그렇지 않다면, 나머지 리스트의 최대값을 반환합니다.</p>
+        <p>예제 리스트로 어떻게 동작하는지 살펴봅시다: <span class="fixed">[2,5,1]</span>.
+          <span class="fixed">maximum'</span>을 호출하면, 처음 두 패턴은 매치되지 않습니다.
+          세번째에 매치할 것이며, 리스트는 <span class="fixed">2</span>와 <span class="fixed">[5,1]</span>로
+          분리됩니다. <i>where</i>절이 <span class="fixed">[5,1]</span>의 최대값을
+          알고자 하므로, 다음으로 넘어갑니다. <span class="fixed">[5,1]</span>는 또 다시
+          세번째 패턴과 매치되어, <span class="fixed">5</span>와 <span class="fixed">[1]</span>로
+          분리됩니다. 다시 한번, <span class="fixed">where</span>절은 <span class="fixed">[1]</span>의
+          최대값을 알고자 합니다. 이것은 주변조건이므로, <span class="fixed">1</span>을 반환하게
+          됩니다. 이제 끝났습니다! 한단계 올라가서, <span class="fixed">5</span>와 <span
+            class="fixed">[1]</span>의 최대값( <span class="fixed">1</span>)
+          을 비교하면, <span class="fixed">5</span>를 얻게 됩니다. 따라서 <span class="fixed">[5,1]</span>의
+          최대값은 <span class="fixed">5</span>입니다. 다시 <span class="fixed">2</span>와
+          <span class="fixed">[5,1]</span>가 있는 단계로 올라갑니다. <span class="fixed">2</span>와
+          <span class="fixed">[5,1]</span>의 최대값을 비교하면, <span class="fixed">5</span>를
+          얻게됩니다.</p>
+        <p>더 깔끔한 방법은 <span class="fixed">max</span>를 사용하는 것입니다. 기억이
+          맞다면, <span class="fixed">max</span>는 두 숫자를 받아 그 중 큰 값을 반환합니다.
+          여기 <span class="fixed">max</span>를 이용하여 <span class="fixed">maximum'</span>을
+          재작성하는 법이 나와있습니다.:</p>
+        <pre name="code" class="haskell:hs">maximum' :: (Ord a) =&gt; [a] -&gt; a
 maximum' [] = error "maximum of empty list"
 maximum' [x] = x
 maximum' (x:xs) = max x (maximum' xs)
 </pre>
-<p>How's that for elegant! In essence, the maximum of a list is the max of the first element and the maximum of the tail.</p>
-<img src="http://s3.amazonaws.com/lyah/maxs.png" alt="max" class="center" width="651" height="267">
-<a name="a-few-more-recursive-functions"></a><h2>A few more recursive functions</h2>
-<p>Now that we know how to generally think recursively, let's implement a few functions using recursion. First off, we'll implement <span class="fixed">replicate</span>. <span class="fixed">replicate</span> takes an <span class="fixed">Int</span> and some element and returns a list that has several repetitions of the same element. For instance, <span class="fixed">replicate 3 5</span> returns <span class="fixed">[5,5,5]</span>. Let's think about the edge condition. My guess is that the edge condition is 0 or less. If we try to replicate something zero times, it should return an empty list. Also for negative numbers, because it doesn't really make sense.</p>
-<pre name="code" class="haskell:hs">
-replicate' :: (Num i, Ord i) =&gt; i -&gt; a -&gt; [a]
+        <p>얼마나 우아합니까! 요컨대, 리스트의 최대값은 첫번째 원소와 tail의 최대값의 max입니다.</p>
+        <img src="http://s3.amazonaws.com/lyah/maxs.png" alt="max" class="center"
+          height="267" width="651"> <a name="a-few-more-recursive-functions"></a>
+        <h2>재귀 함수에 대해 좀 더</h2>
+        <p>이제 저희는 재귀적으로 생각하는 법을 대략 알게 됬으므로, 재귀를 이용해서 함수를 몇개 만들어 봅니다. 우선,
+          저희는 <span class="fixed">replicate</span>을 구현할 것입니다. <span class="fixed">replicate</span>는
+          <span class="fixed">Int</span>하나와 원소하나를 받아 반복되는 원소를 지닌 리스트를
+          반환합니다. 예를들어, <span class="fixed">replicate 3 5</span>는 <span
+            class="fixed">[5,5,5]</span>를 반환합니다. 주변 조건에 대해 생각해봅시다. 제 생각엔
+          주변 조건은 0이하일때 입니다. 무언가를 0번 반복한다면, 비어있는 리스트를 반환하도록 할 것입니다. 또한
+          음수일때도 마찬가지입니다.</p>
+        <pre name="code" class="haskell:hs">replicate' :: (Num i, Ord i) =&gt; i -&gt; a -&gt; [a]
 replicate' n x
-    | n <= 0    = []
+    | n &lt;= 0    = []
     | otherwise = x:replicate' (n-1) x
 </pre>
-<p>We used guards here instead of patterns because we're testing for a boolean condition. If <span class="fixed">n</span> is less than or equal to 0, return an empty list. Otherwise return a list that has <span class="fixed">x</span> as the first element and then <span class="fixed">x</span> replicated n-1 times as the tail. Eventually, the <span class="fixed">(n-1)</span> part will cause our function to reach the edge condition.</p>
-<div class="hintbox"><em>Note:</em> <span class="fixed">Num</span> is not a subclass of <span class="fixed">Ord</span>. That means that what constitutes for a number doesn't really have to adhere to an ordering. So that's why we have to specify both the <span class="fixed">Num</span> and <span class="fixed">Ord</span> class constraints when doing addition or subtraction and also comparison.</div>
-<p>Next up, we'll implement <span class="fixed">take</span>. It takes a certain number of elements from a list. For instance, <span class="fixed">take 3 [5,4,3,2,1]</span> will return <span class="fixed">[5,4,3]</span>. If we try to take 0 or less elements from a list, we get an empty list. Also if we try to take anything from an empty list, we get an empty list. Notice that those are two edge conditions right there. So let's write that out:</p>
-<pre name="code" class="haskell:hs">
-take' :: (Num i, Ord i) =&gt; i -&gt; [a] -&gt; [a]
+        <p>저희는 여기서 부울조건을 검사함으로 패턴대신 가드를 사용하였습니다. <span class="fixed">n</span>이
+          0보다 작거나 같으면, 비어있는 리스트를 반환합니다. 그렇지 않으면, <span class="fixed">x</span>를
+          첫번째 원소로하고 <span class="fixed">x</span>가 n-1번 반복되는 리스트를 반환합니다.
+          결과적으로, <span class="fixed">(n-1)</span>부분이 함수를 주변조건으로 이끌어 줄
+          것입니다.</p>
+        <div class="hintbox"><em>Note:</em> <span class="fixed">Num</span>은
+          <span class="fixed">Ord</span>의 하위클래스가 아닙니다. 이는 숫자를 구성하는데 있어
+          순서를 고수할 필요가 없다는 것을 의미합니다. 이것이 바로 덧셈, 뺄셈, 비교를 할때, <span class="fixed">Num</span>와
+          <span class="fixed">Ord</span> 클래스 제약을 명시해야 되는 이유입니다.</div>
+        <p>다음으로, <span class="fixed">take</span>를 구현할 것입니다. 이것은 리스트로부터
+          특정 갯숫만큼 리스트를 받아옵니다. 예를들어, <span class="fixed">take 3
+            [5,4,3,2,1]</span>는 <span class="fixed">[5,4,3]</span>을
+          반환합니다. 리스트에서 0보다 적게 얻고자 한다면, 빈 리스트를 얻게 될 것입니다. 또한, 비어있는 리스트에서
+          무언가를 얻어올려고 해도, 빈 리스트를 얻게 될 것입니다. 바로 여기에 2개의 주변조건이 있다는 것을 주목하시기
+          바랍니다. 그러면 이제 작성해 봅시다:</p>
+        <pre name="code" class="haskell:hs">take' :: (Num i, Ord i) =&gt; i -&gt; [a] -&gt; [a]
 take' n _
     | n &lt;= 0   = []
 take' _ []     = []
 take' n (x:xs) = x : take' (n-1) xs
-</pre>
-<img src="http://s3.amazonaws.com/lyah/painter.png" alt="painter" class="right" width="350" height="276">
-<p>The first pattern specifies that if we try to take a 0 or negative number of elements, we get an empty list. Notice that we're using <span class="fixed">_</span> to match the list because we don't really care what it is in this case. Also notice that we use a guard, but without an <span class="fixed">otherwise</span> part. That means that if <span class="fixed">n</span> turns out to be more than 0, the matching will fall through to the next pattern. The second pattern indicates that if we try to take anything from an empty list, we get an empty list. The third pattern breaks the list into a head and a tail. And then we state that taking <span class="fixed">n</span> elements from a list equals a list that has <span class="fixed">x</span> as the head and then a list that takes <span class="fixed">n-1</span> elements from the tail as a tail. Try using a piece of paper to write down how the evaluation would look like if we try to take, say, 3 from <span class="fixed">[4,3,2,1]</span>.</p>
-<p><span class="fixed">reverse</span> simply reverses a list. Think about the edge condition. What is it? Come on ... it's the empty list! An empty list reversed equals the empty list itself. O-kay. What about the rest of it? Well, you could say that if we split a list to a head and a tail, the reversed list is equal to the reversed tail and then the head at the end.</p>
-<pre name="code" class="haskell:hs">
-reverse' :: [a] -&gt; [a]
+</pre> <img src="http://s3.amazonaws.com/lyah/painter.png" alt="painter"
+          class="right" height="276" width="350">
+        <p>첫번째 패턴은 0이하의 원소를 얻고자 한다면, 비어있는 리스트를 얻게 된다고 명시되었습니다. 이번 경우
+          신경쓰고자 하지 않은 리스트에 매치하기 위해 <span class="fixed">_</span>를 사용한 것을
+          주목하시기 바랍니다. 또한 <span class="fixed">otherwise</span>부분 없이
+          guard를 사용한 것을 주목하시기 바랍니다. 이는 <span class="fixed">n</span>이
+          0보다 크다면, 다음 패턴으로 넘어간 다는 것을 의미합니다. 두번째 패턴은 비어있는 리스트에서 무언가를
+          얻어오고자 한다면, 빈 리스트를 얻게 된다는 것을 알려주고 있습니다. 세번째 패턴은 리스트를 head와
+          tail로 나눕니다. 그리고나서 리스트로부터 <span class="fixed">n</span>개의 원소를
+          취하는 것은, <span class="fixed">x</span> 와 tail로부터 <span class="fixed">n-1</span>개
+          의 원소를 취하는 리스트를 head와 tail로 갖는 것과 같다고 나와있습니다. 종이를 갖고, <span class="fixed">[4,3,2,1]</span>에
+          서 3개를 취한다고 했을때 어떻게 평가되는지 한번 써봅시다.</p>
+        <p><span class="fixed">reverse</span>는 단순히 리스트를 뒤집습니다. 주변 조건에 대해
+          생각해 봅시다 무엇일까요? 어서요 ... 빈 리스트입니다! 빈 리스트를 뒤집어도 빈 리스트 그 자체입니다.
+          좋습니다. 나머진 무엇일까요? 음, 리스트를 head와 tail로 나눈다면, 뒤집힌 리스트는 뒤집힌 tail에
+          head가 오는 것과 같다고 말할 수 있을 것입니다.</p>
+        <pre name="code" class="haskell:hs">reverse' :: [a] -&gt; [a]
 reverse' [] = []
 reverse' (x:xs) = reverse' xs ++ [x]
 </pre>
-<p>There we go!</p>
-<p>Because Haskell supports infinite lists, our recursion doesn't really have to have an edge condition. But if it doesn't have it, it will either keep churning at something infinitely or produce an infinite data structure, like an infinite list. The good thing about infinite lists though is that we can cut them where we want. <span class="fixed">repeat</span> takes an element and returns an infinite list that just has that element. A recursive implementation of that is really easy, watch.</p>
-<pre name="code" class="haskell:hs">
-repeat' :: a -&gt; [a]
+        <p>다음으로 넘어가 봅시다!</p>
+        <p>하스켈은 무한 리스트를 지원하므로, 저희 재귀는 실제로 주변조건에 도달할 수 없습니다. 하지만, 도달할 수
+          없으면, 뭔가를 무한히 뒤지거나, 무한한 자료구조를 생성할 것입니다. 무한 리스트에서 좋은 점은, 원하는 만큼
+          자를 수 있다는 것입니다. <span class="fixed">repeat</span> 은 원소를 받아 그
+          원소를 갖는 무한 리스트를 반환합니다. 보시는 바쳐럼, 이것의 재귀 구현은 매우 쉽습니다.</p>
+        <pre name="code" class="haskell:hs">repeat' :: a -&gt; [a]
 repeat' x = x:repeat' x
 </pre>
-<p>Calling <span class="fixed">repeat 3</span> will give us a list that starts with <span class="fixed">3</span> and then has an infinite amount of 3's as a tail. So calling <span class="fixed">repeat 3</span> would evaluate like <span class="fixed">3:repeat 3</span>, which is <span class="fixed">3:(3:repeat 3)</span>, which is <span class="fixed">3:(3:(3:repeat 3))</span>, etc. <span class="fixed">repeat 3</span> will never finish evaluating, whereas <span class="fixed">take 5 (repeat 3)</span> will give us a list of five 3's. So essentially it's like doing <span class="fixed">replicate 5 3</span>.</p>
-<p><span class="fixed">zip</span> takes two lists and zips them together. <span class="fixed">zip [1,2,3] [2,3]</span> returns <span class="fixed">[(1,2),(2,3)]</span>, because it truncates the longer list to match the length of the shorter one. How about if we zip something with an empty list? Well, we get an empty list back then. So there's our edge condition. However, <span class="fixed">zip</span> takes two lists as parameters, so there are actually two edge conditions.</p>
-<pre name="code" class="haskell:hs">
-zip' :: [a] -&gt; [b] -&gt; [(a,b)]
+        <p>Calling <span class="fixed">repeat 3</span>를 호출하면, 3으로 시작하고
+          무한한 3을 tail로 갖는 리스트를 얻을 것입니다. So calling <span class="fixed">repeat
+
+
+
+
+
+
+            3</span>을 호출하는 것은 <span class="fixed">3:repeat 3</span>, <span
+            class="fixed">3:(3:repeat 3)</span>, <span class="fixed">3:(3:(3:repeat
+
+
+            3))</span> 등등을 평가한 것과 같습니다. <span class="fixed">repeat 3</span>은
+          평가를 멈추지 않지만, <span class="fixed">take 5 (repeat 3)</span>은 3이
+          5개가 들어있는 리스트를 줄 것입니다. 따라서 이것은 본질적으로 <span class="fixed">replicate
+
+
+            5 3</span>이 하는 일과 같습니다.</p>
+        <p><span class="fixed">zip</span>은 리스트 2개를 받아, 서로 엮어줍니다. <span
+            class="fixed">zip [1,2,3] [2,3]</span>은 <span class="fixed">[(1,2),(2,3)]</span>을
+          반환하는데, 길이를 짧은 것에 맞추기 위해 긴 리스트를 자르기 때문입니다. 어떠한 것과 빈 리스트를 zip하면
+          어떻게 될까요? 음, 저희는 빈 리스트를 되받을 것입니다. 따라서 이건 주변조건입니다. 하지만, <span class="fixed">zip</span>은
+          인자로 2개의 리스트를 받으므로, 2개의 주변조건이 있습니다.<br>
+        </p>
+        <pre name="code" class="haskell:hs">zip' :: [a] -&gt; [b] -&gt; [(a,b)]
 zip' _ [] = []
 zip' [] _ = []
 zip' (x:xs) (y:ys) = (x,y):zip' xs ys
 </pre>
-<p>First two patterns say that if the first list or second list is empty, we get an empty list. The third one says that two lists zipped are equal to pairing up their heads and then tacking on the zipped tails. Zipping <span class="fixed">[1,2,3]</span> and <span class="fixed">['a','b']</span> will eventually try to zip <span class="fixed">[3]</span> with <span class="fixed">[]</span>. The edge condition patterns kick in and so the result is <span class="fixed">(1,'a'):(2,'b'):[]</span>, which is exactly the same as <span class="fixed">[(1,'a'),(2,'b')]</span>.</p>
-<p>Let's implement one more standard library function &mdash; <span class="fixed">elem</span>. It takes an element and a list and sees if that element is in the list. The edge condition, as is most of the times with lists, is the empty list. We know that an empty list contains no elements, so it certainly doesn't have the droids we're looking for.</p>
-<pre name="code" class="haskell:hs">
-elem' :: (Eq a) =&gt; a -&gt; [a] -&gt; Bool
+        <p>처음 두 패턴은, 첫번째 리스트나 두번째 리스트가 비어있으면, 빈 리스트를 얻을 것입니다. 세번째는 두
+          리스트를 엮는것은, head를 pair한 것에 뒤에 tail을 zip한게 따라온 것과 동일하다고 되어있습니다.
+          <span class="fixed">[1,2,3]</span>와 <span class="fixed">['a','b']</span>를
+          더하는 것은 마지막에 가서 <span class="fixed">[3]</span>과 <span class="fixed">[]</span>을
+          엮으려 할 것입니다. 주변 조건 패턴은 이를 넘겨버릴 것이므로, 결과는 <span class="fixed">(1,'a'):(2,'b'):[]</span>가
+          되며, 이는<span class="fixed">[(1,'a'),(2,'b')]</span>와 같습니다.</p>
+        <p>표준 라이브러리 함수를 하나 더 구현해 봅시다 — <span class="fixed">elem</span>.
+          이는 원소를 받아 그 원소가 리스트에 있는지 확인합니다. 주변 조건으로는 리스트에 빠질 수 없는 빈
+          리스트입니다. 빈 리스트는 원소가 없으므로, 이를 뒤져볼 필요가 없습니다.</p>
+        <pre name="code" class="haskell:hs">elem' :: (Eq a) =&gt; a -&gt; [a] -&gt; Bool
 elem' a [] = False
 elem' a (x:xs)
     | a == x    = True
     | otherwise = a `elem'` xs 
 </pre>
-<p>Pretty simple and expected. If the head isn't the element then we check the tail. If we reach an empty list, the result is <span class="fixed">False</span>.</p>
-<a name="quick-sort"></a><h2>Quick, sort!</h2>
-<p>We have a list of items that can be sorted. Their type is an instance of the <span class="fixed">Ord</span> typeclass. And now, we want to sort them! There's a very cool algoritm for sorting called quicksort. It's a very clever way of sorting items. While it takes upwards of 10 lines to implement quicksort in imperative languages, the implementation is much shorter and elegant in Haskell. Quicksort has become a sort of poster child for Haskell. Therefore, let's implement it here, even though implementing quicksort in Haskell is considered really cheesy because everyone does it to showcase how elegant Haskell is.</p>
-<img src="http://s3.amazonaws.com/lyah/quickman.png" alt="quickman" class="left" width="180" height="235">
-<p>So, the type signature is going to be <span class="fixed">quicksort :: (Ord a) =&gt; [a] -&gt; [a]</span>. No surprises there. The edge condition? Empty list, as is expected. A sorted empty list is an empty list. Now here comes the main algorithm: <em>a sorted list is a list that has all the values smaller than (or equal to) the head of the list in front (and those values are sorted), then comes the head of the list in the middle and then come all the values that are bigger than the head (they're also sorted).</em> Notice that we said <i>sorted</i> two times in this definition, so we'll probably have to make the recursive call twice! Also notice that we defined it using the verb <i>is</i> to define the algorithm instead of saying <i>do this, do that, then do that ...</i>. That's the beauty of functional programming! How are we going to filter the list so that we get only the elements smaller than the head of our list and only elements that are bigger? List comprehensions. So, let's dive in and define this function.</p>
-<pre name="code" class="haskell:hs">
-quicksort :: (Ord a) =&gt; [a] -&gt; [a]
+        <p>매우 간단하며, 알아보기 쉽습니다. head가 그 원소가 아니면, tail을 검사합니다. 만약 리스트가
+          비어있다면, 결과는 <span class="fixed">False</span>입니다.</p>
+        <a name="quick-sort"></a>
+        <h2>정렬을 빠르게!</h2>
+        <p>저희가 정렬할 수 있는 리스트를 지녔다고 가정해봅시다. 타입은 Their type is an instance
+          of the <span class="fixed">Ord</span>타입클래스의 인스턴스입니다. 그리고, 저희는
+          그걸 정렬하고자 합니다! quicksort라 불리는 매우 멋진 알고리즘이 있습니다. 이는 항목을 정렬하는데 있어
+          매우 영리한 방법입니다. imperative 언어에서 quicksort을 구현하려면 10줄을 넘어가는데 반해,
+          하스켈에서는 더 간결하고 우아하게 구현할 수 있습니다. quicksort는 하스켈의 표지모델이 되었습니다.
+          그러므로, 여기서 한번 구현해 봅시다.</p>
+        <img src="http://s3.amazonaws.com/lyah/quickman.png" alt="quickman"
+          class="left" height="235" width="180">
+        <p>자, 타입 서명은 <span class="fixed">quicksort :: (Ord a) =&gt; [a]
+            -&gt; [a]</span>가 될 것입니다. 놀랄만한게 없습니다. 그러면 주변 조건은 어떨까요? 예상대로,
+          비어있는 리스트입니다. 비어있는 리스트를 정렬하면 빈 리스트가 됩니다. 다음으로 주 알고리즘이 나옵니다: <em>정
+            렬된 리스트는, head보다 작거나 같은 값들로 구성된 </em>'<em>정렬된</em>'<em>리스트가
+            head앞에오고, head뒤로는 head보다 큰 값들로 구성된 </em>'<em>정렬된</em>'<em>리
+            스트가 오는 리스트입니다.</em> 정의에서 '정렬된' 이라고 두번 언급한 것을 주목하셨다면, 재귀 호출을
+          두번 해야만 한다는 것을 알 것입니다! 또한&nbsp; ~한다음, ~한다라고 말하는 대신 ~는 ~이다, Also
+          notice that we defined it using the verb <i>is</i> to define
+          the algorithm instead of saying <i>do this, do that, then do
+            that ...</i>. 이게 바로 함수형 프로그래밍의 아름다움입니다! How are we going to
+          filter the list so that we get only the elements smaller than
+          the head of our list and only elements that are bigger? 리스트
+          이해(List comprehensions). 그럼, 한번 이 함수를 파해치고 정의해 봅시다.</p>
+        <pre name="code" class="haskell:hs">quicksort :: (Ord a) =&gt; [a] -&gt; [a]
 quicksort [] = []
 quicksort (x:xs) = 
     let smallerSorted = quicksort [a | a &lt;- xs, a &lt;= x]
         biggerSorted = quicksort [a | a &lt;- xs, a &gt; x]
     in  smallerSorted ++ [x] ++ biggerSorted
 </pre>
-<p>Let's give it a small test run to see if it appears to behave correctly.</p>
-<pre name="code" class="haskell:ghci">
-ghci&gt; quicksort [10,2,5,3,1,6,7,4,2,3,4,8,9]
+        <p>Let's give it a small test run to see if it appears to behave
+          correctly.</p>
+        <pre name="code" class="haskell:ghci">ghci&gt; quicksort [10,2,5,3,1,6,7,4,2,3,4,8,9]
 [1,2,2,3,3,4,4,5,6,7,8,9,10]
 ghci&gt; quicksort "the quick brown fox jumps over the lazy dog"
 "        abcdeeefghhijklmnoooopqrrsttuuvwxyz"
 </pre>
-<p>Booyah! That's what I'm talking about! So if we have, say <span class="fixed">[5,1,9,4,6,7,3]</span> and we want to sort it, this algorithm will first take the head, which is <span class="fixed">5</span> and then put it in the middle of two lists that are smaller and bigger than it. So at one point, you'll have <span class="fixed">[1,4,3] ++ [5] ++ [9,6,7]</span>. We know that once the list is sorted completely, the number <span class="fixed">5</span> will stay in the fourth place since there are 3 numbers lower than it and 3 numbers higher than it. Now, if we sort <span class="fixed">[1,4,3]</span> and <span class="fixed">[9,6,7]</span>, we have a sorted list! We sort the two lists using the same function. Eventually, we'll break it up so much that we reach empty lists and an empty list is already sorted in a way, by virtue of being empty. Here's an illustration:</p>
-<img src="http://s3.amazonaws.com/lyah/quicksort.png" alt="quicksort" class="center" width="799" height="332">
-<p>An element that is in place and won't move anymore is represented in <span style="color:#FF6600;font-weight:bold;">orange</span>. If you read them from left to right, you'll see the sorted list. Although we chose to compare all the elements to the heads, we could have used any element to compare against. In quicksort, an element that you compare against is called a pivot. They're in <span style="color:#009900;font-weight:bold">green</span> here. We chose the head because it's easy to get by pattern matching. The elements that are smaller than the pivot are <span style="color:#0f0;font-weight:bold">light green</span> and elements larger than the pivot are <span style="color:#030;font-weight:bold">dark green</span>. The yellowish gradient thing represents an application of quicksort.</p>
-<a name="thinking-recursively"></a><h2>Thinking recursively</h2>
-<p>We did quite a bit of recursion so far and as you've probably noticed, there's a pattern here. Usually you define an edge case and then you define a function that does something between some element and the function applied to the rest. It doesn't matter if it's a list, a tree or any other data structure. A sum is the first element of a list plus the sum of the rest of the list. A product of a list is the first element of the list times the product of the rest of the list. The length of a list is one plus the length of the tail of the list. Ekcetera, ekcetera ...<p>
-<img src="http://s3.amazonaws.com/lyah/brain.png" alt="brain" class="left" width="250" height="219">
-<p>Of course, these also have edge cases. Usually the edge case is some scenario where a recursive application doesn't make sense. When dealing with lists, the edge case is most often the empty list. If you're dealing with trees, the edge case is usually a node that doesn't have any children.</p>
-<p>It's similar when you're dealing with numbers recursively. Usually it has to do with some number and the function applied to that number modified. We did the factorial function earlier and it's the product of a number and the factorial of that number minus one. Such a recursive application doesn't make sense with zero, because factorials are defined only for positive integers. Often the edge case value turns out to be an identity. The identity for multiplication is 1 because if you multiply something by 1, you get that something back. Also when doing sums of lists, we define the sum of an empty list as 0 and 0 is the identity for addition. In quicksort, the edge case is the empty list and the identity is also the empty list, because if you add an empty list to a list, you just get the original list back.</p>
-<p>So when trying to think of a recursive way to solve a problem, try to think of when a recursive solution doesn't apply and see if you can use that as an edge case, think about identities and think about whether you'll break apart the parameters of the function (for instance, lists are usually broken into a head and a tail via pattern matching) and on which part you'll use the recursive call.</p>
+        <p>어! That's what I'm talking about! So if we have, say <span class="fixed">[5,1,9,4,6,7,3]</span>
+          and we want to sort it, this algorithm will first take the
+          head, which is <span class="fixed">5</span> and then put it
+          in the middle of two lists that are smaller and bigger than
+          it. So at one point, you'll have <span class="fixed">[1,4,3]
+            ++ [5] ++ [9,6,7]</span>. We know that once the list is
+          sorted completely, the number <span class="fixed">5</span>
+          will stay in the fourth place since there are 3 numbers lower
+          than it and 3 numbers higher than it. Now, if we sort <span class="fixed">[1,4,3]</span>
+          and <span class="fixed">[9,6,7]</span>, we have a sorted
+          list! We sort the two lists using the same function.
+          Eventually, we'll break it up so much that we reach empty
+          lists and an empty list is already sorted in a way, by virtue
+          of being empty. Here's an illustration:</p>
+        <img src="http://s3.amazonaws.com/lyah/quicksort.png" alt="quicksort"
+          class="center" height="332" width="799">
+        <p>An element that is in place and won't move anymore is
+          represented in <span style="color: rgb(255, 102, 0); font-weight: bold;">orange</span>.
+          If you read them from left to right, you'll see the sorted
+          list. Although we chose to compare all the elements to the
+          heads, we could have used any element to compare against. In
+          quicksort, an element that you compare against is called a
+          pivot. They're in <span style="color: rgb(0, 153, 0); font-weight: bold;">green</span>
+          here. We chose the head because it's easy to get by pattern
+          matching. The elements that are smaller than the pivot are <span
+            style="color: rgb(0, 255, 0); font-weight: bold;">light
+            green</span> and elements larger than the pivot are <span style="color: rgb(0, 51, 0); font-weight: bold;">dark
 
-                <div class="footdiv">
-                <ul>
-                    <li style="text-align:left">
-                                                        <a href="syntax-in-functions" class="prevlink">Syntax in Functions</a>
-                                            </li>
-                    <li style="text-align:center">
-                        <a href="chapters">Table of contents</a>
-                    </li>
-                    <li style="text-align:right">
-                                                        <a href="higher-order-functions" class="nxtlink">Higher Order Functions</a>
-                                            </li>
-                </ul>
-            </div>
+
+
+
+
+
+            green</span>. The yellowish gradient thing represents an
+          application of quicksort.</p>
+        <a name="thinking-recursively"></a>
+        <h2>재귀적으로 생각하기</h2>
+        <p>상당히 많은 수의 재귀를 하면서, 여러분이 느끼셨다시피 여기엔 패턴이 존재합니다. 보통 주변상황을 정의하고
+          어떤 원소와 나머지에 함수를 적용하는 무언가를 하는 함수를 정의합니다. 리스트, 트리, 다른 자료구조들이건
+          상관치 않습니다. sum은 리스트의 첫번째 원소에 나머지들의 합(sum)을 더합니다. product은 리스트의
+          첫번째 원소에 나머지들의 곱(product)을 곱합니다. length는 1더하기 tail의 length를 더한
+          것입니다. 블라 블라 ...</p>
+        <p> <img src="http://s3.amazonaws.com/lyah/brain.png" alt="brain"
+            class="left" height="219" width="250"> </p>
+        <p>물론, 이것들도 주변 조건을 지닙니다. 주변 조건은 보통 재귀를 만족하지 못하는 상황을 나타냅니다. 리스트를
+          다룰때, 주변 조건은 주로 비어있는 리스트입니다. 트리를 다룬다면, 주변 조건은 보통 자식을 지니지 않는 노드일
+          것입니다.</p>
+        <p>숫자를 재귀적으로 다룰때도 마찬가지 입니다. Usually it has to do with some
+          number and the function applied to that number modified. We
+          did the factorial function earlier and it's the product of a
+          number and the factorial of that number minus one. Such a
+          recursive application doesn't make sense with zero, because
+          factorials are defined only for positive integers. Often the
+          edge case value turns out to be an identity. The identity for
+          multiplication is 1 because if you multiply something by 1,
+          you get that something back. Also when doing sums of lists, we
+          define the sum of an empty list as 0 and 0 is the identity for
+          addition. In quicksort, the edge case is the empty list and
+          the identity is also the empty list, because if you add an
+          empty list to a list, you just get the original list back.</p>
+        <p>So when trying to think of a recursive way to solve a
+          problem, try to think of when a recursive solution doesn't
+          apply and see if you can use that as an edge case, think about
+          identities and think about whether you'll break apart the
+          parameters of the function (for instance, lists are usually
+          broken into a head and a tail via pattern matching) and on
+          which part you'll use the recursive call.</p>
+        <div class="footdiv">
+          <ul>
+            <li style="text-align: left;"> <a href="syntax-in-functions"
+                class="prevlink">Syntax in Functions</a> </li>
+            <li style="text-align: center;"> <a href="chapters">목 차</a>
+            </li>
+            <li style="text-align: right;"> <a href="higher-order-functions"
+                class="nxtlink">Higher Order Functions</a> </li>
+          </ul>
         </div>
-    <script type="text/javascript" src="sh/Scripts/shCore.js"></script>
-    <script type="text/javascript" src="shBrushHaskell.js"></script>
-    <script type="text/javascript" src="shBrushPlain.js"></script>
-    <script type="text/javascript">
+      </div>
+      <script type="text/javascript" src="sh/Scripts/shCore.js"></script>
+      <script type="text/javascript" src="shBrushHaskell.js"></script>
+      <script type="text/javascript" src="shBrushPlain.js"></script>
+      <script type="text/javascript">
     dp.SyntaxHighlighter.ClipboardSwf = '/sh/Scripts/clipboard.swf';
     dp.SyntaxHighlighter.HighlightAll('code', false, false, false, 1, false);
-    </script>
-</div>
-<script type="text/javascript">
+    </script> </div>
+    <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
 document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
+</script> <script type="text/javascript">
 var pageTracker = _gat._getTracker("UA-4461592-3");
 pageTracker._trackPageview();
-</script>
-</body>
+</script> </body>
 </html>
