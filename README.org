@@ -3,14 +3,15 @@
 * 재미있는 하스켈을 배워보세요
 - [[http://learnyouahaskell.com][learnyouahaskell.com]] 에서 나온 온라인 책을 번역중입니다.
 - 본 번역은 [[http://ensky0.egloos.com/][꽃돌이푸]] 님과 함께하고 있습니다.
-* 진행상황 [14%]
+* 진행상황 [28%]
+0. [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/chapters.html][목차]]
 1. [X] [[http://ensky0.egloos.com/5511527][머리말]]
-2. [ ] [[http://ensky0.egloos.com/5518698][시작]]
+2. [X] [[http://ensky0.egloos.com/5518698][시작]]
 3. [X] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/types-and-typeclasses.html][타입과 타입클래스]]
-4. [ ] Syntax in Functions
-5. [ ] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/recursion.html][재귀]]
-6. [ ] Higher Order Functionsa
-7. [ ] Modules
+4. [ ] [[http://ensky0.egloos.com/5599806][함수에 관한 문법]]
+5. [X] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/recursion.html][재귀]]
+6. [ ] Higher Order Functions
+7. [ ] 모듈
 8. [ ] Making Our Own Types and Typeclasses
 9. [ ] Input and Output
 10. [ ] Functionally Solving Problems
@@ -18,3 +19,7 @@
 12. [ ] A Fistful of Monads
 13. [ ] For a Few Monads More
 14. [ ] Zippers
+* 보류
+Learn You a Haskell for Great Good! //
+list comprehension // 리스트 이해, 리스트 컴프리헨션
+predicate // 서술자
