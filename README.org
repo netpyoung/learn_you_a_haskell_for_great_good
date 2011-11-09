@@ -1,10 +1,12 @@
-#+TITLE: Learn You a Haskell
+
+#+TITLE: 
+
 
 * 재미있는 하스켈을 배워보세요
 - [[http://learnyouahaskell.com][learnyouahaskell.com]] 에서 나온 온라인 책을 번역중입니다.
 - 본 번역은 [[http://ensky0.egloos.com/][꽃돌이푸]] 님과 함께하고 있습니다.
-* 진행상황 [28%]
-0. [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/chapters.html][목차]]
+* [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/chapters.html][Learn You a Haskell For Great Good!]]
+** 진행상황 [28%]
 1. [X] [[http://ensky0.egloos.com/5511527][머리말]]
 2. [X] [[http://ensky0.egloos.com/5518698][시작]]
 3. [X] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/types-and-typeclasses.html][타입과 타입클래스]]
