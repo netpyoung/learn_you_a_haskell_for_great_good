@@ -60,6 +60,8 @@ numUniques = length . nub
           <span class="fixed">nub</span>을 합침으로써, <span class="fixed">\xs
 
 
+
+
             -&gt; length (nub xs)</span>와 동일한 함수를 만들어 냈습니다.</p>
         <p>또한 GHCI를 이용시, 모듈의 함수들을 전역 이름공간에 넣을 수 있습니다. GHCI에서 <span class="fixed">Data.List</span>에
           서 추출된 함수들을 호출하고자 한다면, 이렇게 하면 됩니다:</p>
@@ -70,6 +72,8 @@ numUniques = length . nub
         <pre name="code" class="haskell:ghci">ghci&gt; :m + Data.List Data.Map Data.Set
 </pre>
         <p>그러나, 이미 모듈을 import한 스크립트를 불러왔다면, 이에 접근하기 위해 <span class="fixed">:m
+
+
 
 
 
@@ -378,6 +382,8 @@ find :: (a -&gt; Bool) -&gt; [a] -&gt; Maybe a
         <p>주식이 처음으로 $1000를 넘어선 날을 찾을 때를 떠올려 보시기 바랍니다. <span class="fixed">head
 
 
+
+
             (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)</span>
           라 하였습니다.&nbsp; <span class="fixed">head</span>가 실제론 안전하지 않다는
           것을 기억하시기 바랍니다. $1000를 넘는 주식이 없다면 어떤일이 발생할까요?&nbsp; <span class="fixed">dropWhile</span>은
@@ -407,6 +413,8 @@ Nothing
 </pre>
         <p><span class="label function">findIndex</span>는 find와 같으나,
           predicate를 만족하는 처음 원소만 아마(maybe) 반환할 것입니다. <span class="label function">findIndices</span>는&nbsp;
+
+
 
           리스트에서 predicate를 만족하는 원소들의 위치를 반환합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; findIndex (==4) [5,3,2,1,6,4]
@@ -480,6 +488,8 @@ ghci&gt; "Im a big baby" \\ "big"
 </pre>
         <p><span class="fixed">[1..10] \\ [2,5,9]</span>는&nbsp; <span class="fixed">delete
 
+
+
             2 . delete 5 . delete 9 $ [1..10]</span>와 같습니다.</p>
         <p><span class="label function">union</span> 또한 집합 관한 함수입니다. 이는
           두 리스트의 교집합(union)을 반환합니다. 이는 두번째 리스트의 모든 원소를 훝어본 다음 첫번째에 없는
@@ -494,23 +504,21 @@ ghci&gt; [1..7] `union` [5..10]
         <pre name="code" class="haskell:ghci">ghci&gt; [1..7] `intersect` [5..10]
 [5,6,7]
 </pre>
-        <p><span class="label function">insert</span>는 :TODO원소와 정렬 가능한
-          리스트를 받아, 원소보다 같거나 작은 마지막 위치에 원소를 집어넣습니다. 다시말해,&nbsp; <span class="fixed">insert</span>는
-          will start at the beginning of the list and then keep going
-          until it finds an element that's equal to or greater than the
-          element that we're inserting and it will insert it just before
-          the element.</p>
+        <p><span class="label function">insert</span>는 원소와 정렬 가능한 리스트를
+          받아, 원소보다 같거나 작은 마지막 위치에 원소를 집어넣습니다. 다시말해,&nbsp; <span class="fixed">insert</span>는
+          리스트의 시작부분에서 시작하여, 넣고자 하는 원소보다 같거나 큰 원소를 만나면, 그 원소 앞에 넣고자 하는
+          원소를 삽입합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; insert 4 [3,5,1,2,8,2]
 [3,4,5,1,2,8,2]
 ghci&gt; insert 4 [1,3,4,4,1]
 [1,3,4,4,4,1]
 </pre>
-        <p>The <span class="fixed">4</span> is inserted right after the
-          <span class="fixed">3</span> and before the <span class="fixed">5</span>
-          in the first example and in between the <span class="fixed">3</span>
-          and <span class="fixed">4</span> in the second example.</p>
-        If we use <span class="fixed">insert</span> to insert into a
-        sorted list, the resulting list will be kept sorted.
+        <p>첫번째 예제에서 <span class="fixed">4</span>는&nbsp; <span class="fixed">3</span>다
+          음&nbsp; <span class="fixed">5</span>이전에 추가되고, 두번째 예제에선&nbsp;
+          <span class="fixed">3</span>과&nbsp; <span class="fixed">4</span>사
+          이에 추가됩니다.</p>
+        정렬된 리스트에 <span class="fixed">insert</span>를 사용한다면, 결과는 정렬된 상태를
+        유지할 것입니다.
         <p></p>
         <pre name="code" class="haskell:ghci">ghci&gt; insert 4 [1,2,3,5,6,7]
 [1,2,3,4,5,6,7]
@@ -519,35 +527,25 @@ ghci&gt; insert 'g' $ ['a'..'f'] ++ ['h'..'z']
 ghci&gt; insert 3 [1,2,4,3,2,1]
 [1,2,3,4,3,2,1]
 </pre>
-        <p>What <span class="fixed">length</span>, <span class="fixed">take</span>,
+        <p><span class="fixed">length</span>, <span class="fixed">take</span>,
           <span class="fixed">drop</span>, <span class="fixed">splitAt</span>,
-          <span class="fixed">!!</span> and <span class="fixed">replicate</span>
-          have in common is that they take an <span class="fixed">Int</span>
-          as one of their parameters (or return an <span class="fixed">Int</span>),
+          <span class="fixed">!!</span><span style="font-weight: bold;">,&nbsp;
 
-
-
-
-
-
-
-          even though they could be more generic and usable if they just
-          took any type that's part of the <span class="fixed">Integral</span>
-          or <span class="fixed">Num</span> typeclasses (depending on
-          the functions). They do that for historical reasons. However,
-          fixing that would probably break a lot of existing code.
-          That's why <span class="fixed">Data.List</span> has their
-          more generic equivalents, named <span class="label function">genericLength</span>,
+          </span><span class="fixed">replicate</span>의 공통점은, <span class="fixed">Integral</span>나
+          <span class="fixed">Num</span>타입클래스에 속한 타입이라면 더욱 generic하고 유용할
+          수 있음에도 불구하고, (<span class="fixed">Int</span>를 반환하거나) <span class="fixed">Int</span>를
+          인자로 취한다는 것입니다. 역사적인 이유 때문이기도 합니다. 하지만, 이걸 고치는 날에는기존에 존재하는 많은
+          코드들이 제대로 동작하지 않을 것입니다. 이것이 왜 <span class="fixed">Data.List</span>가
+          비슷하지만, 더욱 제네릭(generic)한&nbsp; <span class="label function">genericLength</span>,
           <span class="label function">genericTake</span>, <span class="label function">genericDrop</span>,
-          <span class="label function">genericSplitAt</span>, <span class="label function">genericIndex</span>
-          and <span class="label function">genericReplicate</span>. For
-          instance, <span class="fixed">length</span> has a type
-          signature of <span class="fixed">length :: [a] -&gt; Int</span>.
-          If we try to get the average of a list of numbers by doing <span
-            class="fixed">let xs = [1..6] in sum xs / length xs</span>,
-          we get a type error, because you can't use <span class="fixed">/</span>
-          with an <span class="fixed">Int</span>. <span class="fixed">genericLength</span>,
-          on the other hand, has a type signature of <span class="fixed">genericLength
+          <span class="label function">genericSplitAt</span>, <span class="label function">genericIndex</span>,
+          <span class="label function">genericReplicate</span>라는 이름을
+          갖는지에 대한 이유입니다. 예를들어, <span class="fixed">length</span>는&nbsp;
+          <span class="fixed">length :: [a] -&gt; Int</span>타입 서명을
+          지녔습니다. 숫자 리스트의 평균을 구하고자 <span class="fixed">let xs = [1..6]
+            in sum xs / length xs</span>라 한다면,&nbsp; <span class="fixed">Int</span>에
+          <span class="fixed">/</span>을 사용할 수 없기에 에러를 얻을 것입니다. 반면 <span
+            class="fixed">genericLength</span>는 <span class="fixed">genericLength
 
 
 
@@ -555,40 +553,35 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
 
 
 
-            :: (Num a) =&gt; [b] -&gt; a</span>. Because a <span class="fixed">Num</span>
-          can act like a floating point number, getting the average by
-          doing <span class="fixed">let xs = [1..6] in sum xs /
-            genericLength xs</span> works out just fine.</p>
-        <p>The <span class="fixed">nub</span>, <span class="fixed">delete</span>,
-          <span class="fixed">union</span>, <span class="fixed">intersect</span>
-          and <span class="fixed">group</span> functions all have their
-          more general counterparts called <span class="label function">nubBy</span>,
+
+
+            :: (Num a) =&gt; [b] -&gt; a</span>타입 서명을 지녔습니다. <span class="fixed">Num</span>이
+          부동소숫점 숫자처럼 행동할 수 있기에, <span class="fixed">let xs = [1..6] in
+            sum xs / genericLength xs</span>로 평균을 구하는 것은 제대로 동작할 것입니다.</p>
+        <p><span class="fixed">nub</span>, <span class="fixed">delete</span>,
+          <span class="fixed">union</span>, <span class="fixed">intersect</span>,
+          <span class="fixed">group</span>함수들은&nbsp; 모두&nbsp; <span class="label function">nubBy</span>,
           <span class="label function">deleteBy</span>, <span class="label function">unionBy</span>,
-          <span class="label function">intersectBy</span> and <span class="label function">groupBy</span>.
-          The difference between them is that the first set of functions
-          use <span class="fixed">==</span> to test for equality,
-          whereas the <i>By</i> ones also take an equality function and
-          then compare them by using that equality function. <span class="fixed">group</span>
-          is the same as <span class="fixed">groupBy (==)</span>. </p>
-        <p>For instance, say we have a list that describes the value of
-          a function for every second. We want to segment it into
-          sublists based on when the value was below zero and when it
-          went above. If we just did a normal <span class="fixed">group</span>,
-          it would just group the equal adjacent values together. But
-          what we want is to group them by whether they are negative or
-          not. That's where <span class="fixed">groupBy</span> comes
-          in! The equality function supplied to the <i>By</i> functions
-          should take two elements of the same type and return <span class="fixed">True</span>
-          if it considers them equal by its standards.</p>
+          <span class="label function">intersectBy</span>, <span class="label function">groupBy</span>라
+          불리는 더욱 general한 대응체가 있습니다. 차이점은 첫번째 함수들은 같음을 확인하기 위해&nbsp; <span
+            class="fixed">==</span>를 이용하지만, <i>By</i>가 붙은 쪽은
+          비교(equality)함수를 받은 다음, 그 함수를 이용하여 비교를 합니다. <span class="fixed">group</span>은
+          <span class="fixed">groupBy (==)</span>와 같습니다 </p>
+        <p>예를들어, 매 초마다의 함수의 값을 서술한 리스트를 가지고 있다고 가정해 봅시다. 저희는 이 리스트를 0보다
+          작은것과 큰것으로 하위 리스트로 쪼개길 원합니다.&nbsp; <span class="fixed">group</span>으
+          로 한다면, 서로 같은 값만을 묶을 것입니다. 하지만 저희가 원하는 것은 음수 여부에 따라 묶는 것입니다. <span
+            class="fixed">groupBy</span>가 와야할 곳이 바로 여깁니다! <i>By</i>함수에
+          제공된 equality함수는 동일한 타입의 두 원소를 취해, 기준에 따라 동일하다고 판단되면 <span class="fixed">True</span>를
+          반환합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; let values = [-4.3, -2.4, -1.2, 0.4, 2.3, 5.9, 10.5, 29.1, 5.3, -2.4, -14.5, 2.9, 2.3]
 ghci&gt; groupBy (\x y -&gt; (x &gt; 0) == (y &gt; 0)) values
 [[-4.3,-2.4,-1.2],[0.4,2.3,5.9,10.5,29.1,5.3],[-2.4,-14.5],[2.9,2.3]]
 </pre>
-        <p>From this, we clearly see which sections are positive and
-          which are negative. The equality function supplied takes two
-          elements and then returns <span class="fixed">True</span>
-          only if they're both negative or if they're both positive.
-          This equality function can also be written as <span class="fixed">\x
+        <p>여기서 저희는 어느 부분이 양수인지, 음수인지 명확히 알 수 있습니다. 제공된 equality함수는 두 원소를
+          받아, 둘다 음수이거나 양수일 때&nbsp; <span class="fixed">True</span>를
+          반환합니다. 첫번째 방법이 더욱 읽기 쉽다고 여기지만, 앞선 equality함수는&nbsp; <span class="fixed">\x
+
+
 
 
 
@@ -597,68 +590,52 @@ ghci&gt; groupBy (\x y -&gt; (x &gt; 0) == (y &gt; 0)) values
 
 
             y -&gt; (x &gt; 0) &amp;&amp; (y &gt; 0) || (x &lt;= 0)
-            &amp;&amp; (y &lt;= 0)</span>, although I think the first
-          way is more readable. An even clearer way to write equality
-          functions for the <i>By</i> functions is if you import the <span
-            class="label function">on</span> function from <span class="fixed">Data.Function</span>.
-          <span class="fixed">on</span> is defined like this: </p>
+            &amp;&amp; (y &lt;= 0)</span>로 작성할 수 도 있습니다.&nbsp; <i>By</i>함
+          수의 equality함수를 작성하기 위한 더 나은 방법으로는&nbsp; <span class="fixed">Data.Function</span>에
+          서 <span class="label function">on</span>을 import하는 것입니다. <span
+            class="fixed">on</span>는 다음과 같이 정의되었습니다: </p>
         <pre name="code" class="haskell:ghci">on :: (b -&gt; b -&gt; c) -&gt; (a -&gt; b) -&gt; a -&gt; a -&gt; c
 f `on` g = \x y -&gt; f (g x) (g y)
 </pre>
-        <p>So doing <span class="fixed">(==) `on` (&gt; 0)</span>
-          returns an equality function that looks like <span class="fixed">\x
-
-
-
-
-
-
-
-            y -&gt; (x &gt; 0) == (y &gt; 0)</span>. <span class="fixed">on</span>
-          is used a lot with the <i>By</i> functions because with it,
-          we can do: </p>
+        <p>따라서 <span class="fixed">(==) `on` (&gt; 0)</span>은&nbsp; <span
+            class="fixed">\x y -&gt; (x &gt; 0) == (y &gt; 0)</span>와 같은
+          equality함수를 반환합니다. <span class="fixed">on</span>은 <i>By</i>함
+          수에 많이 사용되는데, 이를 이용하여 다음처럼 처리할 수 있기 때문입니다: </p>
         <pre name="code" class="haskell:ghci">ghci&gt; groupBy ((==) `on` (&gt; 0)) values
 [[-4.3,-2.4,-1.2],[0.4,2.3,5.9,10.5,29.1,5.3],[-2.4,-14.5],[2.9,2.3]]
 </pre>
-        <p>Very readable indeed! You can read it out loud: Group this by
-          equality on whether the elements are greater than zero.</p>
-        <p>Similarly, the <span class="fixed">sort</span>, <span class="fixed">insert</span>,
-          <span class="fixed">maximum</span> and <span class="fixed">minimum</span>
-          also have their more general equivalents. Functions like <span
-            class="fixed">groupBy</span> take a function that determines
-          when two elements are equal. <span class="label function">sortBy</span>,
-          <span class="label function">insertBy</span>, <span class="label function">maximumBy</span>
-          and <span class="label function">minimumBy</span> take a
-          function that determine if one element is greater, smaller or
-          equal to the other. The type signature of <span class="fixed">sortBy</span>
-          is <span class="fixed">sortBy :: (a -&gt; a -&gt; Ordering)
-            -&gt; [a] -&gt; [a]</span>. If you remember from before, the
-          <span class="fixed">Ordering</span> type can have a value of <span
-            class="fixed">LT</span>, <span class="fixed">EQ</span> or <span
-            class="fixed">GT</span>. <span class="fixed">sort</span> is
-          the equivalent of <span class="fixed">sortBy compare</span>,
-          because compare just takes two elements whose type is in the <span
-            class="fixed">Ord</span> typeclass and returns their
-          ordering relationship.</p>
-        <p>Lists can be compared, but when they are, they are compared
-          lexicographically. What if we have a list of lists and we want
-          to sort it not based on the inner lists' contents but on their
-          lengths? Well, as you've probably guessed, we'll use the <span
-            class="fixed">sortBy</span> function.</p>
+        <p>눈에 정말 잘 들어옵니다! 이를 다음처럼 크게 읽을 수 있습니다: 0보다 같거나 큰 원소를 묶어라.</p>
+        <p>유사하게, <span class="fixed">sort</span>, <span class="fixed">insert</span>,
+          <span class="fixed">maximum</span>, <span class="fixed">minimum</span>
+          또한 더욱 general한 대응체가 있습니다. 함수는 <span class="fixed">groupBy</span>과
+          같이 두 원소가 동일한지 판별하는 함수를 취합니다. <span class="label function">sortBy</span>,
+          <span class="label function">insertBy</span>, <span class="label function">maximumBy</span>,
+          <span class="label function">minimumBy</span>은 어느 한 원소가 다른 것보다
+          큰지, 작은지, 혹은 같은지를 판별하는 함수를 취합니다. <span class="fixed">sortBy</span>의
+          타입서명은<span class="fixed">sortBy :: (a -&gt; a -&gt; Ordering)
+            -&gt; [a] -&gt; [a]</span>입니다. 이전에 배운 것을 기억하신다면,&nbsp; <span
+            class="fixed">Ordering</span>타입은 <span class="fixed">LT</span>,
+          <span class="fixed">EQ</span>, <span class="fixed">GT</span>의
+          값을 가질 수 있었습니다. <span class="fixed">sort</span>는&nbsp; <span
+            class="fixed">Ord</span>타입클래스의 타입인 두 원소를 취해 둘 사이의
+          ordering관계를 반환하기 때문에 <span class="fixed">sortBy compare</span>와
+          동일합니다.</p>
+        <p>리스트는 사전 편차 상으로 비교됩니다. 만약 리스트의 리스트를 가지고 있고, 내부 리스트의 내용이 아닌 길이를
+          기준으로 정렬하고자 한다면 어떻게 할까요? 음, 여러분이 예상하시는 것처럼,&nbsp; <span class="fixed">sortBy</span>함
+          수를 사용할 수 있을 것입니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; let xs = [[5,4,5,4,4],[1,2,3],[3,5,4,3],[],[2],[2,2]]
 ghci&gt; sortBy (compare `on` length) xs
 [[],[2],[2,2],[1,2,3],[3,5,4,3],[5,4,5,4,4]]
 </pre>
-        <p>Awesome! <span class="fixed">compare `on` length</span> ...
-          man, that reads almost like real English! If you're not sure
-          how exactly the <span class="fixed">on</span> works here, <span
-            class="fixed">compare `on` length</span> is the equivalent
-          of <span class="fixed">\x y -&gt; length x `compare` length y</span>.
-          When you're dealing with <i>By</i> functions that take an
-          equality function, you usually do <span class="fixed">(==)
-            `on` something</span> and when you're dealing with <i>By</i>
-          functions that take an ordering function, you usually do <span
-            class="fixed">compare `on` something</span>.</p>
+        <p>이럴수가! <span class="fixed">compare `on` length</span> ... 이건
+          실제 영어처럼 읽을 수 있습니다! 여기서 <span class="fixed">on</span>이 행하는 일을
+          모르시는 분들을 위해, 부연설명하자면, <span class="fixed">compare `on` length</span>은
+          <span class="fixed">\x y -&gt; length x `compare` length y</span>과
+          동일합니다. equality함수를 취하는 <i>By</i>함수를 다룰때에는, <span class="fixed">(==)
+
+            `on` something</span>을 하시고, ordering함수를 취하는 <i>By</i>함수를 다룰
+          때에는, <span class="fixed">compare `on` something</span>를 하시기
+          바랍니다.</p>
         <a name="data-char"></a>
         <h2>Data.Char</h2>
         <img src="http://s3.amazonaws.com/lyah/legochar.png" alt="lego char"
@@ -688,9 +665,8 @@ ghci&gt; sortBy (compare `on` length) xs
         <p><span class="label function">isLetter</span>는 문자가 영문자인지
           확인합니다.</p>
         <p><span class="label function">isMark</span>는 유니코드 마크 문자인지
-          확인합니다. Those are characters that combine with preceding
-          letters to form latters with accents. Use this if you are
-          French.</p>
+          확인합니다. :FIXME Those are characters that combine with preceding
+          letters to form latters with accents. 프랑스인이라면 이걸 사용하시기 바랍니다.</p>
         <p><span class="label function">isNumber</span>는 문자가 숫자인지 확인합니다.</p>
         <p><span class="label function">isPunctuation</span>는 문자가
           구둣점(punctuation)인지 확인합니다.</p>
@@ -707,21 +683,19 @@ ghci&gt; sortBy (compare `on` length) xs
         <p><span class="label function">isAsciiLower</span>는 문자가
           ASCII이면서 소문자인지 확인합니다.</p>
         <p>여기 나온 모든 predicate는 <span class="fixed">Char -&gt; Bool</span>
-          타입 서명을 지니고 있습니다. Most of the time you'll use this to filter
-          out strings or something like that. For instance, let's say
-          we're making a program that takes a username and the username
-          can only be comprised of alphanumeric characters. We can use
-          the <span class="fixed">Data.List</span> function <span class="fixed">all</span>
-          in combination with the <span class="fixed">Data.Char</span>
-          predicates to determine if the username is alright.</p>
+          타입 서명을 지니고 있습니다. 대부분 문자열 비슷한 것을 걸러내기 위해 이들을 사용할 것입니다. 예를들어,
+          알파벳 문자로만 구성된 사용자 이름을 입력받는 프로그램을 만든다고 가정해봅시다. 사용자 이름이 올바른지 판단하기
+          위해, <span class="fixed">Data.List</span>의&nbsp; <span class="fixed">all</span>함
+          수를 <span class="fixed">Data.Char</span>의 predicate들과 조합하여 사용할
+          수 있을 것입니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; all isAlphaNum "bobby283"
 True
 ghci&gt; all isAlphaNum "eddy the fish!"
 False
 </pre>
-        <p>헐. In case you don't remember, <span class="fixed">all</span>
-          takes a predicate and a list and returns <span class="fixed">True</span>
-          only if that predicate holds for every element in the list.</p>
+        <p>멋집니다.&nbsp; <span class="fixed">all</span>은 predicate와 리스트를
+          취해, 리스트의 모든 원소들이 predicate를 만족할 때에만 <span class="fixed">True</span>를
+          반환한 다는 것을 잊지 마시기 바랍니다.</p>
         <p>또한 <span class="fixed">Data.List</span>함수인 <span class="fixed">words</span>를
           모방하기 위해 <span class="fixed">isSpace</span>를 사용할 수 도 있습니다. </p>
         <pre name="code" class="haskell:ghci">ghci&gt; words "hey guys its me"
@@ -730,27 +704,24 @@ ghci&gt; groupBy ((==) `on` isSpace) "hey guys its me"
 ["hey"," ","guys"," ","its"," ","me"]
 ghci&gt;
 </pre>
-        <p>흠, well, it kind of does what <span class="fixed">words</span>
-          does but we're left with elements of only spaces. Hmm,
-          whatever shall we do? I know, let's filter that sucker.</p>
+        <p>흠, <span class="fixed">words</span>가 한 일과 비슷하나, 여전히 공백이 남아
+          있습니다. 흠, 어떻게 해야 할까요? 제가 아는 방법으로, 한번 이 놈들을 걸러내 보겠습니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; filter (not . any isSpace) . groupBy ((==) `on` isSpace) $ "hey guys its me"
 ["hey","guys","its","me"]
 </pre>
-        <p>Ah.</p>
-        <p>The <span class="fixed">Data.Char</span> also exports a
-          datatype that's kind of like <span class="fixed">Ordering</span>.
-          The <span class="fixed">Ordering</span> type can have a value
-          of <span class="fixed">LT</span>, <span class="fixed">EQ</span>
-          or <span class="fixed">GT</span>. It's a sort of enumeration.
-          It describes a few possible results that can arise from
-          comparing two elements. The <span class="fixed">GeneralCategory</span>
-          type is also an enumeration. It presents us with a few
-          possible categories that a character can fall into. The main
-          function for getting the general category of a character is <span
-            class="fixed">generalCategory</span>. It has a type of <span
-            class="fixed">generalCategory :: Char -&gt; GeneralCategory</span>.
-          There are about 31 categories so we won't list them all here,
-          but let's play around with the function.</p>
+        <p>예~.</p>
+        <p><span class="fixed">Data.Char</span> 또한 <span class="fixed">Ordering</span>과
+          비슷한 자료구조를 제공합니다. <span class="fixed">Ordering</span> 타입은 <span
+            class="fixed">LT</span>, <span class="fixed">EQ</span>, <span
+            class="fixed">GT</span>의 값을 가질 수 있습니다. 이는 열거형입니다. 이는 두 원소를
+          비교할때 발생할 수 있는 몇몇 가능성에 대해 기술합니다.&nbsp; <span class="fixed">GeneralCategory</span>타
+          입 또한 열거형입니다. 이는 몇몇 가능한 분류를 제공합니다.It presents us with a few
+          possible categories that a character can fall into. main함수는
+          문자에 대한 function for getting the general category of a
+          character is <span class="fixed">generalCategory</span>입니다.
+          이는&nbsp; <span class="fixed">generalCategory :: Char -&gt;
+            GeneralCategory</span>타입을 지녔습니다. 31개로 분류할 수 있으나, 여기선 모두 다루지
+          않을 것이며, 살펴만 보도록 하겠습니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; generalCategory ' '
 Space
 ghci&gt; generalCategory 'A'
@@ -821,6 +792,8 @@ encode shift msg =
 
 
 
+
+
             (chr . (+ shift) . ord) msg</span>로 작성할 지도 모르겠습니다. 메시지를 부호화
           시켜봅시다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; encode 3 "Heeeeey"
@@ -844,18 +817,12 @@ ghci&gt; decode 5 . encode 5 $ "This is a sentence"
 "This is a sentence"
 </pre> <a name="data-map"></a>
         <h2>Data.Map</h2>
-        <p>Association lists (also called dictionaries) are lists that
-          are used to store key-value pairs where ordering doesn't
-          matter. For instance, we might use an association list to
-          store phone numbers, where phone numbers would be the values
-          and people's names would be the keys. We don't care in which
-          order they're stored, we just want to get the right phone
-          number for the right person.</p>
-        <p>The most obvious way to represent association lists in
-          Haskell would be by having a list of pairs. The first
-          component in the pair would be the key, the second component
-          the value. Here's an example of an association list with phone
-          numbers:</p>
+        <p>연관(Association) 리스트(혹은 사전(dictionaries)이라 불리는)는 순서에 상관없이 키-값
+          쌍을 저장하는데 사용되는 리스트입니다. 예를들어,&nbsp;전화번호를 저장하는데 사람의 이름을 키로 전화번호는
+          값으로 하는 연관리스트를 사용한다고 합시다. 저장되는 순서에 상관하지 않고, 사람에 대한 정확한 전화번호를
+          얻고자 합니다.</p>
+        <p>하스켈에서 연관리스트를 나타내는데 있어, 깔끔한 방법으로는 쌍(pair)의 리스트를 갖는 것입니다. 쌍의
+          첫번째 구성물은 키이며, 두번째 구성물은 값입니다. 여기 전화번호에 대한 연관리스트 예제가 있습니다:</p>
         <pre name="code" class="haskell:hs">phoneBook = 
     [("betty","555-2938")
     ,("bonnie","452-2928")
@@ -865,19 +832,17 @@ ghci&gt; decode 5 . encode 5 $ "This is a sentence"
     ,("penny","853-2492")
     ]
 </pre>
-        <p>Despite this seemingly odd indentation, this is just a list
-          of pairs of strings. The most common task when dealing with
-          association lists is looking up some value by key. Let's make
-          a function that looks up some value given a key.</p>
+        <p>보기 이상한 들여쓰기를 무시한다면, 이것은 단순히 문자열 쌍의 리스트입니다. 연관리스트를 다룰때 가장 일반적인
+          작업은 키로 어떠한 값을 살펴보는 것입니다. 주어진 키로 값을 찾는 함수를 만들어 봅시다.</p>
         <pre name="code" class="haskell:hs">findKey :: (Eq k) =&gt; k -&gt; [(k,v)] -&gt; v
 findKey key xs = snd . head . filter (\(k,v) -&gt; key == k) $ xs
 </pre>
-        <p>Pretty simple. The function that takes a key and a list,
-          filters the list so that only matching keys remain, gets the
-          first key-value that matches and returns the value. But what
-          happens if the key we're looking for isn't in the association
-          list? Hmm. Here, if a key isn't in the association list, we'll
-          end up trying to get the head of an empty list, which throws a
+        <p>매우 간단합니다. The function that takes a key and a list, filters
+          the list so that only matching keys remain, gets the first
+          key-value that matches and returns the value. But what happens
+          if the key we're looking for isn't in the association list?
+          Hmm. Here, if a key isn't in the association list, we'll end
+          up trying to get the head of an empty list, which throws a
           runtime error. However, we should avoid making our programs so
           easy to crash, so let's use the <span class="fixed">Maybe</span>
           data type. If we don't find the key, we'll return a <span class="fixed">Nothing</span>.
