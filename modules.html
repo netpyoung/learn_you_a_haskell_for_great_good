@@ -86,6 +86,7 @@ numUniques = length . nub
 
 
 
+
             +</span>을 사용할 필요가 없습니다.</p>
         <p>모듈에서 2개의 함수만 필요하다면, 선택적으로 그 함수들을 import 할 수 있습니다.&nbsp; <span
             class="fixed">Data.List</span>에서 <span class="fixed">nub</span>,
@@ -281,6 +282,7 @@ ghci&gt; head (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)
         <p><span class="fixed">span</span>은 predicate가 참인 동안 포함하지만, <span
             class="label function">break</span>는 predicate가 참이면 멈춥니다. <span
             class="fixed">break p</span>가 하는 일은 <span class="fixed">span
+
             (not . p)</span>와 동일합니다. </p>
         <pre name="code" class="haskell:ghci">ghci&gt; break (==4) [1,2,3,4,5,6,7]
 ([1,2,3],[4,5,6,7])
@@ -398,6 +400,7 @@ find :: (a -&gt; Bool) -&gt; [a] -&gt; Maybe a
 
 
 
+
             (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)</span>라
           하였습니다.&nbsp; <span class="fixed">head</span>가 실제론 안전하지 않다는 점을
           기억하시기 바랍니다. $1000를 넘는 주식이 없다면 어떤일이 발생할까요?&nbsp; <span class="fixed">dropWhile</span>은
@@ -427,6 +430,7 @@ Nothing
 </pre>
         <p><span class="label function">findIndex</span>는 find와 같으나,
           predicate를 만족하는 처음 원소만 아마(maybe) 반환할 것입니다. <span class="label function">findIndices</span>는&nbsp;
+
 
 
 
@@ -520,6 +524,7 @@ ghci&gt; "Im a big baby" \\ "big"
 
 
 
+
             2 . delete 5 . delete 9 $ [1..10]</span>와 같습니다.</p>
         <p><span class="label function">union</span> 또한 집합 관한 함수입니다. 이는
           두 리스트의 합집합(union)을 반환합니다. 이는 두번째 리스트의 모든 원소를 훝어본 다음 첫번째에 없는
@@ -568,6 +573,7 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
 
 
 
+
           </span><span class="fixed">replicate</span>의 공통점은, <span class="fixed">Integral</span>나
           <span class="fixed">Num</span>타입클래스에 속한 타입이라면 더욱 generic하고 유용할
           수 있음에도 불구하고, (<span class="fixed">Int</span>를 반환하거나) <span class="fixed">Int</span>를
@@ -600,6 +606,7 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
 
 
 
+
             :: (Num a) =&gt; [b] -&gt; a</span>타입 서명을 지녔습니다. <span class="fixed">Num</span>은
           부동소숫점 숫자처럼 행동할 수 있기에, <span class="fixed">let xs = [1..6] in
             sum xs / genericLength xs</span>로 평균을 구하는 것은 제대로 동작할 것입니다.</p>
@@ -611,6 +618,7 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
           불리는 더욱 general한 대응체가 있습니다. 차이점은 첫번째 함수들은 같음을 확인하기 위해 <span class="fixed">==</span>를
           이용하지만, <i>By</i>가 붙은 쪽은 비교(equality)함수를 받은 다음, 그 함수를 이용하여 비교를
           합니다. <span class="fixed">group</span>은 <span class="fixed">groupBy
+
             (==)</span>와 같습니다 </p>
         <p>예를들어, 매 초마다의 함수의 값을 서술한 리스트를 가지고 있다고 가정해 봅시다. 저희는 이 리스트를 0보다
           작은것과 큰것으로 하위 리스트로 쪼개길 원합니다. <span class="fixed">group</span>으
@@ -625,6 +633,7 @@ ghci&gt; groupBy (\x y -&gt; (x &gt; 0) == (y &gt; 0)) values
         <p>여기서 저희는 어느 부분이 양수인지, 음수인지 명확히 알 수 있습니다. 제공된 equality함수는 두 원소를
           받아, 둘다 음수이거나 양수일 때 <span class="fixed">True</span>를 반환합니다.
           첫번째 방법이 더욱 읽기 쉽다고 생각하지만, 앞선 equality함수는&nbsp; <span class="fixed">\x
+
 
 
 
@@ -671,6 +680,7 @@ f `on` g = \x y -&gt; f (g x) (g y)
           <span class="fixed">EQ</span>, <span class="fixed">GT</span>의
           값을 가질 수 있었습니다. <span class="fixed">sort</span>는 <span class="fixed">Ord</span>타
           입클래스의 타입인 두 원소를 취해 둘 사이의 순서관계를 반환하기 때문에 <span class="fixed">sortBy
+
             compare</span>와 동일합니다.</p>
         <p>리스트는 사전 편차 상으로 비교됩니다. 만약 리스트의 리스트를 가지고 있고, 내부 리스트의 내용이 아닌 길이를
           기준으로 정렬하고자 한다면 어떻게 할까요? 음, 여러분이 예상하시는 것처럼, <span class="fixed">sortBy</span>함
@@ -686,6 +696,7 @@ ghci&gt; sortBy (compare `on` length) xs
             `compare` length y</span>과 동일합니다. 비교(equality)함수를 취하는 <i>By</i>함
           수를 다룰때에는, <span class="fixed">(==) `on` something</span>을
           하시고, 순서(ordering)함수를 취하는 <i>By</i>함수 를 다룰 때에는, <span class="fixed">compare
+
             `on` something</span>를 하시기 바랍니다.</p>
         <a name="data-char"></a>
         <h2>Data.Char</h2>
@@ -848,6 +859,7 @@ encode shift msg =
 
 
 
+
             (chr . (+ shift) . ord) msg</span>로 작성할 지도 모르겠습니다. 메시지를 부호화
           시켜봅시다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; encode 3 "Heeeeey"
@@ -905,6 +917,7 @@ findKey key xs = snd . head . filter (\(k,v) -&gt; key == k) $ xs
 
 
 
+
             something</span>을 반환할 것입니다.</p>
         <pre name="code" class="haskell:hs">findKey :: (Eq k) =&gt; k -&gt; [(k,v)] -&gt; Maybe v
 findKey key [] = Nothing
@@ -937,6 +950,7 @@ Nothing
 
 
 
+
           아니라면 아무것도 얻지 못할 것입니다(<span class="fixed">Nothing</span>).</p>
         <p>저희는 지금&nbsp; <span class="fixed">Data.List</span>의&nbsp; <span
             class="fixed">lookup</span>함수를 구현하였습니다. 키에 대응되는 값을 찾고자 한다면,
@@ -963,14 +977,13 @@ fromList [(1,2),(3,2),(5,5)]
         </p>
         <pre name="code" class="haskell:hs">Map.fromList :: (Ord k) =&gt; [(k, v)] -&gt; Map.Map k v
 </pre>
-        <p>********** 이는 <span class="fixed">k</span>와&nbsp; <span class="fixed">v</span>의
+        <p>이는 <span class="fixed">k</span>와&nbsp; <span class="fixed">v</span>의
           쌍에 대한 리스트를 취하고, <span class="fixed">k</span>타입의 키와&nbsp; <span
-            class="fixed">v</span>타입의 값에 대한 맵을 반환한다는 것을 보여주고 있습니다.
-          :FIXME Notice that when we were doing 연관 리스트와 평범한 리스트에 할때, 키는
-          equatable하였지만, 지금은 orderable합니다.the keys only had to be
-          equatable (타입은 <span class="fixed">Eq</span>타입클래스에 속합니다) but
-          now they have to be orderable. 이는 <span class="fixed">Data.Map</span>모
-          듈에서 필수적인 제약입니다. 키가 순서를 가질 수 있으므로, 트리로 나열할 수 있습니다.</p>
+            class="fixed">v</span>타입의 값에 대한 맵을 반환한다는 것을 보여주고 있습니다. 연관
+          리스트와 평범한 리스트에서는 키가 동등하였지만(equatable)(타입은 <span class="fixed">Eq</span>타
+          입클래스에 속합니다) , 지금은 순서를(orderable) 지닌다는 것을 주목하시기 바랍니다. 이는 <span
+            class="fixed">Data.Map</span>모듈에서 필수적인 제약입니다. 키가 순서를 가질 수
+          있으므로, 트리로 나열할 수 있습니다.</p>
         <p><span class="fixed">Ord</span>타입클래스의 키를 갖지 않는한, 키-값
           연관(association)에는 <span class="fixed">Data.Map</span>을 사용하시기
           바랍니다.</p>
@@ -1009,8 +1022,8 @@ False
 ghci&gt; Map.size $ Map.fromList [(2,4),(3,3),(4,2),(5,4),(6,4)]
 5
 </pre>
-        <p><span class="label function">singleton</span>은 키와 값을 받아 오직 하나
-          mapping을 지닌 맵을 만듭니다.</p>
+        <p><span class="label function">singleton</span>은 키와 값을 받아 오직
+          하나의 사상(寫像, mapping)을 지닌 맵을 만듭니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; Map.singleton 3 9
 fromList [(3,9)]
 ghci&gt; Map.insert 5 9 $ Map.singleton 3 9
@@ -1073,20 +1086,17 @@ ghci&gt; Map.lookup "wendy" $ phoneBookToMap phoneBook
 ghci&gt; Map.lookup "betty" $ phoneBookToMap phoneBook
 "342-2492, 555-2938"
 </pre>
-        <p>중복된 키를 발견하면, 그 키에 해당하는 값들을 합치기 위해 저희가 넘긴 함수가 이용됩니다. We could
-          also first make all the values in the association list
-          singleton lists and then we can use <span class="fixed">++</span>
-          to combine the numbers.</p>
+        <p>중복된 키를 발견하면, 그 키에 해당하는 값들을 합치기 위해 저희가 넘긴 함수가 이용됩니다. 또한 연관리스트에
+          있는 모든 값을 싱글톤 리스트로 만든다음, <span class="fixed">++</span>를 이용하여
+          수를 합칠 수 있습니다.</p>
         <pre name="code" class="haskell:hs">phoneBookToMap :: (Ord k) =&gt; [(k, a)] -&gt; Map.Map k [a]
 phoneBookToMap xs = Map.fromListWith (++) $ map (\(k,v) -&gt; (k,[v])) xs
 </pre>
         <pre name="code" class="haskell:ghci">ghci&gt; Map.lookup "patsy" $ phoneBookToMap phoneBook
 ["827-9162","943-2929","493-2928"]
 </pre>
-        <p>매우 깔끔합니다! Another use case is if we're making a map from an
-          association list of numbers and when a duplicate key is found,
-          키에 해당하는 값중 가장 큰 값을 유지하는we want the biggest value for the key
-          to be kept.</p>
+        <p>매우 깔끔합니다! 또 다른 예로, 수의 연관 리스트에서 맵을 만들시, 중복된 키를 찾는다면 키에 해당하는 값중
+          가장 큰 값을 유지하는 것이 있습니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; Map.fromListWith max [(2,3),(2,5),(2,100),(3,29),(3,22),(3,11),(4,22),(4,15)]
 fromList [(2,100),(3,29),(4,22)]
 </pre>
@@ -1339,17 +1349,17 @@ area side = Cuboid.area side side side
           정의한 것에 주목하시기 바랍니다. cuboid도 동일하게 처리합니다. 또한 3개의 하위 모듈에 동일한 이름의
           함수를 정의할 것을 주목하시기 바랍니다. 분리된 모듈이기에 이렇게 할 수 있습니다. <span class="fixed">Geometry.Cube</span>에
           서 <span class="fixed">Geometry.Cuboid</span>의 함수를 사용하기 원하지만,
-          <span class="fixed">Geometry.Cube</span>와 동일한 이름의 함수를
-          export하기에 곧바로 <span class="fixed">import Geometry.Cuboid</span>라
-          할 수는 없습니다. 이것이 바로 qualified import를 해야 되는지에 대한 이유이며, 다른 것들도
+          곧바로 <span class="fixed">import Geometry.Cuboid</span>라 할 수는
+          없는데, <span class="fixed">Geometry.Cube</span>와 동일한 이름의 함수를
+          export하기 때문입니다. 이것이 바로 qualified import를 해야하는 이유이며, 다른 것들도
           마찬가지 입니다.</p>
-        <p>그러먼 이제, <span class="fixed">Geometry</span>폴더와 동일한 레벨에 있는
-          파일이라면, 다음과 같이 할 수 있습니다:</p>
+        <p>그러먼 이제,&nbsp; 파일이 <span class="fixed">Geometry</span>폴더와 동일한
+          레벨에 있다면, 다음과 같이 할 수 있습니다:</p>
         <pre name="code" class="haskell:ghci">import Geometry.Sphere
 </pre>
         <p>그리고 나면 <span class="fixed">area</span>와 <span class="fixed">volume</span>을
-          호출하여, 구의 면적과 부피를 알 수 있습니다. 그리고 2개 이상의 모듈을 사용하려면 qualified
-          import를 해야 하는데, 동일한 이름의 함수를 export하기 때문입니다. 따라서 다음과 같이 해야합니다:</p>
+          호출하여, 구의 면적과 부피를 알 수 있습니다. 그리고 2개 이상의 모듈을 사용하려면, 동일한 이름의 함수를
+          export하기 qualified import를 해야합니다. 따라서 다음과 같이 해야합니다:</p>
         <pre name="code" class="haskell:ghci">import qualified Geometry.Sphere as Sphere
 import qualified Geometry.Cuboid as Cuboid
 import qualified Geometry.Cube as Cube
