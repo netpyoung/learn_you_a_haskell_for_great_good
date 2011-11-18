@@ -87,6 +87,7 @@ numUniques = length . nub
 
 
 
+
             +</span>을 사용할 필요가 없습니다.</p>
         <p>모듈에서 2개의 함수만 필요하다면, 선택적으로 그 함수들을 import 할 수 있습니다.&nbsp; <span
             class="fixed">Data.List</span>에서 <span class="fixed">nub</span>,
@@ -283,6 +284,7 @@ ghci&gt; head (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)
             class="label function">break</span>는 predicate가 참이면 멈춥니다. <span
             class="fixed">break p</span>가 하는 일은 <span class="fixed">span
 
+
             (not . p)</span>와 동일합니다. </p>
         <pre name="code" class="haskell:ghci">ghci&gt; break (==4) [1,2,3,4,5,6,7]
 ([1,2,3],[4,5,6,7])
@@ -401,6 +403,7 @@ find :: (a -&gt; Bool) -&gt; [a] -&gt; Maybe a
 
 
 
+
             (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)</span>라
           하였습니다.&nbsp; <span class="fixed">head</span>가 실제론 안전하지 않다는 점을
           기억하시기 바랍니다. $1000를 넘는 주식이 없다면 어떤일이 발생할까요?&nbsp; <span class="fixed">dropWhile</span>은
@@ -430,6 +433,7 @@ Nothing
 </pre>
         <p><span class="label function">findIndex</span>는 find와 같으나,
           predicate를 만족하는 처음 원소만 아마(maybe) 반환할 것입니다. <span class="label function">findIndices</span>는&nbsp;
+
 
 
 
@@ -525,6 +529,7 @@ ghci&gt; "Im a big baby" \\ "big"
 
 
 
+
             2 . delete 5 . delete 9 $ [1..10]</span>와 같습니다.</p>
         <p><span class="label function">union</span> 또한 집합 관한 함수입니다. 이는
           두 리스트의 합집합(union)을 반환합니다. 이는 두번째 리스트의 모든 원소를 훝어본 다음 첫번째에 없는
@@ -574,6 +579,7 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
 
 
 
+
           </span><span class="fixed">replicate</span>의 공통점은, <span class="fixed">Integral</span>나
           <span class="fixed">Num</span>타입클래스에 속한 타입이라면 더욱 generic하고 유용할
           수 있음에도 불구하고, (<span class="fixed">Int</span>를 반환하거나) <span class="fixed">Int</span>를
@@ -607,6 +613,7 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
 
 
 
+
             :: (Num a) =&gt; [b] -&gt; a</span>타입 서명을 지녔습니다. <span class="fixed">Num</span>은
           부동소숫점 숫자처럼 행동할 수 있기에, <span class="fixed">let xs = [1..6] in
             sum xs / genericLength xs</span>로 평균을 구하는 것은 제대로 동작할 것입니다.</p>
@@ -618,6 +625,7 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
           불리는 더욱 general한 대응체가 있습니다. 차이점은 첫번째 함수들은 같음을 확인하기 위해 <span class="fixed">==</span>를
           이용하지만, <i>By</i>가 붙은 쪽은 비교(equality)함수를 받은 다음, 그 함수를 이용하여 비교를
           합니다. <span class="fixed">group</span>은 <span class="fixed">groupBy
+
 
             (==)</span>와 같습니다 </p>
         <p>예를들어, 매 초마다의 함수의 값을 서술한 리스트를 가지고 있다고 가정해 봅시다. 저희는 이 리스트를 0보다
@@ -633,6 +641,7 @@ ghci&gt; groupBy (\x y -&gt; (x &gt; 0) == (y &gt; 0)) values
         <p>여기서 저희는 어느 부분이 양수인지, 음수인지 명확히 알 수 있습니다. 제공된 equality함수는 두 원소를
           받아, 둘다 음수이거나 양수일 때 <span class="fixed">True</span>를 반환합니다.
           첫번째 방법이 더욱 읽기 쉽다고 생각하지만, 앞선 equality함수는&nbsp; <span class="fixed">\x
+
 
 
 
@@ -681,6 +690,7 @@ f `on` g = \x y -&gt; f (g x) (g y)
           값을 가질 수 있었습니다. <span class="fixed">sort</span>는 <span class="fixed">Ord</span>타
           입클래스의 타입인 두 원소를 취해 둘 사이의 순서관계를 반환하기 때문에 <span class="fixed">sortBy
 
+
             compare</span>와 동일합니다.</p>
         <p>리스트는 사전 편차 상으로 비교됩니다. 만약 리스트의 리스트를 가지고 있고, 내부 리스트의 내용이 아닌 길이를
           기준으로 정렬하고자 한다면 어떻게 할까요? 음, 여러분이 예상하시는 것처럼, <span class="fixed">sortBy</span>함
@@ -696,6 +706,7 @@ ghci&gt; sortBy (compare `on` length) xs
             `compare` length y</span>과 동일합니다. 비교(equality)함수를 취하는 <i>By</i>함
           수를 다룰때에는, <span class="fixed">(==) `on` something</span>을
           하시고, 순서(ordering)함수를 취하는 <i>By</i>함수 를 다룰 때에는, <span class="fixed">compare
+
 
             `on` something</span>를 하시기 바랍니다.</p>
         <a name="data-char"></a>
@@ -860,6 +871,7 @@ encode shift msg =
 
 
 
+
             (chr . (+ shift) . ord) msg</span>로 작성할 지도 모르겠습니다. 메시지를 부호화
           시켜봅시다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; encode 3 "Heeeeey"
@@ -918,6 +930,7 @@ findKey key xs = snd . head . filter (\(k,v) -&gt; key == k) $ xs
 
 
 
+
             something</span>을 반환할 것입니다.</p>
         <pre name="code" class="haskell:hs">findKey :: (Eq k) =&gt; k -&gt; [(k,v)] -&gt; Maybe v
 findKey key [] = Nothing
@@ -944,6 +957,7 @@ Nothing
 </pre> <img src="http://s3.amazonaws.com/lyah/legomap.png" alt="legomap"
           class="left" height="240" width="214">
         <p>짜잔~! 전화번호를 갖고 있다면, 번호를 얻게 될 것이며(<span class="fixed">Just</span>),
+
 
 
 
@@ -1220,7 +1234,7 @@ ghci&gt; nub "HEY WHATS CRACKALACKIN"
           다 빠르지만, 보시다시피, <span class="fixed">nub</span>는 리스트 원소의 순서를
           유지하는 반면, <span class="fixed">setNub</span>은 그렇지 않습니다.</p>
         <a name="making-our-own-modules"></a>
-        <h2>자신만의 모듈 만들기</h2>
+        <h2>나만의 모듈 만들기</h2>
         <img src="http://s3.amazonaws.com/lyah/making_modules.png" alt="making modules"
           class="right" height="224" width="345">
         <p>지금까지 저희는 멋진 모듈들을 살펴보았습니다. 하지만 어떻게 저희만의 모듈을 만들까요? 대부분의 프로그래밍
