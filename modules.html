@@ -32,17 +32,16 @@
           class="right" height="162" width="230">
         <p>하스켈 모듈은 함수, 타입, 타입클래스의 집합입니다. 하스켈 프로그램은 모듈의 집합이며, 주(main)모듈이
           다른 모듈을 불러와서 그곳에 정의된 함수를 이용하여 무언가를 수행합니다. 코드를 여러 모듈로 나누는 것에는
-          상당한 이점이 있습니다. 모듈이 충분히 generic하다면, 여기서 추출된 함수들은 다양한 프로그램에서 사용할
-          수 있습니다. 코드가 다른 모듈에 너무 의존하지 않는 독립적인 모듈로 나눠진다면(느슨한 결합이라고도 합니다),
-          후에 그것을 다시 사용할 수 있습니다. 목적에 맞게 여러 부분으로써 나눔으로써, 관리하기 편한 코드를 작성할 수
-          있습니다.</p>
+          상당한 이점이 있습니다. 모듈이 충분히 generic하다면, 여기서 추출된 함수들은 여러 프로그램에서 사용할 수
+          있습니다. 코드가 다른 모듈에 너무 의존하지 않는 독립적인 모듈로 나눠진다면(느슨한 결합이라고도 합니다), 후에
+          다시 이용할 수 있습니다. 목적에 맞게 여러 부분으로써 나눔으로써, 관리하기 편한 코드를 작성할 수 있게됩니다.</p>
         <p>하스켈의 표준 라이브러리는 여러 모듈로 나누어졌으며, 각각은 공용 목적에 관계된 함수와 타입을 포함합니다.
           여기에는 리스트를 다루는 모듈, 다중 처리(concurrent programming)을 위한 모듈,
-          복소수(complex numbers)를 다루기 위한 모듈 등등이 있습니다. 지금 까지 저희가 다룬 함수, 타입,
+          복소수(complex numbers)를 다루기 위한 모듈 등등이 있습니다. 지금까지 저희가 다룬 함수, 타입,
           타입클래스 모두 기본적으로 import된 <span class="fixed">Prelude</span>의 한
           부분입니다. 먼저, 모듈을 import하는 방법을 살펴보겠습니다.</p>
-        <p>하스켈에서 모듈을 import하기 위한 문법은 <span class="fixed">import
-            &lt;module name&gt;</span>입니다. 이는 함수를 정의하기 전에 행해져야만 하며, 따라서
+        <p>하스켈에서 모듈을 import하는 문법으로는 <span class="fixed">import
+            &lt;module name&gt;</span>입니다. 이는 함수 정의 전에 행해져야만 하며, 따라서
           import는 보통 파일의 상단에서 행해집니다. 물론, 하나의 스크립트에서 여러 모듈을 import할 수
           있습니다. 단지 여러 줄에 걸쳐 각 import문을 넣으면 됩니다. 리스트를 다루는 유용한 함수들을 지닌 <span
             class="fixed">Data.List</span>모듈을 import한다음, 불러온 함수를 이용하여
@@ -53,8 +52,8 @@ numUniques :: (Eq a) =&gt; [a] -&gt; Int
 numUniques = length . nub
 </pre>
         <p><span class="fixed">import Data.List</span>를 하면, 전역 이름공간에서 <span
-            class="fixed">Data.List</span>에서 불러온 모든 함수들을 이용가능하며, 이는 스크립트
-          어디에서나 호출할 수 있다는 것을 의미합니다. <span class="fixed">Data.List</span>에
+            class="fixed">Data.List</span>에서 불러온 모든 함수들을 이용할 수 있게되어,
+          스크립트 어디에서나 호출할 수 있게됩니다. <span class="fixed">Data.List</span>에
           정의된 <span class="fixed">nub</span>함수는 리스트를 받아 중복된 요소들을 없애
           버립니다.&nbsp; <span class="fixed">length . nub</span>으로 <span
             class="fixed">length</span>와 <span class="fixed">nub</span>을
@@ -88,10 +87,11 @@ numUniques = length . nub
 
 
 
+
             +</span>을 사용할 필요가 없습니다.</p>
-        <p>모듈에서 2개의 함수만 필요하다면, 선택적으로 그 함수들을 import 할 수 있습니다.&nbsp; <span
-            class="fixed">Data.List</span>에서 <span class="fixed">nub</span>,
-          <span class="fixed">sort</span>함수만 import하려면, 이렇게 하시면 됩니다:</p>
+        <p>모듈에서 2개의 함수만 필요하다면, 선택적으로 import 할 수 있습니다.&nbsp; <span class="fixed">Data.List</span>에
+          서 <span class="fixed">nub</span>, <span class="fixed">sort</span>함
+          수만 import하려면, 이렇게 하시면 됩니다:</p>
         <pre name="code" class="haskell:hs">import Data.List (nub, sort)
 </pre>
         <p>모듈에서 선택된 것을 제외한 모든 함수들을 import할 수 도 있습니다. 이는 동일한 이름의 함수를 지닌
@@ -122,10 +122,10 @@ numUniques = length . nub
         <p> <a href="http://www.haskell.org/ghc/docs/latest/html/libraries/">이
             참고문서</a>를 이용하여 표준 라이브러리에 어떠한 모듈이 있는지 살펴보시기 바랍니다. 새로운 하스켈 지식을
           얻기위한 최선의 방법은 표준 라이브러리 레퍼런스를 클릭하여, 모듈과 함수들을 살펴보는 것입니다. 또한 각 모듈의
-          소스 코드를 확인하는 것도 있습니다. 여러 모듈의 소스코드를 읽는 것은 하스켈을 배우고 체우는데 있어 매우 좋은
+          소스 코드를 확인하는 것도 있습니다. 여러 모듈의 소스코드를 읽는 것은 하스켈을 배우고 체움에 있어 매우 좋은
           방법입니다.</p>
         <p>함수를 검색하거나, 위치한 장소를 찾고자 한다면, <a href="http://haskell.org/hoogle">Hoogle</a>을
-          이용하시기 바랍니다. 이것은 실로 놀랄만한 하스켈 검색 엔진이며,&nbsp; 이름, 모듈, 심지어 타입 서명으로
+          이용하시기 바랍니다. 이는 실로 놀랄만한 하스켈 검색 엔진이며,&nbsp; 이름, 모듈, 심지어 타입 서명으로도
           검색할 수 있습니다.</p>
         <a name="data-list"></a>
         <h2>Data.List</h2>
@@ -160,14 +160,13 @@ ghci&gt; transpose ["hey","there","guys"]
 </pre>
         <p>다항식 <span style="font-style: italic;"></span><i>3x<sup>2</sup>
             + 5x + 9</i>, <i>10x<sup>3</sup> + 9</i>, <i>8x<sup>3</sup>
-            + 5x<sup>2</sup> + x - 1</i>을 가졌고 이를 서로 더한다 해봅시다. 하스켈로 리스트 <span
-            class="fixed">[0,3,5,9]</span>, <span class="fixed">[10,0,0,9]</span>,
-          <span class="fixed">[8,5,1,-1]</span>로 나타낼 수 있습니다. 이제, 다음처럼 합칠
-          수 있습니다:</p>
+            + 5x<sup>2</sup> + x - 1</i>를 서로 더한다 해봅시다. 하스켈로 리스트 <span class="fixed">[0,3,5,9]</span>,
+          <span class="fixed">[10,0,0,9]</span>, <span class="fixed">[8,5,1,-1]</span>로
+          나타낼 수 있습니다. 이제, 다음처럼 합칠 수 있습니다:</p>
         <pre name="code" class="haskell:ghci">ghci&gt; map sum $ transpose [[0,3,5,9],[10,0,0,9],[8,5,1,-1]]
 [18,8,6,17]
 </pre>
-        <p>이 3개의 리스트를 전치(transpose)하면서, 3차항을 첫번째 줄에 2차항을 두번째 줄에 등등
+        <p>이 3개의 리스트를 전치(transpose)하면서, 3차항을 첫번째 줄에 2차항을 두번째 줄에 ... 등등
           넣었습니다. 다음으로 <span class="fixed">sum</span>을 map하여 원하는 결과를
           얻었습니다.</p>
         <img src="http://s3.amazonaws.com/lyah/legolists.png" alt="shopping lists"
@@ -202,9 +201,9 @@ True
 ghci&gt; and $ map (==4) [4,4,4,3,4]
 False
 </pre>
-        <p><span class="label function">or</span>는 리스트 중 <span class="fixed">True</span>인
-          값이 하나라도 있는 경우, <span class="fixed">True</span>를 반환한다는 점을 제외하면
-          <span class="fixed">and</span>와 비슷합니다.</p>
+        <p><span class="label function">or</span>는 <span class="fixed">and</span>와
+          비슷하지만, 리스트 중 <span class="fixed">True</span>인 값이 하나라도 있는 경우,
+          <span class="fixed">True</span>를 반환합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; or $ map (==4) [2,3,4,5,6,1]
 True
 ghci&gt; or $ map (&gt;4) [1,2,3]
@@ -225,8 +224,8 @@ ghci&gt; any (`elem` ['A'..'Z']) "HEYGUYSwhatsup"
 True
 </pre>
         <p><span class="label function">iterate</span>는 함수와 시작값을 받습니다.
-          이는 시작값에 함수를 적용한 다음, 그 결과에 함수를 적용을 반복합니다. 반환하는 모든 결과값은 무한 리스트의
-          형태를 띄게됩니다.</p>
+          이는 시작값에 함수를 적용한 다음, 그 결과에 함수를 적용시키는 것을 반복합니다. 반환하는 결과값은 모두 무한
+          리스트의 형태를 띄게됩니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; take 10 $ iterate (*2) 1
 [1,2,4,8,16,32,64,128,256,512]
 ghci&gt; take 3 $ iterate (++ "haha") "haha"
@@ -244,8 +243,8 @@ ghci&gt; let (a,b) = splitAt 3 "foobar" in b ++ a
 "barfoo"
 </pre>
         <p><span class="label function">takeWhile</span>는 작고 매우 유용한 함수
-          입니다. predicate를 만족하는 동안 리스트에서 원소를 취하다가, 만족하지 못하게 되면, 잘라냅니다. 이는
-          매우 유용합니다.</p>
+          입니다. predicate를 만족하는 동안 리스트에서 원소를 취하다가, 만족하지 않으면, 잘라냅니다. 이는 매우
+          유용합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; takeWhile (&gt;3) [6,5,4,3,2,1,2,3,4,5,4,3,2,1]
 [6,5,4]
 ghci&gt; takeWhile (/=' ') "This is a sentence"
@@ -268,15 +267,15 @@ ghci&gt; takeWhile (/=' ') "This is a sentence"
 ghci&gt; dropWhile (&lt;3) [1,2,2,2,3,4,5,4,3,2,1]
 [3,4,5,4,3,2,1]
 </pre>
-        <p>그날의 주식 현황을 표현하는 리스트를 가졌다고 가정해봅시다. 주식 값, 년도, 월, 날짜로 구성된 튜플로
-          리스트는 만들어졌습니다. 이제 주식값이 언제 처음으로 1000달러를 넘는지 확인해봅시다!</p>
+        <p>그날의 주식 현황을 표현하는 리스트를 가졌다고 가정해봅시다. 리스트는 주식 값, 년도, 월, 날짜로 구성된
+          튜플들로 만들어졌습니다. 이제 주식값이 언제 처음으로 1000달러를 넘는지 확인해봅시다!</p>
         <pre name="code" class="haskell:ghci">ghci&gt; let stock = [(994.4,2008,9,1),(995.2,2008,9,2),(999.2,2008,9,3),(1001.4,2008,9,4),(998.3,2008,9,5)]
 ghci&gt; head (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)
 (1001.4,2008,9,4)
 </pre>
         <p><span class="label function">span</span>은 <span class="fixed">takeWhile</span>와
-          같은 종이지만, 리스트 쌍을 반환합니다. 첫번째 리스트는 <span class="fixed">takeWhile</span>에
-          서 나온 것을 모두 포함합니다. 두번째 리스트는 떨어져 나온 부분을 포함하고 있습니다.</p>
+          같은 부류이지만, 리스트 쌍을 반환합니다. 첫번째 리스트는 <span class="fixed">takeWhile</span>에
+          서 나온 것을 모두 포함합니다. 두번째 리스트는 떨어져 나온 부분만을 포함합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; let (fw, rest) = span (/=' ') "This is a sentence" in "First word:" ++ fw ++ ", the rest:" ++ rest
 "First word: This, the rest: is a sentence"
 </pre>
@@ -285,24 +284,25 @@ ghci&gt; head (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)
             class="fixed">break p</span>가 하는 일은 <span class="fixed">span
 
 
+
             (not . p)</span>와 동일합니다. </p>
         <pre name="code" class="haskell:ghci">ghci&gt; break (==4) [1,2,3,4,5,6,7]
 ([1,2,3],[4,5,6,7])
 ghci&gt; span (/=4) [1,2,3,4,5,6,7]
 ([1,2,3],[4,5,6,7])
 </pre>
-        <p><span class="fixed">break</span>를 사용할 시에는 결과의 두번째 리스트
+        <p><span class="fixed">break</span>를 사용할 시에는, 결과의 두번째 리스트는
           predicate를 만족하는 원소로 시작할 것입니다.</p>
-        <p><span class="label function">sort</span>는 단순히 리스트를 정렬합니다.
-          리스트의 원소의 타입은 <span class="fixed">Ord</span>타입클래스에 속해야 하는데,
-          순서를 갖지 않으면 정렬할 수 없기 때문입니다.</p>
+        <p><span class="label function">sort</span>는 단순히 리스트를 정렬합니다. 순서를
+          갖지 않으면 정렬할 수 없기에, 리스트의 원소의 타입은 <span class="fixed">Ord</span>타
+          입클래스에 속해야 합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; sort [8,5,3,2,1,6,4,2]
 [1,2,2,3,4,5,6,8]
 ghci&gt; sort "This will be sorted soon"
 "    Tbdeehiillnooorssstw"
 </pre>
-        <p><span class="label function">group</span>은 리스트를 받아, 동일한 인접한
-          원소을 하위 리스트로 묶습니다.</p>
+        <p><span class="label function">group</span>은 리스트를 받아, 인접한 동일한
+          원소들을 하위 리스트로 묶습니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; group [1,1,1,1,2,2,2,2,3,3,2,2,2,5,6,7]
 [[1,1,1,1],[2,2,2,2],[3,3],[2,2,2],[5],[6],[7]]
 </pre>
@@ -354,14 +354,15 @@ False
           원소가 리스트 안에 있는지 검사합니다.</p>
         <p><span class="label function">partition</span>는 리스트와
           predicate를 취해, 리스트 쌍을 반환합니다. 결과의 첫번째 리스트는 predicate를 만족하는 모든
-          원소들을 포함하고 있으며, 두번째는 만족하지 않는 것들을 포함합니다.</p>
+          원소들을 포함하고 있으며, 두번째는 만족하지 않는 것들을 포함하고 있습니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; partition (`elem` ['A'..'Z']) "BOBsidneyMORGANeddy"
 ("BOBMORGAN","sidneyeddy")
 ghci&gt; partition (&gt;3) [1,3,5,6,3,2,1,0,3,7]
 ([5,6,7],[1,3,3,2,1,0,3])
 </pre>
-        <p><span class="fixed">span</span>과 <span class="fixed">break</span>에
-          서 어떠한 점이 다른지 이해하는 것이 중요합니다:</p>
+        <p><span class="fixed">span</span>과 <span class="fixed">break</span>의
+          차이점을 이해하는 것이 중요합니다:<br>
+        </p>
         <pre name="code" class="haskell:ghci">ghci&gt; span (`elem` ['A'..'Z']) "BOBsidneyMORGANeddy"
 ("BOB","sidneyMORGANeddy")
 </pre>
@@ -369,11 +370,11 @@ ghci&gt; partition (&gt;3) [1,3,5,6,3,2,1,0,3,7]
           predicate를 만족하거나 만족하지 못하는 원소를 만나면 멈추는 반면, <span class="fixed">partition</span>는
           리스트 전체를 훝어 predicate에 따라 나눕니다.</p>
         <p><span class="label function">find</span>는 predicate와 리스트를 취해,
-          predicate를 만족하는 첫번째 요소를 반환하지만,&nbsp; <span class="fixed">Maybe</span>값
-          으로 그 요소를 감싸서 반환합니다. 다음 장에서 대수적 자료구조에 대해 깊게 다룰 것이지만, 지금 저희가 알아야
-          할 것은 다음과 같습니다: ' <span class="fixed">Maybe</span>는&nbsp; <span
-            class="fixed">Just something</span>이나 <span class="fixed">Nothing</span>이
-          될 수 있다'. 리스트가 비어있는 리스트가 되거나 무언가를 담은 리스트가 될 수 있는 것처럼, <span class="fixed">Maybe</span>값
+          predicate를 만족하는 첫번째 요소를 <span class="fixed">Maybe</span>값으로
+          감싸 반환합니다. 다음 장에서 대수적 자료구조에 대해 깊게 다룰 것이지만, 지금 저희가 알아야 할 것은 다음과
+          같습니다: ' <span class="fixed">Maybe</span>는&nbsp; <span class="fixed">Just
+            something</span>이나 <span class="fixed">Nothing</span>이 될 수
+          있다'. 리스트는 비어있는 리스트가 되거나 무언가를 담은 리스트가 될 수 있는 것처럼, <span class="fixed">Maybe</span>값
           은 단일 요소이거나 아무런 요소도 아닐 수 있습니다. 그리고 정수 리스트의 타입을 <span class="fixed">[Int]</span>라
           하는것 처럼, 정수에 대한 타입은 <span class="fixed">Maybe Int</span>가 됩니다.
           어찌됐던간에, <span class="fixed">find</span>함수를 돌려 봅시다.</p>
@@ -404,16 +405,17 @@ find :: (a -&gt; Bool) -&gt; [a] -&gt; Maybe a
 
 
 
+
             (dropWhile (\(val,y,m,d) -&gt; val &lt; 1000) stock)</span>라
-          하였습니다.&nbsp; <span class="fixed">head</span>가 실제론 안전하지 않다는 점을
-          기억하시기 바랍니다. $1000를 넘는 주식이 없다면 어떤일이 발생할까요?&nbsp; <span class="fixed">dropWhile</span>은
+          하였습니다. <span class="fixed">head</span>가 실제론 안전하지 않다는 점을 기억하시기
+          바랍니다. $1000를 넘는 주식이 없다면 어떤일이 발생할까요?&nbsp; <span class="fixed">dropWhile</span>은
           비어있는 리스트를 반환할 것이며, 빈 리스트의 head를 얻으려 한다면 에러를 결과로 얻을 것입니다.
           하지만,&nbsp; <span class="fixed">find (\(val,y,m,d) -&gt; val
             &gt; 1000) stock</span>라고 재작성한다면, 비교적 안전할 것입니다. 주식이 $1000을
           넘지 않는다면(어떠한 요소도 predicate를 만족하지 않는다면),&nbsp; <span class="fixed">Nothing</span>을
           얻을 것입니다. 반면, 리스트에 유효한 값이 있다면, <span class="fixed">Just
             (1001.4,2008,9,4)</span>라는 값을 얻게될 것입니다. </p>
-        <p><span class="label function">elemIndex</span>는&nbsp; <span class="fixed">elem</span>와
+        <p><span class="label function">elemIndex</span>는 <span class="fixed">elem</span>와
           비슷하나, 부울값을 반환하지 않고, 찾는 원소의 위치를 반환합니다. 리스트내에 원소가 없으면,&nbsp; <span
             class="fixed">Nothing</span>을 반환합니다. </p>
         <pre name="code" class="haskell:ghci">ghci&gt; :t elemIndex
@@ -424,28 +426,15 @@ ghci&gt; 10 `elemIndex` [1,2,3,4,5,6]
 Nothing
 </pre>
         <p><span class="label function">elemIndices</span>은 <span class="fixed">elemIndex</span>와
-          같으나, 찾고자 하는 원소가 여러번 나타나는 위치 리스트를 반환합니다. 리스트를 이용하여 위치를
-          표현하기에,&nbsp; <span class="fixed">Maybe</span>타입이 필요없는데, 실패는 <span
-            class="fixed">Nothing</span>와 매우 유사한 빈 리스트로 표현할 수 있기 때문입니다.<br>
+          같으나, 찾고자 하는 원소가 여러번 나타나는 위치 리스트를 반환합니다. 리스트를 이용하여 위치를 표현하기에, <span
+            class="fixed">Maybe</span>타입이 필요없는데, 실패는 <span class="fixed">Nothing</span>와
+          매우 유사한 빈 리스트로 표현할 수 있기 때문입니다.<br>
         </p>
         <pre name="code" class="haskell:ghci">ghci&gt; ' ' `elemIndices` "Where are the spaces?"
 [5,9,13]
 </pre>
         <p><span class="label function">findIndex</span>는 find와 같으나,
-          predicate를 만족하는 처음 원소만 아마(maybe) 반환할 것입니다. <span class="label function">findIndices</span>는&nbsp;
-
-
-
-
-
-
-
-
-
-
-
-
-
+          predicate를 만족하는 처음 원소만 아마(maybe) 반환할 것입니다. <span class="label function">findIndices</span>는
           리스트에서 predicate를 만족하는 원소들의 위치를 반환합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; findIndex (==4) [5,3,2,1,6,4]
 Just 5
@@ -455,14 +444,14 @@ ghci&gt; findIndices (`elem` ['A'..'Z']) "Where Are The Caps?"
 [0,6,10,14]
 </pre>
         <p>저희는 이미 <span class="fixed">zip</span>와 <span class="fixed">zipWith</span>를
-          다루었습니다. 이들은 2개의 리스트를 튜플이나 인자를 두개 받는 함수(binary function)로 엮습니다.
-          그러면 3개의 리스트를 서로 엮으려면 어떻게 할까요? 아니면, 3개의 리스트를 3개의 인자를 받는 함수로
-          엮으려면 어떻게 할까요? 이러한 것을 위해&nbsp; <span class="label function">zip3</span>,
+          다루었습니다. 이들은 2개의 리스트를, 튜플이나 인자를 두개 받는 함수(binary function)로
+          엮습니다. 그러면 3개의 리스트를 서로 엮으려면 어떻게 할까요? 아니면, 3개의 리스트를 3개의 인자를 받는
+          함수로 엮으려면 어떻게 할까요? 이러한 것들을 위해 <span class="label function">zip3</span>,
           <span class="label function">zip4</span>, <span class="label function">zipWith3</span>,
-          <span class="label function">zipWith4</span>, 등등을 가지고 있습니다.
-          이러한 변종들은 7까지 있습니다. 이것이 꼼수(hack)처럼 보여도, 8개의 리스트를 서로 엮을 기회는 많이
-          없을 터이니 문제없을 것입니다. 리스트를 무한히 엮을 수 있는 획기적인 방법도 있으나, 지금 다루기에는 조금
-          이른감이 있습니다.</p>
+          <span class="label function">zipWith4</span>, 등등이 있습니다. 이러한
+          변종들은 7까지 있습니다. 꼼수(hack)처럼 보이더라도, 8개의 리스트를 서로 엮을 기회는 많이 없을 터이니
+          문제없을 것입니다. 리스트를 무한히 엮을 수 있는 획기적인 방법도 있으나, 지금 다루기에는 조금 이른감이
+          있습니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; zipWith3 (\x y z -&gt; x + y + z) [1,2,3] [4,5,2,2] [2,2,3]
 [7,9,8]
 ghci&gt; zip4 [2,3,3] [2,2,2] [5,5,3] [2,2,2]
@@ -476,7 +465,7 @@ ghci&gt; zip4 [2,3,3] [2,2,2] [5,5,3] [2,2,2]
 </pre>
         <p><span class="fixed">'\n'</span>은 유닉스의 개행문자입니다. 역슬러쉬는 하스켈에서
           문자열과 문자간에 특별한 의미를 지니고 있습니다.</p>
-        <p><span class="label function">unlines</span>은&nbsp; <span class="fixed">lines</span>과
+        <p><span class="label function">unlines</span>은 <span class="fixed">lines</span>과
           반대되는 함수입니다. 이는 문자열 리스트를 받아 <span class="fixed">'\n'</span>로
           서로를 연결합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; unlines ["first line", "second line", "third line"]
@@ -530,6 +519,7 @@ ghci&gt; "Im a big baby" \\ "big"
 
 
 
+
             2 . delete 5 . delete 9 $ [1..10]</span>와 같습니다.</p>
         <p><span class="label function">union</span> 또한 집합 관한 함수입니다. 이는
           두 리스트의 합집합(union)을 반환합니다. 이는 두번째 리스트의 모든 원소를 훝어본 다음 첫번째에 없는
@@ -553,8 +543,8 @@ ghci&gt; [1..7] `union` [5..10]
 ghci&gt; insert 4 [1,3,4,4,1]
 [1,3,4,4,4,1]
 </pre>
-        <p>첫번째 예제에서 <span class="fixed">4</span>는 <span class="fixed">3</span>다
-          음 <span class="fixed">5</span>이전에 추가되고, 두번째 예제에선 <span class="fixed">3</span>과
+        <p> <span class="fixed">4</span>는, 첫번째 예제에서 <span class="fixed">3</span>다
+          음 <span class="fixed">5</span>이전에 추가되며, 두번째 예제에선 <span class="fixed">3</span>과
           <span class="fixed">4</span>사이에 추가됩니다.</p>
         정렬된 리스트에 <span class="fixed">insert</span>를 사용한다면, 결과는 정렬된 상태를
         유지할 것입니다.
@@ -569,6 +559,7 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
         <p><span class="fixed">length</span>, <span class="fixed">take</span>,
           <span class="fixed">drop</span>, <span class="fixed">splitAt</span>,
           <span class="fixed">!!</span><span style="font-weight: bold;">,&nbsp;
+
 
 
 
@@ -614,22 +605,24 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
 
 
 
-            :: (Num a) =&gt; [b] -&gt; a</span>타입 서명을 지녔습니다. <span class="fixed">Num</span>은
+
+            :: (Num a) =&gt; [b] -&gt; a</span> 타입 서명을 지녔습니다. <span class="fixed">Num</span>은
           부동소숫점 숫자처럼 행동할 수 있기에, <span class="fixed">let xs = [1..6] in
             sum xs / genericLength xs</span>로 평균을 구하는 것은 제대로 동작할 것입니다.</p>
         <p><span class="fixed">nub</span>, <span class="fixed">delete</span>,
           <span class="fixed">union</span>, <span class="fixed">intersect</span>,
-          <span class="fixed">group</span>함수들은&nbsp; 모두&nbsp; <span class="label function">nubBy</span>,
+          <span class="fixed">group</span>함수들은&nbsp; 모두 <span class="label function">nubBy</span>,
           <span class="label function">deleteBy</span>, <span class="label function">unionBy</span>,
           <span class="label function">intersectBy</span>, <span class="label function">groupBy</span>라
           불리는 더욱 general한 대응체가 있습니다. 차이점은 첫번째 함수들은 같음을 확인하기 위해 <span class="fixed">==</span>를
-          이용하지만, <i>By</i>가 붙은 쪽은 비교(equality)함수를 받은 다음, 그 함수를 이용하여 비교를
+          이용하지만, <i>By</i>가 붙은 쪽은 비교(equality)함수를 받아, 그 함수를 이용하여 비교를
           합니다. <span class="fixed">group</span>은 <span class="fixed">groupBy
+
 
 
             (==)</span>와 같습니다 </p>
         <p>예를들어, 매 초마다의 함수의 값을 서술한 리스트를 가지고 있다고 가정해 봅시다. 저희는 이 리스트를 0보다
-          작은것과 큰것으로 하위 리스트로 쪼개길 원합니다. <span class="fixed">group</span>으
+          작은것과 큰것으로 구성된 하위 리스트로 쪼개길 원합니다. <span class="fixed">group</span>으
           로 한다면, 서로 같은 값만을 묶을 것입니다. 하지만 저희가 원하는 것은 음수 여부에 따라 묶는 것입니다. <span
             class="fixed">groupBy</span>가 와야할 곳이 바로 여깁니다! <i>By</i>함수에
           제공된 equality함수는 동일한 타입의 두 원소를 취해, 기준에 따라 동일하다고 판단되면 <span class="fixed">True</span>를
@@ -638,9 +631,10 @@ ghci&gt; insert 3 [1,2,4,3,2,1]
 ghci&gt; groupBy (\x y -&gt; (x &gt; 0) == (y &gt; 0)) values
 [[-4.3,-2.4,-1.2],[0.4,2.3,5.9,10.5,29.1,5.3],[-2.4,-14.5],[2.9,2.3]]
 </pre>
-        <p>여기서 저희는 어느 부분이 양수인지, 음수인지 명확히 알 수 있습니다. 제공된 equality함수는 두 원소를
-          받아, 둘다 음수이거나 양수일 때 <span class="fixed">True</span>를 반환합니다.
-          첫번째 방법이 더욱 읽기 쉽다고 생각하지만, 앞선 equality함수는&nbsp; <span class="fixed">\x
+        <p>여기서 어느 부분이 양수인지, 음수인지 명확히 알 수 있습니다. 제공된 equality함수는 두 원소를 받아,
+          둘다 음수이거나 양수일 때 <span class="fixed">True</span>를 반환합니다. 첫번째
+          방법이 더욱 읽기 쉽다고 생각하지만, 앞선 equality함수는&nbsp; <span class="fixed">\x
+
 
 
 
@@ -691,6 +685,7 @@ f `on` g = \x y -&gt; f (g x) (g y)
           입클래스의 타입인 두 원소를 취해 둘 사이의 순서관계를 반환하기 때문에 <span class="fixed">sortBy
 
 
+
             compare</span>와 동일합니다.</p>
         <p>리스트는 사전 편차 상으로 비교됩니다. 만약 리스트의 리스트를 가지고 있고, 내부 리스트의 내용이 아닌 길이를
           기준으로 정렬하고자 한다면 어떻게 할까요? 음, 여러분이 예상하시는 것처럼, <span class="fixed">sortBy</span>함
@@ -705,7 +700,8 @@ ghci&gt; sortBy (compare `on` length) xs
             length</span>은 <span class="fixed">\x y -&gt; length x
             `compare` length y</span>과 동일합니다. 비교(equality)함수를 취하는 <i>By</i>함
           수를 다룰때에는, <span class="fixed">(==) `on` something</span>을
-          하시고, 순서(ordering)함수를 취하는 <i>By</i>함수 를 다룰 때에는, <span class="fixed">compare
+          하시고, 순서(ordering)함수를 취하는 <i>By</i>함수를 다룰 때에는, <span class="fixed">compare
+
 
 
             `on` something</span>를 하시기 바랍니다.</p>
@@ -716,8 +712,7 @@ ghci&gt; sortBy (compare `on` length) xs
         <p><span class="fixed">Data.Char</span>모듈은 이 이름이 시사하는 바처럼, 문자를
           다루는 함수를 제공합니다. 이 또한 문자 리스트인 문자열을 걸러내고 map할때 유용합니다.</p>
         <p><span class="fixed">Data.Char</span>는 문자를 받아 어떠한 가정이 참인지 거짓인지
-          알려주는, 문자에 대한 predicate 분기를 위한 함수들을 제공합니다. 여기 어떠한 것이 있는지
-          나와있습니다:</p>
+          알려주는, 문자에 대한 predicate 분기 함수들을 제공합니다. 여기 어떠한 것이 있는지 나와있습니다:</p>
         <p><span class="label function">isControl</span>는 문자가 제어문자인지
           확인합니다.</p>
         <p><span class="label function">isSpace</span>는 문자가 공백문자인지
@@ -755,8 +750,8 @@ ghci&gt; sortBy (compare `on` length) xs
           ASCII이면서 대문자인지 확인합니다.</p>
         <p><span class="label function">isAsciiLower</span>는 문자가
           ASCII이면서 소문자인지 확인합니다.</p>
-        <p>여기 나온 모든 predicate는 <span class="fixed">Char -&gt; Bool</span>
-          타입서명을 지니고 있습니다. 대부분 문자열 비슷한 것을 걸러내기 위해 이들을 사용할 것입니다. 예를들어, 알파벳
+        <p>여기 나온 모든 predicate들은 <span class="fixed">Char -&gt; Bool</span>
+          타입서명을 지니고 있습니다. 대부분 문자열 비슷한 것을 걸러내기 위해 사용할 것입니다. 예를들어, 알파벳
           문자로만 구성된 사용자 이름을 입력받는 프로그램을 만든다고 가정해봅시다. 사용자 이름이 올바른지 판단하기 위해,
           <span class="fixed">Data.List</span>의 <span class="fixed">all</span>함
           수를 <span class="fixed">Data.Char</span>의 predicate들과 조합하여 사용할
@@ -766,8 +761,8 @@ True
 ghci&gt; all isAlphaNum "eddy the fish!"
 False
 </pre>
-        <p>멋집니다.&nbsp; <span class="fixed">all</span>은 predicate와 리스트를
-          취해, 리스트의 모든 원소들이 predicate를 만족할 때에만 <span class="fixed">True</span>를
+        <p>멋집니다. <span class="fixed">all</span>은 predicate와 리스트를 취해,
+          리스트의 모든 원소들이 predicate를 만족할 때에만 <span class="fixed">True</span>를
           반환한다는 것을 잊지 마시기 바랍니다.</p>
         <p>또한 <span class="fixed">Data.List</span>함수인 <span class="fixed">words</span>를
           모방하기 위해 <span class="fixed">isSpace</span>를 사용할 수 도 있습니다. </p>
@@ -872,6 +867,7 @@ encode shift msg =
 
 
 
+
             (chr . (+ shift) . ord) msg</span>로 작성할 지도 모르겠습니다. 메시지를 부호화
           시켜봅시다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; encode 3 "Heeeeey"
@@ -916,11 +912,12 @@ ghci&gt; decode 5 . encode 5 $ "This is a sentence"
 findKey key xs = snd . head . filter (\(k,v) -&gt; key == k) $ xs
 </pre>
         <p>매우 간단합니다. 함수는 키와 리스트를 취해, 일치하는 키만 남기고 걸러(filter)내어, 처음으로 일치하는
-          키-값을 얻어내어 값을 반환합니다. 하지만 연관리스트에 존재하지 않는 키를 찾고자 한다면 어떻게 될까요? 흠.
+          키-값을 얻어, 값을 반환합니다. 하지만 연관리스트에 존재하지 않는 키를 찾고자 한다면 어떻게 될까요? 흠.
           여기에선, 연관리스트에 키가 없다면, 비어있는 리스트의 head를 얻고자 할 것이며, 런타임 에러를 발생시킬
           것입니다. 하지만, 저희는 프로그램이 쉽게 멈추지 않도록 막아야하므로, <span class="fixed">Maybe</span>
           자료구조를 이용해 봅시다. 키를 찾지 못하면, <span class="fixed">Nothing</span>을
           반환할 것입니다. 키를 찾고 키에 대응하는 값을 something이라 하면, <span class="fixed">Just
+
 
 
 
@@ -965,12 +962,12 @@ Nothing
 
 
 
+
           아니라면 아무것도 얻지 못할 것입니다(<span class="fixed">Nothing</span>).</p>
-        <p>저희는 지금&nbsp; <span class="fixed">Data.List</span>의&nbsp; <span
-            class="fixed">lookup</span>함수를 구현하였습니다. 키에 대응되는 값을 찾고자 한다면,
-          원소 리스트를 찾을 때 까지 뒤질 것입니다. The <span class="fixed">Data.Map</span>모
-          듈은 (내부적으로 트리로 구현되어있어) 더욱 빠른 연관리스트와 많은 유틸리티 함수를 제공합니다. 지금부터,
-          연관리스트 대신, 맵을 가지고 작업하도록 하겠습니다.</p>
+        <p>저희는 지금&nbsp; <span class="fixed">Data.List</span>의 <span class="fixed">lookup</span>함
+          수를 구현하였습니다. 키에 대응되는 값을 찾고자 한다면, 원소 리스트를 찾을 때 까지 뒤질 것입니다. <span
+            class="fixed">Data.Map</span>모듈은 (내부적으로 트리로 구현되어있어) 더욱 빠른
+          연관리스트와 많은 유틸리티 함수를 제공합니다. 지금부터, 연관리스트 대신, 맵을 가지고 작업하도록 하겠습니다.</p>
         <p><span class="fixed">Data.Map</span>이 제공하는 함수는, <span class="fixed">Prelude</span>와
           <span class="fixed">Data.List</span>에 충돌하므로, qualified import를
           하도록 하겠습니다. </p>
@@ -993,8 +990,8 @@ fromList [(1,2),(3,2),(5,5)]
 </pre>
         <p>이는 <span class="fixed">k</span>와&nbsp; <span class="fixed">v</span>의
           쌍에 대한 리스트를 취하고, <span class="fixed">k</span>타입의 키와&nbsp; <span
-            class="fixed">v</span>타입의 값에 대한 맵을 반환한다는 것을 보여주고 있습니다. 연관
-          리스트와 평범한 리스트에서는 키가 동등하였지만(equatable)(타입은 <span class="fixed">Eq</span>타
+            class="fixed">v</span>타입의 값에 대한 맵을 반환한다는 것을 보여주고 있습니다. 키가 연관
+          리스트와 평범한 리스트에선 평등하였지만(equatable)(타입은 <span class="fixed">Eq</span>타
           입클래스에 속합니다) , 지금은 순서를(orderable) 지닌다는 것을 주목하시기 바랍니다. 이는 <span
             class="fixed">Data.Map</span>모듈에서 필수적인 제약입니다. 키가 순서를 가질 수
           있으므로, 트리로 나열할 수 있습니다.</p>
@@ -1071,10 +1068,10 @@ fromList [(2,'A'),(4,'B')]
           각각 키와 값의 리스트를 반환합니다. <span class="fixed">keys</span>는 <span
             class="fixed">map fst . Map.toList</span>와 동일하며, <span class="fixed">elems</span>은
           <span class="fixed">map snd . Map.toList</span>과 동일합니다.</p>
-        <p><span class="label function">fromListWith</span>은 is a cool
-          little function. It acts like <span class="fixed">fromList</span>처
-          럼 행동하지만, 중복된 키를 버리지 않고, 주어진 함수를 이용하여 무엇을 할지 결정합니다. 여자들이 여러 번호를
-          지닐 수 있다고 가정한다면, 다음과 같은 연관 리스트를 얻게 될 것입니다.</p>
+        <p><span class="label function">fromListWith</span>은 작고 멋진
+          함수입니다. 이는 <span class="fixed">fromList</span>처럼 행동하지만, 중복된 키를
+          버리지 않고, 주어진 함수를 이용하여 무엇을 할지 결정합니다. 여자들이 여러 번호를 가질 수 있다고 가정한다면,
+          다음과 같은 연관 리스트를 얻게 될 것입니다.</p>
         <pre name="code" class="haskell:hs">phoneBook = 
     [("betty","555-2938")
     ,("betty","342-2492")
@@ -1100,7 +1097,7 @@ ghci&gt; Map.lookup "wendy" $ phoneBookToMap phoneBook
 ghci&gt; Map.lookup "betty" $ phoneBookToMap phoneBook
 "342-2492, 555-2938"
 </pre>
-        <p>중복된 키를 발견하면, 그 키에 해당하는 값들을 합치기 위해 저희가 넘긴 함수가 이용됩니다. 또한 연관리스트에
+        <p>중복된 키를 발견하면, 그 키에 해당하는 값들을 합치기 위해 저희가 넘긴 함수가 사용됩니다. 또한 연관리스트에
           있는 모든 값을 싱글톤 리스트로 만든다음, <span class="fixed">++</span>를 이용하여
           수를 합칠 수 있습니다.</p>
         <pre name="code" class="haskell:hs">phoneBookToMap :: (Ord k) =&gt; [(k, a)] -&gt; Map.Map k [a]
@@ -1145,7 +1142,7 @@ fromList [(3,104),(5,103),(6,339)]
         <pre name="code" class="haskell:ghci">import qualified Data.Set as Set
 </pre>
         <p>그런 다음, GHCI에서 스크립트를 불러옵니다.</p>
-        <p>문서 2개가 있다고 가정해 봅시다. 이 둘 간에 공통으로 사용되는 문자를 찾고자 합니다.</p>
+        <p>2개의 문장이 있다고 가정해 봅시다. 이 둘 간에 공통적으로 사용되는 문자를 찾고자 합니다.</p>
         <pre name="code" class="haskell:ghci">text1 = "I just had an anime dream. Anime... Reality... Are they so different?"
 text2 = "The old man left his garbage can out and now his trash is all over my lawn!"
 </pre>
@@ -1170,15 +1167,15 @@ fromList ".?AIRj"
 ghci&gt; Set.difference set2 set1
 fromList "!Tbcgvw"
 </pre>
-        <p>혹은&nbsp; <span class="label function">union</span>을 이용하여 두
-          문장간에 고유한 문자를 모두 확인할 수 있습니다.</p>
+        <p>혹은 <span class="label function">union</span>을 이용하여 두 문장간에
+          고유한 문자를 모두 확인할 수 있습니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; Set.union set1 set2
 fromList " !.?AIRTabcdefghijlmnorstuvwy"
 </pre>
         <p><span class="label function">null</span>, <span class="label function">size</span>,
           <span class="label function">member</span>, <span class="label function">empty</span>,
           <span class="label function">singleton</span>, <span class="label function">insert</span>,
-          <span class="label function">delete</span>함수 모두 저희가 예상한 바처럼
+          <span class="label function">delete</span> 함수 모두 저희가 예상한 바처럼
           동작합니다.</p>
         <pre name="code" class="haskell:ghci">ghci&gt; Set.null Set.empty
 True
@@ -1231,15 +1228,15 @@ ghci&gt; nub "HEY WHATS CRACKALACKIN"
 "HEY WATSCRKLIN"
 </pre>
         <p><span class="fixed">setNub</span>은 보통 <span class="fixed">nub</span>보
-          다 빠르지만, 보시다시피, <span class="fixed">nub</span>는 리스트 원소의 순서를
-          유지하는 반면, <span class="fixed">setNub</span>은 그렇지 않습니다.</p>
+          다 빠르지만, 보시다시피 <span class="fixed">nub</span>는 리스트 원소의 순서를
+          유지하는 반면 <span class="fixed">setNub</span>은 그렇지 않습니다.</p>
         <a name="making-our-own-modules"></a>
         <h2>나만의 모듈 만들기</h2>
         <img src="http://s3.amazonaws.com/lyah/making_modules.png" alt="making modules"
           class="right" height="224" width="345">
         <p>지금까지 저희는 멋진 모듈들을 살펴보았습니다. 하지만 어떻게 저희만의 모듈을 만들까요? 대부분의 프로그래밍
-          언어에서, 코드를 여러 파일로 나눈 것처럼, 하스켈도 그러합니다. 프로그램을 만들 시, 유사한 목적을 지니는
-          함수와 타입을 하나의 모듈로 모아 넣는 것이 좋은 습관입니다. 이러한 방법으로, 다른 프로그램에서 모듈을
+          언어에서 코드를 여러 파일로 나눈 것처럼 하스켈도 그러합니다. 프로그램을 만들 시, 유사한 목적을 지니는 함수와
+          타입을 하나의 모듈로 모아 넣는 것이 좋은 습관입니다. 이러한 방법으로, 다른 프로그램에서 모듈을
           import함으로써 쉽게 함수들을 재사용할 수 있습니다.</p>
         <p>모듈이 기하학적 물체의 면적과 부피를 계산하는 함수를 제공하도록 만들어 봄으로써, 어떻게 모듈을 만드는지 살펴
           봅시다. 우선 <span class="fixed">Geometry.hs</span>파일을 만듭니다.</p>
@@ -1291,20 +1288,19 @@ cuboidArea a b c = rectangleArea a b * 2 + rectangleArea a c * 2 + rectangleArea
 rectangleArea :: Float -&gt; Float -&gt; Float
 rectangleArea a b = a * b
 </pre>
-        <p>여기 상당한 표준 기하학이 있습니다.&nbsp;주목할것이 몇가지 있습니다. 정육면체(cube)는
+        <p>아름다운 표준 기하학이 여기 있습니다.&nbsp;주목할것이 몇가지 있습니다. 정육면체(cube)는
           직육면체(cuboid)의 특수한 경우이기에, 모든 변의 길이가 동일한 길이를 가진 직육면체로 취급함으로써 이의
           넓이와 높이를 정의하였습니다. 저희는 또한 변의 길이로 사각형의 넓이를 계산하는 <span class="fixed">rectangleArea</span>라
           불리는 도움 함수를 정의하였습니다. 이는 다른 것보다 사소한 것으로, 단순한 곱셈입니다. 이를 모듈안에서
           (다시말해 <span class="fixed">cuboidArea</span>와 <span class="fixed">cuboidVolume</span>에
           서)이용하지만 , export 하지 않는 것을 주목하시기 바랍니다! 3차원 객체를 다루는 함수만 나타내기 원하기
           때문에, <span class="fixed">rectangleArea</span>을 이용하긴 하지만
-          export하지 않았습니다.</p>
-        <p>모듈을 만들 때에는 보통, 모듈과 중계자 역활을 하는 함수만을 export하기에, 구현물은 감추어집니다.
-          누군가가 <span class="fixed">Geometry</span>모듈을 이용한다면, export하지
-          않은 함수에는 신경쓰지 않을 것입니다. export하지 않았으므로, 새로운 버전에서 이러한 함수들을 완전히
-          바꿀지 삭제할지를 정할 수 있으며 (<span class="fixed">rectangleArea</span>를
-          지워 <span class="fixed">*</span>을 사용할 수 도 있습니다) , 어느 누구도 신경쓰지
-          않을 것입니다.</p>
+          export하진 않았습니다.</p>
+        <p>모듈을 만들 때에는 보통 모듈과 중계자 역활을 하는 함수만을 export하기에 구현물은 감추어집니다. 누군가가
+          <span class="fixed">Geometry</span>모듈을 이용한다면, export하지 않은 함수에는
+          신경쓰지 않을 것입니다. export하지 않았으므로, 새로운 버전에서 이러한 함수들을 완전히 바꿀지 삭제할지를
+          정할 수 있으며 (<span class="fixed">rectangleArea</span>를 지워 <span
+            class="fixed">*</span>을 사용할 수 도 있습니다) , 어느 누구도 신경쓰지 않을 것입니다.</p>
         <p>모듈을 사용하려면, 다음과 같이 해야합니다:</p>
         <pre name="code" class="haskell:ghci">import Geometry
 </pre>
@@ -1361,14 +1357,13 @@ area side = Cuboid.area side side side
         <p>좋습니다! 첫번째는 <span class="fixed">Geometry.Sphere</span>입니다. 이를
           <span class="fixed">Geometry</span>폴더에 이를 넣고, 모듈의 이름을 <span class="fixed">Geometry.Sphere</span>라
           정의한 것에 주목하시기 바랍니다. cuboid도 동일하게 처리합니다. 또한 3개의 하위 모듈에 동일한 이름의
-          함수를 정의할 것을 주목하시기 바랍니다. 분리된 모듈이기에 이렇게 할 수 있습니다. <span class="fixed">Geometry.Cube</span>에
-          서 <span class="fixed">Geometry.Cuboid</span>의 함수를 사용하기 원하지만,
-          곧바로 <span class="fixed">import Geometry.Cuboid</span>라 할 수는
-          없는데, <span class="fixed">Geometry.Cube</span>와 동일한 이름의 함수를
-          export하기 때문입니다. 이것이 바로 qualified import를 해야하는 이유이며, 다른 것들도
-          마찬가지 입니다.</p>
-        <p>그러먼 이제,&nbsp; 파일이 <span class="fixed">Geometry</span>폴더와 동일한
-          레벨에 있다면, 다음과 같이 할 수 있습니다:</p>
+          함수를 정의할 것을 주목하시기 바랍니다. 분리된 모듈이기에 이렇게 할 수 있습니다. <span class="fixed">Geometry.Cube</span>와
+          동일한 이름의 함수를 export하기에, <span class="fixed">Geometry.Cube</span>에
+          서 <span class="fixed">Geometry.Cuboid</span>의 함수를 사용하기 위해,
+          곧바로 <span class="fixed">import Geometry.Cuboid</span>라 할 수
+          없습니다. 이것이 바로 qualified import를 해야하는 이유이며, 다른 것들도 마찬가지 입니다.</p>
+        <p>그러먼 이제, 파일이 <span class="fixed">Geometry</span>폴더와 동일한 레벨에
+          있다면, 다음과 같이 할 수 있습니다:</p>
         <pre name="code" class="haskell:ghci">import Geometry.Sphere
 </pre>
         <p>그리고 나면 <span class="fixed">area</span>와 <span class="fixed">volume</span>을
@@ -1382,8 +1377,8 @@ import qualified Geometry.Cube as Cube
           <span class="fixed">Cuboid.area</span> 등등으로 호출하고 그에 해당하는 면적과
           부피를 계산 할 수 있습니다.</p>
         <p>다음으로 저희는 어떤 함수가 공익성을 제공하는지, 모듈안에 집어넣을 수 있는지 확인하기 위해, 많은 함수를
-          지닌 매우 큰 파일을 작성할 것입니다. 앞으로 여러분은 모듈을 import하여 동일한 기능을 요구하는 프로그램을
-          작성할 수 있을 것입니다.</p>
+          지닌 매우 큰 파일을 작성할 것입니다. 앞으로 여러분들은 모듈을 import하여 동일한 기능을 요구하는
+          프로그램을 작성할 수 있을 것입니다.</p>
         <div class="footdiv">
           <ul>
             <li style="text-align: left;"> <a href="higher-order-functions"
