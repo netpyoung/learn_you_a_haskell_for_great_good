@@ -255,7 +255,7 @@ reverseWords = unwords . map reverse . words
           값을 지녀야 하므로, <i>if</i>와 <i>else</i>이 대응된다는 것을 명심하시기 바랍니다. <i>if</i>는
           조건이 참일때 I/O action을 수행하고, 그렇지 않을때에는<span style="font-style: italic;">
           </span><i>else</i>아래에 있는 I/O action이 수행됩니다. 이것이 바로 왜 I/O <i>do</i>블
-          록안에 <i>if</i>가&nbsp; <span class="fixed">if <i>condition</i> then <i>I/O
+          록안에 <i>if</i>가&nbsp; <span class="fixed">if <i>조건문</i> then <i>I/O
               action</i> else <i>I/O action</i></span>라는 형태를 띄어야 하는지에 대한 이유입니다.</p>
         <p>우선 <i>else</i>절 아레서 무슨 일이 일어나는지 살펴보도록 하겠습니다. <i>else </i>다음에는 정확히
           하나의 I/O action만을 지녀야하기에, <i>do</i>블록을 이용하여 두 I/O action을 하나로 만들었습니다.
@@ -564,12 +564,12 @@ orange
           <span class="fixed">getLine</span>은 터미널에서 한 줄을 읽어오는 I/O action입니다. 이
           둘은 사실 복잡하지 않으며, 대부분의 프로그래밍 언어에서 이와 상응하는 함수나 구문을 갖고있습니다. 따라서 지금은 <span
             class="label function">getContents</span>를 만나보도록 하겠습니다. <span class="fixed">getContents</span>는
-          end-of-file 문자를 만나기 전까지의 표준 입력에서 모든것을 읽어오는 I/O action입니다. 이의 타입은 <span
-            class="fixed">getContents :: IO String</span>입니다. What's cool about
-          <span class="fixed">getContents</span> is that it does lazy I/O. <span
-            class="fixed">foo &lt;- getContents</span>라 하면, 들어온 것들을 한번에 읽어것이
-          아니라, 메모리에 저장한 다음, <span class="fixed">foo</span>와 bind해 줍니다. 맞습니다, 이는
-          lazy입니다! 말하길: <i>"예 예, 진짜로 필요할때 터미널에서 입력을 읽어들일거야!"</i>. </p>
+          end-of-file 문자를 만나기 전까지의 표준 입력에서 모든것을 읽어오는 I/O action입니다. 타입은 <span class="fixed">getContents
+            :: IO String</span>입니다. <span class="fixed">getContents</span>에서 멋진
+          점은 lazy I/O를 수행한다는 것입니다. <span class="fixed">foo &lt;- getContents</span>라
+          하면, 들어온 것들을 한번에 읽어것이 아니라, 메모리에 저장한 다음, <span class="fixed">foo</span>와
+          bind해 줍니다. 맞습니다, 이는 lazy입니다! 말하길: <i>"예 예, 진짜로 필요할때 터미널에서 입력을
+            읽어들일거야!"</i>. </p>
         <p> <span class="fixed">getContents</span>는 어떤 프로그램의 출력을 저희 프로그램의 입력으로
           흘러보낼때(pipe) 매우 유용합니다. unix 시스템에서의 파이프가 하는일을 알지 못한다면, 여기 짧은 지침서가 있습니다.
           다음 짧은 하이쿠를 포함하는 텍스트 파일을 만들어 봅시다:</p>
@@ -577,10 +577,10 @@ orange
 What's with that airplane food, huh?
 It's so small, tasteless 
 </pre>
-        <p>예, 이 하이쿠는 별로이지만, 어쩔 수 없습니다? 좋은 하이쿠 지침서를 아시는 분은 제게 알려주시기 바랍니다.</p>
+        <p>예, 이 하이쿠는 별로이지만, 어떡합니까? 좋은 하이쿠 지침서를 아시는 분은 제게 알려주시기 바랍니다.</p>
         <p>이제, <span class="fixed">forever</span>함수를 소계하면서 작성한 작은 프로그램을 떠올려
-          봅시다. 문장을 입력받아, 대문자로 변형시켜 사용자에게반환한 다음, 동일한 일을 무한히 반복하였습니다. 여러분들이 뒤로
-          스크롤하지 않을 것이므로, 여기 다시 보여드리겠습니다:</p>
+          봅시다. 문장을 입력받아, 대문자로 변형시켜 사용자에게반환한 다음, 동일한 일을 무한히 반복하였습니다. 여러분이 뒤로
+          스크롤하지 않을 것이라 예상되어, 여기 다시 보여드리겠습니다:</p>
         <pre name="code" class="haskell:hs">import Control.Monad
 import Data.Char
 
@@ -764,19 +764,15 @@ palindrome
         <p>또 다시, 프로그램을 실행시켜 표준입력에 단어를 입력한 것과 동일한 출력을 얻게되었습니다.&nbsp; 사용자의 입력이 아닌
           파일로 입력이 들어왔기에 <span class="fixed">palindromes.hs</span>의 입력을 확인할 수
           없습니다.</p>
-        <p>아마 여러분은 이제 어떻게 lazy I/O가 동작하는지, 어떻게 이 이점을 활용할 수 있는지를 깨달았을 것입니다. You
-          can just think in terms of what the output is supposed to be for some
-          given input and write a function to do that transformation. lazy
-          I/O에선, nothing is eaten from the input until it absolutely has to be
-          because what we want to print right now depends on that input.</p>
+        <p>아마 여러분은 이제 어떻게 lazy I/O가 동작하는지, 어떻게 이 이점을 활용할 수 있는지를 깨달았을 것입니다. :TODO
+          주어진 어떠한 입력을 추정하여 출력이 무엇인가를 생각할 수 있으며, 전송을 하는 함수를 작성할 수 있습니다. lazy
+          I/O에는 입력에 맞춰 출력을 하므로, 입력을 완료하기 전까지 아무런 일도 하지 안습니다..</p>
         <p>지금까지 저희는 무언가를 터미널에 출력하고 읽으며 I/O를 다루어봤습니다. 하지만 파일을 읽고 쓰는 작업은 어떨까요? 음..
-          한편으로 보자면, 저희는 이미 그러한 작업을 했습니다. One way to think about reading from the
-          terminal 터미널에서 무언가를 읽는 작업을 파일에서 읽어오는 것이라 생각할 수 있습니다. . Same goes for
-          writing to the terminal, it's kind of like writing to a file. 이러한 두
-          파일을 <span class="fixed">stdout</span>와 <span class="fixed">stdin</span>라
-          부를 수 있으며, 이는 각각 <i>표준 출력(standard output</i>)과 <i>표준 입력(standard
-            input</i>)을 의미합니다. 명심하시기 바랍니다. 파일을 읽고 쓰는 작업은, 표준 출력에 쓰는 작업과 표준 입력에서
-          읽어들이는 작업과 매우 유사하다는 것을 곧 보게될 것입니다.</p>
+          한편으로 보자면, 저희는 이미 그러한 작업을 했습니다. 터미널에서 무언가를 읽는 작업을 파일에서 읽어오는 것이라 생각할 수
+          있습니다. 터미널에 무언가를 쓰는 것은 파일에 무언가를 쓰는것이라 할 수 있습니다. 이러한 두 파일을 <span class="fixed">stdout</span>와
+          <span class="fixed">stdin</span>라 부를 수 있으며, 이는 각각 <i>표준 출력(standard
+            output</i>)과 <i>표준 입력(standard input</i>)을 의미합니다. 명심하시기 바랍니다. 파일을
+          읽고 쓰는 작업은, 표준 출력에 쓰는 작업과 표준 입력에서 읽어들이는 작업과 매우 유사하다는 것을 곧 보게될 것입니다.</p>
         <p>Avril Lavigne's의 히트작인 <i>Girlfriend</i> 가사를 담고있는 <i>girlfriend.txt</i>을
           열어, 터미널에 출력하는 매우 간단한 프로그램부터 시작해 보도록 하겠습니다. 여기 <i>girlfriend.txt</i>가
           있습니다:</p>
@@ -818,15 +814,12 @@ I think you need a new one!
         <pre name="code" class="haskell:hs">data IOMode = ReadMode | WriteMode | AppendMode | ReadWriteMode
 </pre> <img src="http://s3.amazonaws.com/lyah/file.png" alt="A FILE IN A CAKE!!!"
           class="left" height="340" width="232">
-        <p> 주중 가능한 요일을 나타내는 것과 비슷한 여기 나온 타입은Just like our type that represents
-          the seven possible values for the days of the week, this type is an
-          enumeration 열거입니다 that represents what we want to do with our opened
-          file. 매우 간단합니다. 이 타입이 Just note that this type is <span class="fixed">IOMode</span>인
-          지 and not <span class="fixed">IO Mode</span>이 아닌지 주목하기만 하면 됩니다. <span
-            class="fixed">IO Mode</span>는 would be the type of an I/O action
-          that has a value of 어떠한 타입 <span class="fixed">Mode</span>를 결과 값으로 지닌
-          I/O action이여야 하지만, but <span class="fixed">IOMode</span>는 단지 간단한 열거(enumeration)입
-          니다is just a simple enumeration.</p>
+        <p> 주중 가능한 요일을 나타내는 것과 비슷한 여기 나온 타입은, 연 파일에 대해 어떠한 작업을 하는지 나타내는
+          열거(enumeration)입 니다. 이는 매우 단순합니다. 이 타입이&nbsp; <span class="fixed">IOMode</span>인
+          지 <span class="fixed">IO Mode</span>가 아닌지에 주목하기만 하면 됩니다. <span class="fixed">IO
+            Mode</span>는 어떠한 타입 <span class="fixed">Mode</span>를 결과 값으로 지닌 I/O
+          action이지만, <span class="fixed">IOMode</span>는 단지 간단한
+          열거(enumeration)입니다.</p>
         <p>마지막으로, 특정 파일을 특정모드로 여는 I/O action을 반환합니다. 이러한 action을 무언가에 bind한다면 <span
             class="fixed">Handle</span>을 얻게됩니다. <span class="fixed">Handle</span>
           타입의 값은 파일의 위치를 나타냅니다. 이 핸들을 이용하여 읽어온 파일의 위치를 알아낼 수 있습니다. 파일 읽어 핸들에
@@ -883,24 +876,21 @@ withFile' path mode f = do
           action을 반환받습니다. 이 action을 <span class="fixed">result</span>에 bind하여,
           핸들을 닫은 다음 <span class="fixed">return result</span>를 하였습니다. <span class="fixed">f</span>로
           얻은 I/O action에 봉인된 결과를 <span class="fixed">return</span>받음으로써, I/O
-          action은 <span class="fixed">f handle</span>에서 얻은 것과 동일한 결과를 봉인합니다. So
-          if <span class="fixed">f handle</span> returns an action that
-          will&nbsp; 표준 입력에서 줄의 갯수를 읽어 파일에 쓰는 action을 반환하면read a number of lines
-          from the standard input and write them to a file and&nbsp;&nbsp; have
-          as its result encapsulated the number of lines it read, if we used
-          that with <span class="fixed">withFile'</span>, the resulting I/O
-          action would also have as its result the number of lines read.</p>
-        <p><span class="fixed">getContents</span>와 비슷한<span class="fixed">hGetContents</span>함
+          action은 <span class="fixed">f handle</span>에서 얻은 것과 동일한 결과를 봉인합니다.
+          따라서 <span class="fixed">withFile'</span>사용하고&nbsp; <span class="fixed">f
+            handle</span>이 표준 입력에서 줄의 갯수를 읽어 파일에 작성하고 읽은 줄의 갯수를 봉인된 결과로 갖는
+          action을 반환한다면, 결과 I/O action 또한 읽은 줄의 갯수를 결과로 가질 것입니다.</p>
+        <p><span class="fixed">getContents</span>와 비슷한 <span class="fixed">hGetContents</span>함
           수도 있지만 <span class="label function">hGetLine</span>, <span class="label function">hPutStr</span>,
-          <span class="label function">hPutStrLn</span>, <span class="label function">hGetChar</span>
-          도 있습니다. 이들은 <i>h</i>가 없는 것과 대응되는 작업을 하지만 표준 입력이나 표준 출력과 관계된 작업을 하는
-          대신, 핸들을 인자로 받아 특정 파일에 동작합니다. 예: <span class="fixed">putStrLn</span>은
-          문자열을 취해 터미널에 그 문자열과 개행문자를 출력하는 I/O action을 반환합니다. <span class="fixed">hPutStrLn</span>는
+          <span class="label function">hPutStrLn</span>, <span class="label function">hGetChar</span>도
+          있습니다. 이들은 <i>h</i>가 없는 것과 대응되는 작업을 하지만 표준 입력이나 표준 출력과 관계된 작업을 하는 대신,
+          핸들을 인자로 받아 특정 파일에 동작합니다. 예: <span class="fixed">putStrLn</span>은 문자열을
+          취해 터미널에 그 문자열과 개행문자를 출력하는 I/O action을 반환합니다. <span class="fixed">hPutStrLn</span>는
           핸들과 문자열을 취해, 핸들에 연결된 파일에 문자열과 개행문자를 써넣는 I/O action을 반환합니다. 같은 맥락으로, <span
             class="fixed">hGetLine</span>은 핸들을 받아, 파일에서 한 줄을 읽는 I/O action을
           반환합니다.</p>
         <p>파일을 불러와서 그 내용을 문자열로 취급하는 것은 매우 일반적이므로, 이러한 작업을 좀더 편하게 만들 작고 멋진 함수를
-          가졌습니다.:</p>
+          가졌습니다:</p>
         <p> <span class="label function">readFile</span>는 <span class="fixed">readFile
             :: FilePath -&gt; IO String</span> 타입서명을 갖습니다. <span class="fixed">FilePath</span>는
           <span class="fixed">String</span>의 색다른 이름이라는 것을 명심하시기 바랍니다. <span class="fixed">readFile</span>은
@@ -966,68 +956,45 @@ Take salad out of the oven
         contents &lt;- hGetContents handle
         putStr contents)
 </pre>
-        <p>is actually like connecting a pipe from the file to the output. Just
-          like you can think of lists as streams, you can also think of files as
-          streams. This will read one line at a time and print it out to the
-          terminal as it goes along. So you may be asking, how wide is this pipe
-          then? How often will the disk be accessed? Well, for text files, the
-          default buffering is line-buffering usually. That means that the
-          smallest part of the file to be read at once is one line. That's why
-          in this case it actually reads a line, prints it to the output, reads
-          the next line, prints it, etc. For binary files, the default buffering
-          is usually block-buffering. That means that it will read the file
-          chunk by chunk. The chunk size is some size that your operating system
-          thinks is cool.</p>
-        <p>You can control how exactly buffering is done by using the <span class="fixed">hSetBuffering</span>
-          function. It takes a handle and a <span class="fixed">BufferMode</span>
-          and returns an I/O action that sets the buffering. <span class="fixed">BufferMode</span>
-          is a simple enumeration data type and the possible values it can hold
-          are: <span class="fixed">NoBuffering</span>, <span class="fixed">LineBuffering</span>
-          or <span class="fixed">BlockBuffering (Maybe Int)</span>. The <span
-            class="fixed">Maybe Int</span> is for how big the chunk should be,
-          in bytes. If it's <span class="fixed">Nothing</span>, then the
-          operating system determines the chunk size. <span class="fixed">NoBuffering</span>
-          means that it will be read one character at a time. <span class="fixed">NoBuffering</span>
-          usually sucks as a buffering mode because it has to access the disk so
-          much.</p>
-        <p>Here's our previous piece of code, only it doesn't read it line by
-          line but reads the whole file in chunks of 2048 bytes.</p>
+        <p>이는 실제로 파일에서 출력으로 pipe로 연결한 것과 같습니다. 리스트를 스트림이라 생각할 수 있다면, 파일을 스트림이라
+          생각할 수 도 있을것입니다. 이는 한번에 한 줄을 읽어가며 터미널에 출력할 것입니다. 아마 여러분은 'pipe가 얼마나
+          넓은가? 얼머나 자주 디스크에 접근할까?' 라고 물어보실 수 도 있을 것입니다. 텍스트 파일에서 기본 버퍼링은 보통 줄단위
+          버퍼링이 됩니다. 이는 한번에 파일에서 읽을 가장 작은 단위가 줄 단위라는 것을 의미합니다. 한 줄을 읽고 출력하고, 한 줄을
+          읽고 출력하는 이유가 바로 이겁니다. 이진 파일에서의 기본 버퍼링은 보통 블럭-버퍼링이 됩니다. 이는 파일을 덩어리 단위로
+          읽는다는 것을 의미합니다. 덩어리의 크기는 운영체제가 생각하기에 괜찮다고 여겨지는 크기가 됩니다.</p>
+        <p><span class="fixed">hSetBuffering</span>함수를 이용하여 버퍼링을 제어할 수 있습니다. 이
+          함수는 핸들과 <span class="fixed">BufferMode</span>를 취해&nbsp; 버퍼링을 설정하는 I/O
+          action을 반환합니다. <span class="fixed">BufferMode</span>은 단순한 열거 자료구조이며,
+          가능한 값은 다음과 같습니다: <span class="fixed">NoBuffering</span>, <span class="fixed">LineBuffering</span>,
+          <span class="fixed">BlockBuffering (Maybe Int)</span>. <span class="fixed">Maybe
+            Int</span>는 덩어리의 크기로 바이트 단위입니다. <span class="fixed">Nothing</span>이
+          라면 운영체제가 덩어리의 크기를 결정하게 됩니다. <span class="fixed">NoBuffering</span>는
+          한번에 문자 하나를 읽는다는 것을 의미합니다. <span class="fixed">NoBuffering</span>는
+          디스크에 많이 접근하기에 버퍼링 모드로는 보통 썩 좋지는 않습니다.</p>
+        <p>여기 이전 코드를 줄 단위로 읽는게 아니라 2048 바이트씩 읽도록 한 것이 나와 있습니다.</p>
         <pre name="code" class="haskell:hs">main = do 
     withFile "something.txt" ReadMode (\handle -&gt; do
         hSetBuffering handle $ BlockBuffering (Just 2048)
         contents &lt;- hGetContents handle
         putStr contents)
 </pre>
-        <p>Reading files in bigger chunks can help if we want to minimize disk
-          access or when our file is actually a slow network resource.</p>
-        <p>We can also use <span class="label function">hFlush</span>, which is
-          a function that takes a handle and returns an I/O action that will
-          flush the buffer of the file associated with the handle. When we're
-          doing line-buffering, the buffer is flushed after every line. When
-          we're doing block-buffering, it's after we've read a chunk. It's also
-          flushed after closing a handle. That means that when we've reached a
-          newline character, the reading (or writing) mechanism reports all the
-          data so far. But we can use <span class="fixed">hFlush</span> to
-          force that reporting of data that has been read so far. After
-          flushing, the data is available to other programs that are running at
-          the same time.</p>
-        <p>Think of reading a block-buffered file like this: your toilet bowl is
-          set to flush itself after it has one gallon of water inside it. So you
-          start pouring in water and once the gallon mark is reached, that water
-          is automatically flushed and the data in the water that you've poured
-          in so far is read. But you can flush the toilet manually too by
-          pressing the button on the toilet. This makes the toilet flush and all
-          the water (data) inside the toilet is read. In case you haven't
-          noticed, flushing the toilet manually is a metaphor for <span class="fixed">hFlush</span>.
-          This is not a very great analogy by programming analogy standards, but
-          I wanted a real world object that can be flushed for the punchline.</p>
-        <p>We already made a program to add a new item to our to-do list in <i>todo.txt</i>,
-          now let's make a program to remove an item. I'll just paste the code
-          and then we'll go over the program together so you see that it's
-          really easy. We'll be using a few new functions from <span class="fixed">System.Directory</span>
-          and one new function from <span class="fixed">System.IO</span>, but
-          they'll all be explained.</p>
-        <p>Anyway, here's the program for removing an item from <i>todo.txt</i>:</p>
+        <p>디스크 접근을 최소화 하거나 느린 네트워크 자원에서, 큰 덩어리 단위로 파일을 읽는 것이 도움이 됩니다.</p>
+        <p>또한 <span class="label function">hFlush</span>를 이용할 수 있으며, 이는 핸들을 받아
+          handle핸들에 연결돤 파일의 버퍼를 비워주는 I/O action을 반환합니다. 줄단위 버퍼링을 할때, 버퍼는 줄마다
+          비워지게 됩니다. 블록 단위 버퍼링을 한다면, 한 덩어리를 읽을때마다 비워지게 됩니다. 또한 핸들을 닫을때도 비워집니다. 개행
+          문자를 만나면, 읽는(혹은 쓰는) 매커니즘이 모든 데이터를 날려버린다는 것을 의미합니다. 이제까지 읽은 데이터를 강제로
+          보고하는데에도 <span class="fixed">hFlush</span>를 사용할 수 있습니다.&nbsp; flush를
+          하고 나면, 동시간에 실행되고 있는 다른 프로그램에서 그 데이터를 이용할 수 있게됩니다.</p>
+        <p>블록-버퍼단위로 파일을 읽는 것을 다음과 같이 생각할 수 있습니다: 변기가 있고 물를 내리면 1갤론의 물을 체워넣다고
+          가정해봅시다. 물을 내리면 1갤론에 도달하기 까지 자동대로 물을 체울 것이며, 내려진 물 속에 있는 데이터는 읽혀질 것입니다.
+          또한 수동으로 변기 레버를 내림으로써 변기 물을 내릴 수 도 있습니다. 변기 물을 내림으로써 변기에 있는 모든 물(데이터)를
+          읽을 수 있게 만들어 줍니다. 눈치체셨지도 모르겠지만, 변기 물을 수동으로 내리는 것이 <span class="fixed">hFlush</span>에
+          대한 비유였습니다. 이는 프로그래밍적 기준에는 좋은 비유가 아니지만, 핵심을 나타내기 위해 실생활의 물체를 선택했습니다.</p>
+        <p> <i>todo.txt</i>에 새로운 항목을 추가하는 프로그램을 만들었으므로, 이번엔 항목을 삭제하는 프로그램을 만들어
+          봅시다. 코드를 붙여놓아 같이 살펴보다보면, 실제론 매우 쉽다는 것을 발견하실 수 있을 것입니다.&nbsp; <span class="fixed">System.IO</span>와
+          <span class="fixed">System.Directory</span>에 있는 새로운 함수들을 이용할 것이지만, 이들
+          모두 설명드릴 것입니다.</p>
+        <p>어찌됐건, 여기 <i>todo.txt</i>에서 항목을 제거하는 프로그램이 있습니다:</p>
         <pre name="code" class="haskell:hs">import System.IO
 import System.Directory
 import Data.List
@@ -1053,48 +1020,41 @@ main = do
         <p>우선, <i>todo.txt</i>를 읽기모드로 열어서 핸들을 <span class="fixed">handle</span>에
           bind하였습니다. </p>
         <p>다음으로, <span class="fixed">System.IO</span>에서 이제껏 만나지 못했던 <span class="label function">openTempFile</span>함
-          수를 이용하였습니다. 이름 참 잘지었습니다. It takes a path to a temporary directory and
-          a template name for a file and opens a temporary file. <span class="fixed">.</span>는
+          수를 이용하였습니다. 이름 참 잘지었습니다. 이는 임시 디렉토리과 파일을 받아 임시파일을 엽니다. <span class="fixed">.</span>는
           어떠한 OS라도 현재 디렉토리라는 것을 알리기에, 임시 디렉토리로 <span class="fixed">"."</span>를
-          이용하였습니다. 임시 파일We used <span class="fixed">"temp"</span> as the
-          template name for the temporary file, which means that the temporary
-          file will be named <i>temp</i> plus some random characters. It
-          returns an I/O action that makes the temporary file and the result in
-          that I/O action is a pair of values: the name of the temporary file
-          and a handle. We could just open a normal file called <i>todo2.txt</i>
-          or something like that but it's better practice to use <span class="fixed">openTempFile</span>
-          so you know you're probably not overwriting anything. </p>
-        <p>The reason we didn't use <span class="fixed">getCurrentDirectory</span>
-          to get the current directory and then pass it to <span class="fixed">openTempFile</span>
-          but instead just passed <span class="fixed">"."</span> to <span class="fixed">openTempFile</span>
-          is because <span class="fixed">.</span> refers to the current
-          directory on unix-like system and Windows </p>
-        <p>Next up, we bind the contents of <i>todo.txt</i> to <span class="fixed">contents</span>.
-          Then, split that string into a list of strings, each string one line.
-          So <span class="fixed">todoTasks</span> is now something like <span
-            class="fixed">["Iron the dishes", "Dust the dog", "Take salad out of
-            the oven"]</span>. We zip the numbers from 0 onwards and that list
-          with a function that takes a number, like 3, and a string, like <span
-            class="fixed">"hey"</span> and returns <span class="fixed">"3 -
-            hey"</span>, so <span class="fixed">numberedTasks</span> is <span
-            class="fixed">["0 - Iron the dishes", "1 - Dust the dog" ...</span>.
-          We join that list of strings into a single newline delimited string
-          with <span class="fixed">unlines</span> and print that string out to
-          the terminal. Note that instead of doing that, we could have also done
-          <span class="fixed">mapM putStrLn numberedTasks</span></p>
-        <p>We ask the user which one they want to delete and wait for them to
-          enter a number. Let's say they want to delete number 1, which is <span
-            class="fixed">Dust the dog</span>, so they punch in <span class="fixed">1</span>.
-          <span class="fixed">numberString</span> is now <span class="fixed">"1"</span>
-          and because we want a number, not a string, we run <span class="fixed">read</span>
-          on that to get <span class="fixed">1</span> and bind that to <span class="fixed">number</span>.</p>
-        <p>Remember the <span class="fixed">delete</span> and <span class="fixed">!!</span>
-          functions from <span class="fixed">Data.List</span>. <span class="fixed">!!</span>
-          returns an element from a list with some index and <span class="fixed">delete</span>
-          deletes the first occurence of an element in a list and returns a new
-          list without that occurence. <span class="fixed">(todoTasks !!
-            number)</span> (number is now <span class="fixed">1</span>) returns
-          <span class="fixed">"Dust the dog"</span>. We bind <span class="fixed">todoTasks</span>
+          이용하였습니다. 임시 파일 이름으론 <span class="fixed">"temp"</span>를 사용했으며, 이는 <i>temp</i>란
+          이름에 무작위 문자가 붙는 다는 것을 의미합니다. <span class="label function">openTempFile</span>함
+          수는 임시 파일을 만드는 I/O action을 반환하고 그 결과는 2개의 값이 됩니다: 임시 파일의 이름과 핸들. <i>todo2.txt</i>나
+          비슷한 파일을 열 수도 있지만, 어떠한 파일도 덮어쓰지 않는다는 것을 알 수 있으므로 <span class="fixed">openTempFile</span>를
+          사용하는게 좋은 습관이 될 것입니다.</p>
+        <p><span class="fixed">getCurrentDirectory</span>을 이용하여 현재 디렉토리를 얻어 <span
+            class="fixed">openTempFile</span>로 넘기는 대신, 단순히 <span class="fixed">"."</span>를
+          <span class="fixed">openTempFile</span>에 넘긴 이유는 <span class="fixed">.</span>가
+          유닉스(유사한) 시스템과 윈도우에서 현재 디렉토리를 가리키기 때문입니다.</p>
+        <p>다음으로 넘어가서, <i>todo.txt</i>의 내용을 <span class="fixed">contents</span>에
+          bind하였습니다. 그런 다음, 문자열을 줄 단위로 문자열 리스트로 나누었습니다. 따라서 <span class="fixed">todoTasks</span>는
+          이제 <span class="fixed">["Iron the dishes", "Dust the dog", "Take
+            salad out of the oven"]</span>와 같아질 것입니다. 이 리스트와 0부터 시작하는 숫자를,
+          숫자(3)와 문자열(<span class="fixed">"hey"</span>)을 취해 <span class="fixed">"3
+            - hey"</span>을 반환하는 함수와 zip시킬 것이므로, <span class="fixed">numberedTasks</span>는
+          <span class="fixed">["0 - Iron the dishes", "1 - Dust the dog" ...</span>가
+          될 것입니다. 이 문자열 리스트를 <span class="fixed">unlines</span>로 개행문자를 추가하여
+          join하여 터미널에 출력할 것입니다. <span class="fixed">mapM putStrLn numberedTasks</span>로
+          도 그러한 일을 할 수 있다는 것을 주목하시기 바랍니다.</p>
+        <p>저희는 삭제하고자 하는 것이 무엇인지 사용자에게 요청할 것이며, 숫자를 입력할 때까지 기다릴 것입니다. <span class="fixed">Dust
+            the dog</span>인 숫자 1을 삭제하려 <span class="fixed">1</span>을 누른다고 가정해
+          봅니다, which is <span class="fixed">Dust the dog</span>, so they punch
+          in <span class="fixed">1</span>. 현재 <span class="fixed">numberString</span>은
+          <span class="fixed">"1"</span>이며, 원하는 것은 문자열이 아닌 숫자이므로 <span class="fixed">read</span>를
+          돌려 <span class="fixed">1</span>를 얻은 후 <span class="fixed">number</span>에
+          bind합니다.</p>
+        <p><span class="fixed">delete</span>와 <span class="fixed">!!</span>함수가
+          <span class="fixed">Data.List</span>에서 나왔단 사실을 명심하시기 바랍니다. <span class="fixed">!!</span>는
+          리스트에서 원소를 반환하고 returns an element from a list with some index and <span
+            class="fixed">delete</span>는 deletes the first occurence of an
+          element in a list and returns a new list without that occurence. <span
+            class="fixed">(todoTasks !! number)</span> (number는 현재 <span class="fixed">1</span>)
+          은 <span class="fixed">"Dust the dog"</span>을 반환합니다. We bind <span class="fixed">todoTasks</span>
           without the first occurence of <span class="fixed">"Dust the dog"</span>
           to <span class="fixed">newTodoItems</span> and then join that into a
           single string with <span class="fixed">unlines</span> before writing
@@ -1111,7 +1071,7 @@ main = do
         <p>And that's that! We could have done this in even fewer lines, but we
           were very careful not to overwrite any existing files and politely
           asked the operating system to tell us where we can put our temporary
-          file. Let's give this a go!</p>
+          file. 한번 돌려봅시다!</p>
         <pre name="code" class="plain">$ runhaskell deletetodo.hs
 These are your TO-DO items:
 0 - Iron the dishes
@@ -1137,29 +1097,28 @@ Take salad out of the oven
         <h2>명령 라인 인자</h2>
         <img src="http://s3.amazonaws.com/lyah/arguments.png" alt="COMMAND LINE ARGUMENTS!!! ARGH"
           class="right" height="380" width="449">
-        <p>미널에서 돌아가는 어플리케이션이나 스크립트를 만든다 한다면, 명령 라인 인자를 처리하는 작업은 필수입니다. 다행히도,
-          하스켈의 표준 라이브러리는 프로그램의 명령 라인 인자에 대한 우아한 방법을 가지고 있습니다.</p>
+        <p>터미널에서 돌아가는 어플리케이션이나 스크립트를 만든다 한다면, 명령 라인 인자를 처리하는 작업은 필수입니다. 다행히도,
+          하스켈의 표준 라이브러리는 프로그램의 명령 라인 인자에 대한 우아한 방법을 지니고 있습니다.</p>
         <p>이전 단락에서, 해야할 일 목록에 할 일들을 추가하는 프로그램 하나와 항목을 추가하는 프로그램을 만들었습니다. 저희가 취한
           접근법에는 두가지 문제가 있습니다. 첫번째는 코드에 to-do 파일의 이름을 하드코드 하였다는 것입니다.&nbsp;<span
             style="font-style: italic;"></span><i>todo.txt</i>라고 파일 이름을 <span style="font-style: italic;"></span>정
-          해버려, 사용자는 여러게의 할 일 목록들을 관리하지 못하게 되었습니다.</p>
+          해버려, 사용자는 여러개의 할 일 목록들을 관리하지 못하게 되었습니다.</p>
         <p>이를 해결할 한가지 방법으로는, 사용자에게 항상 할 일 목록으로 사용하고자 하는 파일을 물어보는 것입니다. 사용자가
           삭제하고자 하는 항목을 알고자할때 이러한 접근법을 이용하였습니다. 이는 동작하긴 하지만, 사용자가 프로그램을 실행시키고,
           무언가를 요청하고 요청받는데 기다려야 하기에 별로 좋지는 않습니다. 이러한 것을 interactive 프로그램이라 부르며,
           interactive 명령 라인 프로그램과 조금 다른 차이점을 갖습니다. 스크립트와 같이 프로그램이 자동적으로 실행되길
           원한다면 어떻게 해야할까요? 하나의 프로그램이나 여러 프로그램을 단순히 호출하기만 하는 batch스크립트보다, 프로그램과
           상호작용하는 batch스크립트를 만드는 것이 어려울 것입니다.</p>
-        <p>실행중에 사용자에게 요청하는 대신, 프로그램을 실행시킬때 사용자의 요구를 받아들이도록 하면 더 좋을 것입니다. And
-          what better way to have the user tell the program what they want it to
-          do when they run it than via command line arguments 명령 라인 인자를 통해 !</p>
+        <p>실행중에 사용자에게 요청하는 대신, 프로그램을 실행시킬때 사용자의 요구를 받아들이도록 하면 더 좋을 것입니다. 그리고 더
+          나은 방법은, 명령 라인 인자를 통해 사용자가 원하는것을 알려주는 것입니다 !</p>
         <p><span class="fixed">System.Environment</span>모듈은 두가지 훌륭한 I/O action을
           지닙니다. 하나는 which has a type of <span class="fixed">getArgs :: IO
-            [String]</span>타입을 지닌 <span class="label function">getArgs</span>이며,
-          and is an I/O action that will get the arguments that the program was
-          run with and have as its contained result a list with the arguments 인자
-          리스트를 결과로 포함하는 . <span class="label function">getProgName</span>는 has
-          a type of <span class="fixed">getProgName :: IO String</span>타입을 지니며,
-          프로그램 이름을 포함하는 I/O action입니다.</p>
+            [String]</span>타입을 지닌 <span class="label function">getArgs</span>이
+          며, and is an I/O action that will get the arguments that the program
+          was run with and have as its contained result a list with the
+          arguments 인자 리스트를 결과로 포함하는 . <span class="label function">getProgName</span>는
+          has a type of <span class="fixed">getProgName :: IO String</span>타입을
+          지니며, 프로그램 이름을 포함하는 I/O action입니다.</p>
         <p>여기, 이 두 개가 어떻게 동작하는지 보여주는 작은 프로그램이 있습니다:</p>
         <pre name="code" class="haskell:hs"> import System.Environment 
  import Data.List
@@ -1236,20 +1195,18 @@ dispatch =  [ ("add", add)
         <p>다음 줄에선, dispatch 리스트에서 command를 살펴봅니다. <span class="fixed">"add"</span>는
           <span class="fixed">add</span>를 가리킬 것이므로 <span class="fixed">Just add</span>를
           결과로 얻게될 것입니다. 그리고 함수에서 <span class="fixed">Maybe</span>를 배제하기 위해 다시한번
-          패턴 매칭을 사용하였습니다. dispatch 리스트에 command가 없으면 어떤일이 발생할까요? Well then the
-          lookup will return <span class="fixed">Nothing</span>을 반환하여, but we
-          said we won't concern ourselves with failing gracefully too much, so
-          the pattern matching will fail and our program will throw a fit 프로그램은
-          나락으로 떨어질 것입니다.</p>
-        <p>마지막으로, 나머지 인자 리스트와 함께 <span class="fixed">action</span>함수를 호출하였습니다
-          That will return an I/O action을 반환합니다 that either adds an item 이는 리스트에
-          항목을 보여주거나 항목을 추가하거나 삭제하는 I/O action을 반환하며 displays a list of items or
-          deletes an item and because that 이러한 action이 part of the <span class="fixed">main</span>
-          <i>do</i> 블록의 일부이기에, it will get performed. If we follow our concrete
-          example so far and our <span class="fixed">action</span>함수는 <span class="fixed">add</span>이
-          며, it will get called with <span class="fixed">args</span> (<span class="fixed">["todo.txt",
-            "Spank the monkey"]</span>)로 호출되며 and return an <span class="fixed">Spank
-            the monkey</span>을 <i>todo.txt</i>에 추가하는 I/O action을 반환할 것입니다.</p>
+          패턴 매칭을 사용하였습니다. dispatch 리스트에 command가 없으면 어떤일이 발생할까요? command가 없다면
+          lookup은 <span class="fixed">Nothing</span>을 반환할 것이며, 이에 대한 대비를 안했기에,
+          패턴 매칭은 실패할 것이며 프로그램은 나락으로 떨어질 것입니다.</p>
+        <p>마지막으로, 나머지 인자 리스트와 함께 <span class="fixed">action</span>함수를 호출하였습니다.
+          이는 I/O action을 반환합니다 that either adds an item 이는 리스트에 항목을 보여주거나 항목을
+          추가하거나 삭제하는 I/O action을 반환하며, displays a list of items or deletes an
+          item and because that 이러한 action이 part of the <span class="fixed">main</span>
+          <i>do</i> 블록의 일부이기에, it will get performed. 구체적인 예를 들자하면, <span class="fixed">action</span>함
+          수는 <span class="fixed">add</span>이며, <span class="fixed">args</span>
+          (<span class="fixed">["todo.txt", "Spank the monkey"]</span>)로 호출되어 <span
+            class="fixed">Spank the monkey</span>을 <i>todo.txt</i>에 추가하는 I/O
+          action을 반환할 것입니다.</p>
         <p>훌륭합니다! 이제 구현해야 할것으로 <span class="fixed">add</span>, <span class="fixed">view</span>,
           <span class="fixed">remove</span>가 남았습니다. <span class="fixed">add</span>부
           터 시작해봅시다:</p>
@@ -1259,11 +1216,9 @@ add [fileName, todoItem] = appendFile fileName (todoItem ++ "\n")
         <p><span class="fixed">todo add todo.txt "Spank the monkey"</span>로
           프로그램이 호출되면, <span class="fixed">"add"</span>는&nbsp; <span class="fixed">main</span>블
           록의 첫번째 패턴 매치에서 <span class="fixed">command</span>에 bind될 것이며,<span class="fixed">["todo.txt",
-            "Spank the monkey"]</span>은 dispatch리스트에서 얻은 함수로 넘겨질 것입니다.. So,
-          because we're not dealing with bad input right now, we just pattern
-          match against a list with those two elements right away and return an
-          I/O action that appends that line to the end of the file, along with a
-          newline character.</p>
+            "Spank the monkey"]</span>은 dispatch리스트에서 얻은 함수로 넘겨질 것입니다. 지금 당장은
+          잘못된 입력을 다루지 않을 것이므로, 곧장 리스트의 두 원소에 대해 패턴 매치를 하여, 개행문자를 포함하여 파일 끝에 그 줄을
+          추가하는 I/O action을 반환합니다.</p>
         <p>다음으로, 목록을 확인하는 기능을 구현해 봅시다. 파일에 있는 항목들을 확인하려면, <span class="fixed">todo
             view todo.txt</span>라 할 것입니다. 따라서 처음 패턴 매치에서, <span class="fixed">command</span>는
           <span class="fixed">"view"</span>가 될 것이며 <span class="fixed">args</span>는
@@ -1275,15 +1230,15 @@ view [fileName] = do
         numberedTasks = zipWith (\n line -&gt; show n ++ " - " ++ line) [0..] todoTasks
     putStr $ unlines numberedTasks
 </pre>
-        <p>We already did pretty much the same thing in the program that only
-          deleted tasks when we were displaying the tasks so that the user can
-          choose one for deletion, only here we just display the tasks.</p>
+        <p>이미 동일한 일을 훌륭히 해냈기에 프로그램에서 작업을 지우는 We already did pretty much the same
+          thing in the program that only deleted tasks when we were displaying
+          the tasks so that the user can choose one for deletion, only here we
+          just display the tasks.</p>
         <p>마지막으로, <span class="fixed">remove</span>를 구현해 봅시다. It's going to be
           very similar to the program that only deleted the tasks, so if you
           don't understand how deleting an item here works, check out the
           explanation under that program. 주된 차이점은 <i>todo.txt</i>라 하드코딩하지 않고,
-          인자로 받았다는 것입니다. We're also not prompting the user for the task number
-          to delete, we're getting it as an argument.</p>
+          인자로 받았다는 것입니다. 또한, 삭제할 작업 번호를 사용자에게 물어보지 않고, 인자로 받았습니다.</p>
         <pre name="code" class="haskell:hs">remove :: [String] -&gt; IO ()
 remove [fileName, numberString] = do
     handle &lt;- openFile fileName ReadMode
@@ -1298,9 +1253,9 @@ remove [fileName, numberString] = do
     removeFile fileName
     renameFile tempName fileName
 </pre>
-        <p>We opened up the file based on <span class="fixed">fileName</span>에
-          기반한 파일을 열고, 임시 파일을 열어 사용자가 삭제하기를 원하는 줄을 삭제하여 임시 파일에 저장하고, 원본 파일을 삭제하여
-          임시파일을 <span class="fixed">fileName</span>으로 이름을 바꿉니다.</p>
+        <p><span class="fixed">fileName</span>에 해당하는 파일과 임시 파일을 열어, 사용자가 삭제하기를
+          원하는 줄을 삭제하여 임시 파일에 저장하고, 원본 파일을 삭제하여 임시파일을 <span class="fixed">fileName</span>으
+          로 이름을 바꾸었습니다.</p>
         <p>여기 전체 프로그램이 있습니다Here's the whole program at once, in all its glory!</p>
         <pre name="code" class="haskell:hs">import System.Environment 
 import System.Directory
@@ -1343,18 +1298,17 @@ remove [fileName, numberString] = do
     renameFile tempName fileName
 </pre> <img src="http://s3.amazonaws.com/lyah/salad.png" alt="fresh baked salad"
           class="left" height="200" width="143">
-        <p>To summarize our solution: we made a dispatch association that maps
-          from commands to functions that take some command line arguments and
-          return an I/O action. We see what the command is and based on that we
-          get the appropriate function from the dispatch list. We call that
-          function with the rest of the command line arguments to get back an
-          I/O action that will do the appropriate thing and then just perform
-          that action!</p>
-        <p>In other languages, we might have implemented this with a big switch
-          case statement or whatever, but using higher order functions allows us
-          to just tell the dispatch list to give us the appropriate function and
-          then tell that function to give us an I/O action for some command line
-          arguments.</p>
+        <p>저희의 해결책을 요약하자면: we made a dispatch association that maps from
+          commands to functions that take some command line arguments and return
+          an I/O action. We see what the command is and based on that we get the
+          appropriate function from the dispatch list. We call that function
+          with the rest of the command line arguments to get back an I/O action
+          that will do the appropriate thing and then just perform that action!</p>
+        <p>다른 언어에서는 커다란 switch case문이나 다른 것으로 이를 구현해야만 했을 것입니다 statement or
+          whatever, but using higher order 함수를 이용하여 dispatch 리스트가 적절한 함수를 돌려주고 이
+          함수는&nbsp; functions allows us to just tell the dispatch list to give
+          us the appropriate function and then tell that function to give us an
+          명령 라인 인자에 대한 I/O action을 줍니다 for some command line arguments.</p>
         <p>한번 저희 앱을 돌려봅시다!</p>
         <pre name="code" class="plain">$ ./todo view todo.txt
 0 - Iron the dishes
