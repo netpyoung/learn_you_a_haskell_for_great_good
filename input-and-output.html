@@ -1050,28 +1050,22 @@ main = do
           bind합니다.</p>
         <p><span class="fixed">delete</span>와 <span class="fixed">!!</span>함수가
           <span class="fixed">Data.List</span>에서 나왔단 사실을 명심하시기 바랍니다. <span class="fixed">!!</span>는
-          리스트에서 원소를 반환하고 returns an element from a list with some index and <span
-            class="fixed">delete</span>는 deletes the first occurence of an
-          element in a list and returns a new list without that occurence. <span
-            class="fixed">(todoTasks !! number)</span> (number는 현재 <span class="fixed">1</span>)
-          은 <span class="fixed">"Dust the dog"</span>을 반환합니다. We bind <span class="fixed">todoTasks</span>
-          without the first occurence of <span class="fixed">"Dust the dog"</span>
-          to <span class="fixed">newTodoItems</span> and then join that into a
-          single string with <span class="fixed">unlines</span> before writing
-          it to the temporary file that we opened. The old file is now unchanged
-          and the temporary file contains all the lines that the old one does,
-          except the one we deleted.</p>
-        <p>After that we close both the original and the temporary files and
-          then we remove the original one with <span class="label function">removeFile</span>,
-          which, as you can see, takes a path to a file and deletes it. After
-          deleting the old <i>todo.txt</i>, we use <span class="label function">renameFile</span>
-          to rename the temporary file to <i>todo.txt</i>. Be careful, <span class="fixed">removeFile</span>
-          and <span class="fixed">renameFile</span> (which are both in <span class="fixed">System.Directory</span>
-          by the way) take file paths as their parameters, not handles.</p>
-        <p>And that's that! We could have done this in even fewer lines, but we
-          were very careful not to overwrite any existing files and politely
-          asked the operating system to tell us where we can put our temporary
-          file. 한번 돌려봅시다!</p>
+          리스트와 색인으로 원소를 반환하고 <span class="fixed">delete</span>는 리스트에서 첫번째로 나타난
+          것을 지우고, 그 나타난 것을 제외한 새로운 리스트를반환합니다. <span class="fixed">(todoTasks !!
+            number)</span> (number는 현재 <span class="fixed">1</span>) 은 <span class="fixed">"Dust
+            the dog"</span>을 반환합니다. 첫번째로 나타난&nbsp; <span class="fixed">"Dust
+            the dog"</span>을 제외한&nbsp; <span class="fixed">todoTasks</span>를 <span
+            class="fixed">newTodoItems</span>에 bind하여, 저희가 연 임시 파일에 작성하기 전에 <span
+            class="fixed">unlines</span>으로 하나의 문자열로 join시켰습니다. 이제 예전 파일은 바뀌지 않고,
+          임시파일은 삭제한 것을 제외한 예전 파일의 모든 줄을 포함하게 되었습니다.</p>
+        <p>원본과 임시파일을 닫은 후에 원본 파일&nbsp;<span class="label function">removeFile</span>로
+          지웠습니다. 보시는 바처럼 <span class="label function">removeFile</span>는 파일 경로를
+          취해 해당하는 파일을 지웁니다. 예전 <i>todo.txt</i>을 지운 후에, <span class="label function">renameFile</span>을
+          이용하여 임시파일을 <i>todo.txt</i>로 이름 바꾸었습니다. <span class="fixed">removeFile</span>과
+          <span class="fixed">renameFile</span> (모두 <span class="fixed">System.Directory</span>에
+          있긴 하지만)는 핸들이 아닌 파일 경로를 인자로 받는다는 것을 주의하시기 바랍니다.</p>
+        <p>이제 끝입니다! 더 적은 라인으로 작성할 수 도 있지만, 기존에 존재하는 파일을 덮어쓰지 않도록 주의해야 하며, 임시파일을
+          어디에 두어도 괜찮은지 운영체제에게 공손히 물어봐야만 합니다. 한번 돌려봅시다!</p>
         <pre name="code" class="plain">$ runhaskell deletetodo.hs
 These are your TO-DO items:
 0 - Iron the dishes
@@ -1112,13 +1106,11 @@ Take salad out of the oven
         <p>실행중에 사용자에게 요청하는 대신, 프로그램을 실행시킬때 사용자의 요구를 받아들이도록 하면 더 좋을 것입니다. 그리고 더
           나은 방법은, 명령 라인 인자를 통해 사용자가 원하는것을 알려주는 것입니다 !</p>
         <p><span class="fixed">System.Environment</span>모듈은 두가지 훌륭한 I/O action을
-          지닙니다. 하나는 which has a type of <span class="fixed">getArgs :: IO
-            [String]</span>타입을 지닌 <span class="label function">getArgs</span>이
-          며, and is an I/O action that will get the arguments that the program
-          was run with and have as its contained result a list with the
-          arguments 인자 리스트를 결과로 포함하는 . <span class="label function">getProgName</span>는
-          has a type of <span class="fixed">getProgName :: IO String</span>타입을
-          지니며, 프로그램 이름을 포함하는 I/O action입니다.</p>
+          지닙니다. 하나는 <span class="fixed">getArgs :: IO [String]</span>타입을 지닌 <span
+            class="label function">getArgs</span>이며, 프로그램을 돌릴시에 인자를 얻어 그 인자 리스트를
+          결과로 포함하는 I/O action입니다. <span class="label function">getProgName</span>는
+          <span class="fixed">getProgName :: IO String</span>타입을 지니며, 프로그램 이름을
+          포함하는 I/O action입니다.</p>
         <p>여기, 이 두 개가 어떻게 동작하는지 보여주는 작은 프로그램이 있습니다:</p>
         <pre name="code" class="haskell:hs"> import System.Environment 
  import Data.List
@@ -1156,8 +1148,7 @@ arg-test
           <li>삭제<br>
           </li>
         </ul>
-        <p>We're not going to concern ourselves with possible bad input too much
-          right now.</p>
+        <p>지금은 예외적인 입력에 대한 것은 넘어갈 것입니다.</p>
         <p>터미널에 <span class="fixed">todo add todo.txt "Find the magic sword of
             power"</span>를 입력하여, <span class="fixed">Find the magic sword of
             power</span>를 <i>todo.txt</i>파일에 추가는 프로그램을 만들 것입니다. 해야할 작업을 보기 위해선
@@ -1199,14 +1190,12 @@ dispatch =  [ ("add", add)
           lookup은 <span class="fixed">Nothing</span>을 반환할 것이며, 이에 대한 대비를 안했기에,
           패턴 매칭은 실패할 것이며 프로그램은 나락으로 떨어질 것입니다.</p>
         <p>마지막으로, 나머지 인자 리스트와 함께 <span class="fixed">action</span>함수를 호출하였습니다.
-          이는 I/O action을 반환합니다 that either adds an item 이는 리스트에 항목을 보여주거나 항목을
-          추가하거나 삭제하는 I/O action을 반환하며, displays a list of items or deletes an
-          item and because that 이러한 action이 part of the <span class="fixed">main</span>
-          <i>do</i> 블록의 일부이기에, it will get performed. 구체적인 예를 들자하면, <span class="fixed">action</span>함
-          수는 <span class="fixed">add</span>이며, <span class="fixed">args</span>
-          (<span class="fixed">["todo.txt", "Spank the monkey"]</span>)로 호출되어 <span
-            class="fixed">Spank the monkey</span>을 <i>todo.txt</i>에 추가하는 I/O
-          action을 반환할 것입니다.</p>
+          이는 리스트의 항목들을 보여주거나 항목을 추가하거나 삭제하는 I/O action을 반환하며, 이러한 action은 <span
+            class="fixed">main</span> <i>do</i> 블록의 일부로 수행될 것입니다. 구체적인 예를 들자하면,
+          <span class="fixed">action</span>함 수는 <span class="fixed">add</span>이
+          며, <span class="fixed">args</span> (<span class="fixed">["todo.txt",
+            "Spank the monkey"]</span>)로 호출되어 <span class="fixed">Spank the
+            monkey</span>을 <i>todo.txt</i>에 추가하는 I/O action을 반환할 것입니다.</p>
         <p>훌륭합니다! 이제 구현해야 할것으로 <span class="fixed">add</span>, <span class="fixed">view</span>,
           <span class="fixed">remove</span>가 남았습니다. <span class="fixed">add</span>부
           터 시작해봅시다:</p>
@@ -1230,15 +1219,14 @@ view [fileName] = do
         numberedTasks = zipWith (\n line -&gt; show n ++ " - " ++ line) [0..] todoTasks
     putStr $ unlines numberedTasks
 </pre>
-        <p>이미 동일한 일을 훌륭히 해냈기에 프로그램에서 작업을 지우는 We already did pretty much the same
-          thing in the program that only deleted tasks when we were displaying
-          the tasks so that the user can choose one for deletion, only here we
-          just display the tasks.</p>
-        <p>마지막으로, <span class="fixed">remove</span>를 구현해 봅시다. It's going to be
-          very similar to the program that only deleted the tasks, so if you
-          don't understand how deleting an item here works, check out the
-          explanation under that program. 주된 차이점은 <i>todo.txt</i>라 하드코딩하지 않고,
-          인자로 받았다는 것입니다. 또한, 삭제할 작업 번호를 사용자에게 물어보지 않고, 인자로 받았습니다.</p>
+        <p>이미 동일한 일을 훌륭히 해냈기에 프로그램에서 작업을 지우는 것과 매우 유사한 :TODO We already did
+          pretty much the same thing in the program that only deleted tasks when
+          we were displaying the tasks so that the&nbsp; 사용자는 user can choose
+          one for deletion, only here we just display the tasks.</p>
+        <p>마지막으로, <span class="fixed">remove</span>를 구현해 봅시다. 이는 작업을 삭제하는 프로그램과
+          매우 유사하므로, 어떻게 항목이 삭제되는지 이해하지 못했다면, 다음 프로그램의 설명을 주의깊게 듣기 바랍니다. 주된 차이점은
+          <i>todo.txt</i>라 하드코딩하지 않고, 인자로 받았다는 것입니다. 또한, 삭제할 작업 번호를 사용자에게 물어보지
+          않고, 인자로 받았습니다.</p>
         <pre name="code" class="haskell:hs">remove :: [String] -&gt; IO ()
 remove [fileName, numberString] = do
     handle &lt;- openFile fileName ReadMode
@@ -1256,7 +1244,7 @@ remove [fileName, numberString] = do
         <p><span class="fixed">fileName</span>에 해당하는 파일과 임시 파일을 열어, 사용자가 삭제하기를
           원하는 줄을 삭제하여 임시 파일에 저장하고, 원본 파일을 삭제하여 임시파일을 <span class="fixed">fileName</span>으
           로 이름을 바꾸었습니다.</p>
-        <p>여기 전체 프로그램이 있습니다Here's the whole program at once, in all its glory!</p>
+        <p>여기 이 모든것이 들어있는 전체 프로그램이 있습니다!</p>
         <pre name="code" class="haskell:hs">import System.Environment 
 import System.Directory
 import System.IO
@@ -1298,17 +1286,14 @@ remove [fileName, numberString] = do
     renameFile tempName fileName
 </pre> <img src="http://s3.amazonaws.com/lyah/salad.png" alt="fresh baked salad"
           class="left" height="200" width="143">
-        <p>저희의 해결책을 요약하자면: we made a dispatch association that maps from
-          commands to functions that take some command line arguments and return
-          an I/O action. We see what the command is and based on that we get the
-          appropriate function from the dispatch list. We call that function
-          with the rest of the command line arguments to get back an I/O action
-          that will do the appropriate thing and then just perform that action!</p>
-        <p>다른 언어에서는 커다란 switch case문이나 다른 것으로 이를 구현해야만 했을 것입니다 statement or
-          whatever, but using higher order 함수를 이용하여 dispatch 리스트가 적절한 함수를 돌려주고 이
-          함수는&nbsp; functions allows us to just tell the dispatch list to give
-          us the appropriate function and then tell that function to give us an
-          명령 라인 인자에 대한 I/O action을 줍니다 for some command line arguments.</p>
+        <p>저희의 해결책을 요약하자면: 명령 라인 인자에서 명령어와 함수의 연관을 dispatch하여 I/O action을
+          반환하였습니다. 저희는 어떤 명령인지 확인할 수 있으며, dispatch 리스트에서 적절한 함수를 얻을 수 있습니다. 나머지
+          명령 라인 인자로 함수를 호출하여, 적절한 일을 처리하는 I/O action을 되돌려 받아 그 action을 수행하게 됩니다.</p>
+        <p>다른 언어에서는 커다란 switch case문이나 다른 것으로 이를 구현해야만 했을 것입니다. 하지만 higher order
+          함수를 이용하여 dispatch 리스트가 적절한 함수를 돌려 받았으며, 이 함수는&nbsp; functions allows
+          us to just tell the dispatch list to give us the appropriate function
+          and then tell that function to give us an 명령 라인 인자에 대한 I/O action을 줍니다
+          for some command line arguments.</p>
         <p>한번 저희 앱을 돌려봅시다!</p>
         <pre name="code" class="plain">$ ./todo view todo.txt
 0 - Iron the dishes
@@ -1330,62 +1315,48 @@ $ ./todo view todo.txt
 1 - Dust the dog
 2 - Pick up children from drycleaners
 </pre>
-        <p>Another cool thing about this is that it's easy to add extra
-          functionality. Just add an entry in the dispatch association list and
-          implement the corresponding function and you're laughing! As an
-          exercise, you can try implementing a <span class="fixed">bump</span>
-          function that will take a file and a task number and return an I/O
-          action that bumps that task to the top of the to-do list.</p>
-        <p>You could make this program fail a bit more gracefully in case of bad
-          input (for example, if someone runs <span class="fixed">todo UP YOURS
-            HAHAHAHA</span>) by making an I/O action that just reports there has
-          been an error (say, <span class="fixed">errorExit :: IO ()</span>)
-          and then check for possible erronous input and if there is erronous
-          input, perform the error reporting I/O action. Another way is to use
-          exceptions, which we will meet soon.</p>
+        <p>여기서 또다른 멋있는 점 하나는, 기능을 추가하기 쉽다는 것입니다. 단지, 연관 리스트의 항목을 추가하고, 대응하는 함수를
+          구현하고 약간의 웃음만 있으면 됩니다! 연습으로, 파일과 작업 번호를 취해, 그 작업을 to-do리스트의 최 상단으로 올리는
+          <span class="fixed">bump</span>함수를 구현해 볼 수 도 있습니다.</p>
+        <p>(<span class="fixed">todo UP YOURS HAHAHAHA</span>와 같은) 잘못된 입력에 대해,
+          error(예로, <span class="fixed">errorExit :: IO ()</span>)를 발생시키는 I/O
+          action 을 만들어 좀더 우아하게 처리하는 프로그램을 만들 수 도 있습니다.and then check for
+          possible erronous input and if there is erronous input, perform the
+          error reporting I/O action. Another way is to use exceptions, which we
+          will meet soon.</p>
         <a name="randomness"></a>
         <h2>무작위성</h2>
         <img src="http://s3.amazonaws.com/lyah/random.png" alt="this picture is the ultimate source of randomness and wackiness"
           class="right" height="362" width="358">
         <p>프로그래밍을 하면서, 여러분은 무작위 데이터를 얻어오는 작업 많이 해야할 것입니다. 주사위를 던지는 게임을 만들던가,
           프로그램을 테스트하기 위한 데이터를 생성해야만 할지도 모릅니다. 프로그래밍할때 무작위 데이터를 이용하는 경우가 많이 있습니다.
-          흠, 사실 이는 가짜-random, because we all know that the only true source of
-          randomness is a monkey on a unicycle 원숭이가 한손엔 치즈를 다른 한손은 엉덩이에대고 외발자전거를
-          타는 것이&nbsp; with a cheese in one hand and its butt in the other. 이번
-          단락에서는, 하스켈이 어떻게 (보기에) 무작위 데이터를 만드는지 살펴보도록 하겠습니다.</p>
+          흠, 사실 이는 가짜입니다. 예측 불가능 한것은, 원숭이가 한손엔 치즈를 다른 한손은 엉덩이에대고 외발자전거를 타는 것입니다.
+          이번 단락에서는, 하스켈이 어떻게 (보기에) 무작위 데이터를 만드는지 살펴보도록 하겠습니다.</p>
         <p>대부분의 프로그래밍 언어에는 무작위 수를 돌려주는 함수가 있습니다. 함수를 호출할 때마다, 다양한 무작위 수를 얻게됩니다.
           하스켈은 어떨까요? 흠, 하스켈은 순수한 함수형 언어라는 것을 기억하시기 바랍니다. 이는 참조투명성(referential
           transparency)을 갖는다는 것을의미합니다. 참조투명성은 동일한 인자를 넣으면, 동일한 결과가 생성되는 것입니다.
-          That's really cool because it allows us to reason differently about
-          programs 프로그램에 대해&nbsp; and it enables us to defer evaluation until we
-          really need it. If I call a function, I can be sure that it won't do
-          any funny stuff before giving me the results. All that matters are its
-          results. 하지만 이는 무작위 수를 얻기에 곤란합니다. 다음과 같은 함수가 있다고 가정해봅시다:</p>
+          이는, 프로그램에 대해 다르게 사고할 수 있으며, 평가가 필요하기 전까지 미룰 수 있는 매우 멋진 기능입니다. 함수를
+          호출한다고 한다면, 결과를 돌려주기 전에는 어떠한 재미난 일도 하지 않는 다는 것을 확신할 수 있습니다. 중요한 것은
+          결과입니다. 하지만 이는 무작위 수를 얻기에 곤란합니다. 다음과 같은 함수가 있다고 가정해봅시다:</p>
         <pre name="code" class="haskell:hs">randomNumber :: (Num a) =&gt; a
 randomNumber = 4
 </pre>
-        <p>항상 <span class="fixed">4</span>를 반환할 것이기에, 유용한 무작위 수 함수가 아닙니다. It's
-          not very useful as a random number function because it will always
-          return <span class="fixed">4</span>, even though I can assure you
-          that the 4 is completely random, because I used a die to determine it.</p>
-        <p>다른 언어는 무작위 수를 어떻게 만들까요? Well, they take various info from your
-          computer, like the current time 컴퓨터에서 현재 시간과 비슷한 변하는 것을 취해, how much
-          and where you moved your mouse and what kind of noises you made behind
-          your computer and based on that, give a number that looks really
-          random. The combination of those factors (that randomness) is probably
-          different in any given moment in time, so you get a different random
-          number.</p>
-        <p>Ah. So in Haskell, we can make a random number then if we make a
-          function that takes as its parameter that randomness and based on that
-          returns some number (or other data type).</p>
-        <p>Enter the <span class="fixed">System.Random</span>모듈로 들어가봅시다. 이는
-          무작위성을 만족시켜줄 함수를 가지고 있습니다. Let's just dive into one of the functions it
-          exports then, namely <span class="label function">random</span>. 여기
-          타입이 나와 있습니다: <span class="fixed">random :: (RandomGen g, Random a)
-            =&gt; g -&gt; (a, g)</span>. 우와! 이 타입 선언에는 새로운 타입클래스가 있습니다! <span class="label class">RandomGen</span>타
-          입클래스는 무작위성의 근본으로 하는 타입을 위한 것입니다. <span class="label class">Random</span>타
-          입클래스는 무작위 값을 취할 수 있습니다. 부울값으로 취할 수 있는 무작위 값은 A boolean value can take
-          on a random value, namely <span class="fixed">True</span> or <span class="fixed">False</span>.
+        <p>항상 <span class="fixed">4</span>를 반환할 것이기에, 유용한 무작위 수 함수가 아닙니다. (하지만,
+          저는 4가 완벽한 무작위 수라고 말할 수 있습니다. 제 주사위의 눈꿈이 모두 4이기 때문입니다)</p>
+        <p>다른 언어는 무작위 수를 어떻게 만들까요? 컴퓨터에서 현재 시간, 마우스의 좌표와 컴퓨터 내부에서 일어나는 노이즈 비슷한
+          변하는 것을 취해, 실제 무작위 수처럼 보이는 숫자를 돌려줍니다. 이러한 요소들의 조합이 순간마다 아마도 다양한 수를 돌려
+          줌으로, 다양한 무작위 수를 얻을 수 있습니다.</p>
+        <p>아. 하스켈에서는, we can make a random number 무작위 수를 만들 수 있습니다 then if we
+          make a function that takes as its parameter that randomness and based
+          on that returns some number (or other data type).</p>
+        <p><span class="fixed">System.Random</span>모듈로 들어가봅시다. 이는 무작위성을 만족시켜줄
+          함수를 가지고 있습니다. 이것을 export하여 <span class="label function">random</span>함
+          수를 좀더 살펴봅시다. 여기 타입이 나와 있습니다: <span class="fixed">random :: (RandomGen
+            g, Random a) =&gt; g -&gt; (a, g)</span>. 우와! 이 타입 선언에는 새로운 타입클래스가
+          있습니다! <span class="label class">RandomGen</span>타 입클래스는 무작위성의 근본으로 하는
+          타입을 위한 것입니다. <span class="label class">Random</span>타입클래스는 무작위 값을 취할
+          수 있습니다. 부울값으로 취할 수 있는 무작위 값은 A boolean value can take on a random
+          value, namely <span class="fixed">True</span> or <span class="fixed">False</span>.
           A number can also take up a plethora of different random values. Can a
           function take on a random value? I don't think so, probably not! If we
           try to translate the type declaration of <span class="fixed">random</span>
@@ -1906,32 +1877,26 @@ copyFile source dest = do
         <h2>예외</h2>
         <img src="http://s3.amazonaws.com/lyah/timber.png" class="left" alt="timberr!!!!"
           height="394" width="308">
-        <p>모든 언어는&nbsp; 프로시져, 함수, 코드를 갖고있습니다.All languages have procedures,
-          functions, and pieces of code that might fail in some way. That's just
-          a fact of life. Different languages have different ways of handling
-          those failures. C에서는 보통 이상한 반환값을 사용하기도 합니다, we usually use some
-          abnormal return value (like <span class="fixed">-1</span> or a null
-          pointer) to indicate that what a function returned shouldn't be
-          treated like a normal value 평범한 값으로 취급할 수 없는. 반면, Java와 C#에선 예외를 이용하여
-          실패를 다룹니다. 예외가 발생하면, When an exception is thrown, the control flow
-          jumps to some code that we've defined that does some cleanup and then
-          maybe re-throws the exception so that some other error handling code
-          can take care of some other stuff.</p>
-        <p>하스켈은 매우 훌륭한 타입 시스템입니다. 대수적 자료구조는Algebraic data types allow for types
-          like <span class="fixed">Maybe</span>나 <span class="fixed">Either</span>와
-          같은 타입을 허용하며, 결과를 표현하기 위해 이러한 타입의 값을 이용할 수 있습니다we can use values of
-          those types to represent results that may be there or not. In C,
-          returning, say, <span class="fixed">-1</span> on failure is
-          completely a matter of convention. It only has special meaning to
-          humans. If we're not careful, we might treat these abnormal values as
-          ordinary ones and then they can cause havoc and dismay in our code.
-          Haskell's type system gives us some much-needed safety in that aspect.
-          A function <span class="fixed">a -&gt; Maybe b</span> clearly
-          indicates that it it may produce a <span class="fixed">b</span>
-          wrapped in <span class="fixed">Just</span> or that it may return <span
-            class="fixed">Nothing</span>. The type is different from just plain
-          <span class="fixed">a -&gt; b</span> and if we try to use those two
-          functions interchangeably, the compiler will complain at us.</p>
+        <p>모든 언어는 프로시져, 함수, 예외를 다루는 코드를 갖고있습니다. 이는 어쩔수 없는 현실입니다. 댜양한 언어들이 다양한
+          방식으로 에러를 처리합니다. C에서는 함수가 평범한 값으로 취급할 수 없는 값을 반환하는 것을 나타내기 위해 보통&nbsp;
+          ( <span class="fixed">-1</span>이나 널 포인터와 같은) 이상한 반환값을 사용하기도 합니다. 반면,
+          Java와 C#에선 예외를 이용하여 실패를 다룹니다. 예외가 발생하면, When an exception is thrown,
+          제어 흐름 the control flow jumps to some code that we've defined that does
+          some cleanup and then maybe re-throws the exception so that some other
+          error handling code can take care of some other stuff.</p>
+        <p>하스켈은 매우 훌륭한 타입 시스템입니다. 대수적 자료구조는 <span class="fixed">Maybe</span>나 <span
+            class="fixed">Either</span>와 같은 타입을 허용하며, 결과를 표현하기 위해 이러한 타입의 값을 이용할
+          수 있습니다. C에서는 실패시 <span class="fixed">-1</span>를 반환하는것이 관습처럼 굳어졌습니다.
+          It only has special meaning to humans. If we're not careful, we might
+          treat these abnormal values as ordinary ones and then they can cause
+          havoc and dismay in our code. Haskell's type system gives us some
+          much-needed safety in that aspect. A function <span class="fixed">a
+            -&gt; Maybe b</span> clearly indicates that it it may produce a <span
+            class="fixed">b</span> wrapped in <span class="fixed">Just</span>
+          or that it may return <span class="fixed">Nothing</span>. The type is
+          different from just plain <span class="fixed">a -&gt; b</span> and if
+          we try to use those two functions interchangeably, the compiler will
+          complain at us.</p>
         <p>Despite having expressive types that support failed computations,
           Haskell still has support for exceptions, because they make more sense
           in I/O contexts. A lot of things can go wrong when dealing with the
