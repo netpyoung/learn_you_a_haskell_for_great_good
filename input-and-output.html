@@ -764,9 +764,9 @@ palindrome
         <p>또 다시, 프로그램을 실행시켜 표준입력에 단어를 입력한 것과 동일한 출력을 얻게되었습니다.&nbsp; 사용자의 입력이 아닌
           파일로 입력이 들어왔기에 <span class="fixed">palindromes.hs</span>의 입력을 확인할 수
           없습니다.</p>
-        <p>아마 여러분은 이제 어떻게 lazy I/O가 동작하는지, 어떻게 이 이점을 활용할 수 있는지를 깨달았을 것입니다. :TODO
-          주어진 어떠한 입력을 추정하여 출력이 무엇인가를 생각할 수 있으며, 전송을 하는 함수를 작성할 수 있습니다. lazy
-          I/O에는 입력에 맞춰 출력을 하므로, 입력을 완료하기 전까지 아무런 일도 하지 안습니다..</p>
+        <p>아마 여러분은 이제 어떻게 lazy I/O가 동작하는지, 어떻게 이 이점을 활용할 수 있는지를 깨달았을 것입니다. 주어진
+          어떠한 입력을 추정하여 출력이 무엇인가를 생각할 수 있으며, 전송을 하는 함수를 작성할 수 있습니다. lazy I/O에는
+          입력에 맞춰 출력을 하므로, 입력을 완료하기 전까지 아무런 일도 하지 안습니다..</p>
         <p>지금까지 저희는 무언가를 터미널에 출력하고 읽으며 I/O를 다루어봤습니다. 하지만 파일을 읽고 쓰는 작업은 어떨까요? 음..
           한편으로 보자면, 저희는 이미 그러한 작업을 했습니다. 터미널에서 무언가를 읽는 작업을 파일에서 읽어오는 것이라 생각할 수
           있습니다. 터미널에 무언가를 쓰는 것은 파일에 무언가를 쓰는것이라 할 수 있습니다. 이러한 두 파일을 <span class="fixed">stdout</span>와
@@ -1219,10 +1219,8 @@ view [fileName] = do
         numberedTasks = zipWith (\n line -&gt; show n ++ " - " ++ line) [0..] todoTasks
     putStr $ unlines numberedTasks
 </pre>
-        <p>이미 동일한 일을 훌륭히 해냈기에 프로그램에서 작업을 지우는 것과 매우 유사한 :TODO We already did
-          pretty much the same thing in the program that only deleted tasks when
-          we were displaying the tasks so that the&nbsp; 사용자는 user can choose
-          one for deletion, only here we just display the tasks.</p>
+        <p>작업들을 보여줘서, 사용자가 삭제할것을 고를수 있게 하는 프로그램에서 이와 똑같은 일을 이미 하였으며, 여기선 단지 작업들만
+          보여주도록 하였습니다.</p>
         <p>마지막으로, <span class="fixed">remove</span>를 구현해 봅시다. 이는 작업을 삭제하는 프로그램과
           매우 유사하므로, 어떻게 항목이 삭제되는지 이해하지 못했다면, 다음 프로그램의 설명을 주의깊게 듣기 바랍니다. 주된 차이점은
           <i>todo.txt</i>라 하드코딩하지 않고, 인자로 받았다는 것입니다. 또한, 삭제할 작업 번호를 사용자에게 물어보지
@@ -1289,11 +1287,9 @@ remove [fileName, numberString] = do
         <p>저희의 해결책을 요약하자면: 명령 라인 인자에서 명령어와 함수의 연관을 dispatch하여 I/O action을
           반환하였습니다. 저희는 어떤 명령인지 확인할 수 있으며, dispatch 리스트에서 적절한 함수를 얻을 수 있습니다. 나머지
           명령 라인 인자로 함수를 호출하여, 적절한 일을 처리하는 I/O action을 되돌려 받아 그 action을 수행하게 됩니다.</p>
-        <p>다른 언어에서는 커다란 switch case문이나 다른 것으로 이를 구현해야만 했을 것입니다. 하지만 higher order
-          함수를 이용하여 dispatch 리스트가 적절한 함수를 돌려 받았으며, 이 함수는&nbsp; functions allows
-          us to just tell the dispatch list to give us the appropriate function
-          and then tell that function to give us an 명령 라인 인자에 대한 I/O action을 줍니다
-          for some command line arguments.</p>
+        <p>다른 언어에서는 커다란 switch case문이나 다른 것으로 이를 구현해야만 했을 것입니다. 하지만 저희는 higher
+          order 함수를 이용하여 dispatch 리스트로부터 적절한 함수를 돌려 받았으며, 이 함수는 명령 라인 인자에 대한 I/O
+          action을 줍니다.</p>
         <p>한번 저희 앱을 돌려봅시다!</p>
         <pre name="code" class="plain">$ ./todo view todo.txt
 0 - Iron the dishes
@@ -1318,12 +1314,11 @@ $ ./todo view todo.txt
         <p>여기서 또다른 멋있는 점 하나는, 기능을 추가하기 쉽다는 것입니다. 단지, 연관 리스트의 항목을 추가하고, 대응하는 함수를
           구현하고 약간의 웃음만 있으면 됩니다! 연습으로, 파일과 작업 번호를 취해, 그 작업을 to-do리스트의 최 상단으로 올리는
           <span class="fixed">bump</span>함수를 구현해 볼 수 도 있습니다.</p>
-        <p>(<span class="fixed">todo UP YOURS HAHAHAHA</span>와 같은) 잘못된 입력에 대해,
-          error(예로, <span class="fixed">errorExit :: IO ()</span>)를 발생시키는 I/O
-          action 을 만들어 좀더 우아하게 처리하는 프로그램을 만들 수 도 있습니다.and then check for
-          possible erronous input and if there is erronous input, perform the
-          error reporting I/O action. Another way is to use exceptions, which we
-          will meet soon.</p>
+        <p>(<span class="fixed">todo UP YOURS HAHAHAHA</span>와 같은) 잘못된 입력에 대해
+          error(예로, <span class="fixed">errorExit :: IO ()</span>)를 보고하는 I/O
+          action 을 만든다음, 에러를 유발하는 입력인지 확인하고, 만일 그러하다면 error를 보고하는 I/O action을
+          수행함으로써 좀더 우아하게 처리하는 프로그램을 만들 수 도 있습니다. 또다른 방법은 저희가 곧 만나게될 예외를 이용하는
+          것입니다.</p>
         <a name="randomness"></a>
         <h2>무작위성</h2>
         <img src="http://s3.amazonaws.com/lyah/random.png" alt="this picture is the ultimate source of randomness and wackiness"
@@ -1346,31 +1341,23 @@ randomNumber = 4
         <p>다른 언어는 무작위 수를 어떻게 만들까요? 컴퓨터에서 현재 시간, 마우스의 좌표와 컴퓨터 내부에서 일어나는 노이즈 비슷한
           변하는 것을 취해, 실제 무작위 수처럼 보이는 숫자를 돌려줍니다. 이러한 요소들의 조합이 순간마다 아마도 다양한 수를 돌려
           줌으로, 다양한 무작위 수를 얻을 수 있습니다.</p>
-        <p>아. 하스켈에서는, we can make a random number 무작위 수를 만들 수 있습니다 then if we
-          make a function that takes as its parameter that randomness and based
-          on that returns some number (or other data type).</p>
+        <p>아. 하스켈에서는, 무작위 수를 만들어 인자로 취하고 이에 기반하는 어떠한 숫자(혹은 다른 타입)를 반환할 수 도 있습니다.</p>
         <p><span class="fixed">System.Random</span>모듈로 들어가봅시다. 이는 무작위성을 만족시켜줄
           함수를 가지고 있습니다. 이것을 export하여 <span class="label function">random</span>함
           수를 좀더 살펴봅시다. 여기 타입이 나와 있습니다: <span class="fixed">random :: (RandomGen
             g, Random a) =&gt; g -&gt; (a, g)</span>. 우와! 이 타입 선언에는 새로운 타입클래스가
           있습니다! <span class="label class">RandomGen</span>타 입클래스는 무작위성의 근본으로 하는
           타입을 위한 것입니다. <span class="label class">Random</span>타입클래스는 무작위 값을 취할
-          수 있습니다. 부울값으로 취할 수 있는 무작위 값은 A boolean value can take on a random
-          value, namely <span class="fixed">True</span> or <span class="fixed">False</span>.
-          A number can also take up a plethora of different random values. Can a
-          function take on a random value? I don't think so, probably not! If we
-          try to translate the type declaration of <span class="fixed">random</span>
-          to English, we get something like: it takes a random generator (that's
-          our source of randomness) and returns a random value and a new random
-          generator. Why does it also return a new generator as well as a random
-          value? Well, we'll see in a moment.</p>
-        <p>To use our <span class="fixed">random</span> function, we have to
-          get our hands on one of those random generators. The <span class="fixed">System.Random</span>
-          module exports a cool type, namely <span class="label type">StdGen</span>
-          that is an instance of the <span class="fixed">RandomGen</span>
-          typeclass. We can either make a <span class="fixed">StdGen</span>
-          manually or we can tell the system to give us one based on a multitude
-          of sort of random stuff.</p>
+          수 있습니다. 부울값으로 취할 수 있는 무작위 값은&nbsp; <span class="fixed">True</span>나 <span
+            class="fixed">False</span>입니다. 숫자로는 엄청나게 다양한 무작위 수를 취할 수 있습니다. 함수가
+          무작위 값을 취할 수 있을까요? 잘 모르겠지만, 아마도 안될 것입니다!&nbsp; <span class="fixed">random</span>의
+          타입선언을 영어로 번역한다면, 이와 같은 것을 얻게될 것입니다: (무작위성의 원천인)난수 발생기를 취해 무작위 값과 새로운
+          난수 발생기를 반환한다. 무작위 값 말고도 새로운 난수 발생기를 반환하는 이유가 무엇일까요? 흠, 곧 만나보도록 하겠습니다.</p>
+        <p><span class="fixed">random</span>함수를 이용하여, 난수 발생기를 손에 얻을 수 있습니다. The
+          <span class="fixed">System.Random</span>모듈은 <span class="fixed">RandomGen</span>
+          타입클래스의 인스턴스인 <span class="label type">StdGen</span>라는 멋진 타입을 export
+          합니다. 저희는 수동으로 <span class="fixed">StdGen</span>을 만들거나, 무작위스러운 다양한 것에
+          기반한 무언가를 시스템에게 요구할 수 있습니다.</p>
         <p> <span class="label function">mkStdGen</span>함수를 이용하여 난수를 생성하는 장치를
           만들어보도록 하겠습니다. mkStdGen은 <span class="fixed">mkStdGen :: Int -&gt;
             StdGen</span>타입을 지녔습니다. 이는 정수를 취해 이에 기반한 난수를 생성합니다. 좋습니다. 이제 <span
@@ -1383,28 +1370,22 @@ randomNumber = 4
       `Random a' arising from a use of `random' at &lt;interactive&gt;:1:0-20
     Probable fix: add a type signature that fixes these type variable(s)
 </pre>
-        <p>이게 뭘까요? 아, 맞습니다. <span class="fixed">random</span>함수는 function can
-          return a value of any type that's part of the <span class="fixed">Random</span>타
-          입클래스의 타입값을 반환하므로, 하스켈에게 저희가 원하는 타입을 알려줘야 합니다. 또한 let's not forget that
-          it returns a random value and a random generator in a pair 무작위 값과 난수
-          발생기.</p>
+        <p>이게 뭘까요? 아, 맞습니다. <span class="fixed">random</span>함수는 <span class="fixed">Random</span>타
+          입클래스의 타입값을 반환하므로, 하스켈에게 저희가 원하는 타입을 알려줘야 합니다. 또한 무작위 값과 난수 발생기를 쌍으로
+          반환한 다는 것을 잊지 마시기 바랍니다.</p>
         <pre name="code" class="haskell:hs">ghci&gt; random (mkStdGen 100) :: (Int, StdGen)
 (-1352021624,651872571 1655838864)
 </pre>
-        <p>Finally! A number that looks kind of random! The first component of
-          the tuple is our number whereas the second component is a textual
-          representation of our new random generator. What happens if we call <span
-            class="fixed">random</span> with the same random generator again?</p>
+        <p>마침내 난수가 나타났습니다! 튜플의 첫번째 구성물은 숫자이며, 두번째 구성물은 새로운 난수 발생기를 문자로 표현한 것입니다.
+          동일한 난수 발생기에 <span class="fixed">random</span>을 호출하면 어떠한 일이 발생할까요?</p>
         <pre name="code" class="haskell:hs">ghci&gt; random (mkStdGen 100) :: (Int, StdGen)
 (-1352021624,651872571 1655838864)
 </pre>
-        <p>Of course. The same result for the same parameters. So let's try
-          giving it a different random generator as a parameter.</p>
+        <p>물론 동일한 인자에 동일한 결과가 나타났습니다. 그럼 다른 난수 발생기를 인자로 넣어보도록 하겠습니다.</p>
         <pre name="code" class="haskell:hs">ghci&gt; random (mkStdGen 949494) :: (Int, StdGen)
 (539963926,466647808 1655838864)
 </pre>
-        <p>Alright, cool, great, a different number. We can use the type
-          annotation to get different types back from that function. </p>
+        <p>오우 좋습니다. 다른 숫자입니다. 함수에 타입 어노테이션을 사용하여 다양한 타입을 돌려받을 수 있습니다.</p>
         <pre name="code" class="haskell:hs">ghci&gt; random (mkStdGen 949488) :: (Float, StdGen)
 (0.8938442,1597344447 1655838864)
 ghci&gt; random (mkStdGen 949488) :: (Bool, StdGen)
@@ -1412,19 +1393,13 @@ ghci&gt; random (mkStdGen 949488) :: (Bool, StdGen)
 ghci&gt; random (mkStdGen 949488) :: (Integer, StdGen)
 (1691547873,1597344447 1655838864)
 </pre>
-        <p>Let's make a function that simulates tossing a coin three times. If <span
-            class="fixed">random</span> didn't return a new generator along with
-          a random value, we'd have to make this function take three random
-          generators as a parameter and then return coin tosses for each of
-          them. But that sounds wrong because if one generator can make a random
-          value of type <span class="fixed">Int</span> (which can take on a
-          load of different values), it should be able to make three coin tosses
-          (which can take on precisely eight combinations). So this is where <span
-            class="fixed">random</span> returning a new generator along with a
-          value really comes in handy.</p>
-        <p>We'll represent a coin with a simple <span class="fixed">Bool</span>.
-          <span class="fixed">True</span> is tails, <span class="fixed">False</span>
-          is heads.</p>
+        <p>동전을 세번 던지는 함수를 만들어 봅시다. <span class="fixed">random</span>이 새로운
+          난수발생기를 반환하지 않는다면, 저희는 인자로 3개의 난수 발생기를 받아, 각각에 대해 동전을 던지는 함수를 만들어야 합니다.
+          하지만, 좀 이상합니다. 난수 발생기가 <span class="fixed">Int</span>타입의 난수를 생성할 수
+          있으면, 3개의 동전을 던질 수 있어야 합니다. 따라서 값과 함께 새로운 난수 발생기를 반환하는 <span class="fixed">random</span>은
+          매우 편리합니다.</p>
+        <p>동전을 단순하게 <span class="fixed">Bool</span>로 나타내도록 하겠습니다. <span class="fixed">True</span>는
+          앞면, <span class="fixed">False</span>는 뒷면입니다.</p>
         <pre name="code" class="haskell:hs">threeCoins :: StdGen -&gt; (Bool, Bool, Bool)
 threeCoins gen = 
     let (firstCoin, newGen) = random gen
@@ -1432,13 +1407,11 @@ threeCoins gen =
         (thirdCoin, newGen'') = random newGen'
     in  (firstCoin, secondCoin, thirdCoin)
 </pre>
-        <p>We call <span class="fixed">random</span> with the generator we got
-          as a parameter to get a coin and a new generator. Then we call it
-          again, only this time with our new generator, to get the second coin.
-          We do the same for the third coin. Had we called it with the same
-          generator every time, all the coins would have had the same value and
-          we'd only be able to get <span class="fixed">(False, False, False)</span>
-          or <span class="fixed">(True, True, True)</span> as a result.</p>
+        <p>난수발생기에 <span class="fixed">random</span>을 호출하여 동전과 새로운 난수 발생기를 인자로
+          받았습니다. 그런 다음 두번째 동전을 얻기위해 새로운 난수발생기로 다시 호출하였습니다. 세번째 동전에도 동일하게 하였습니다.
+          동일한 난수 발생기로 호출한다면, 동전은 모두 같은 값기 될 것이므로 <span class="fixed">(False,
+            False, False)</span>나 <span class="fixed">(True, True, True)</span>를
+          결과로 얻게 될 것입니다.</p>
         <pre name="code" class="haskell:hs">ghci&gt; threeCoins (mkStdGen 21)
 (True,True,True)
 ghci&gt; threeCoins (mkStdGen 22)
@@ -1448,14 +1421,11 @@ ghci&gt; threeCoins (mkStdGen 943)
 ghci&gt; threeCoins (mkStdGen 944)
 (True,True,True)
 </pre>
-        <p>Notice that we didn't have to do <span class="fixed">random gen ::
-            (Bool, StdGen)</span>. That's because we already specified that we
-          want booleans in the type declaration of the function. That's why
-          Haskell can infer that we want a boolean value in this case.</p>
-        <p>So what if we want to flip four coins? Or five? Well, there's a
-          function called <span class="label function">randoms</span> that
-          takes a generator and returns an infinite sequence of values based on
-          that generator.</p>
+        <p><span class="fixed">random gen :: (Bool, StdGen)</span>라고 하지 않은것에
+          주목하시기 바랍니다. 저희가 이미 함수의 타입선언에 부울값을 명시했기 때문입니다. 이것이 바로 하스켈이 저희가 부울값을
+          원한다는 것을 추론할 수 있게된 까닭입니다..</p>
+        <p>4개 혹은 5개의 동전을 돌린다면 어떻게 될까요? 난수 발생기를 받아 그에 기반하는 무한한 값들을 반환하는 <span class="label function">randoms</span>함
+          수가 있습니다.</p>
         <pre name="code" class="haskell:hs">ghci&gt; take 5 $ randoms (mkStdGen 11) :: [Int]
 [-1807975507,545074951,-1015194702,-1622477312,-502893664]
 ghci&gt; take 5 $ randoms (mkStdGen 11) :: [Bool]
@@ -1463,19 +1433,15 @@ ghci&gt; take 5 $ randoms (mkStdGen 11) :: [Bool]
 ghci&gt; take 5 $ randoms (mkStdGen 11) :: [Float]
 [7.904789e-2,0.62691015,0.26363158,0.12223756,0.38291094]
 </pre>
-        <p>Why doesn't <span class="fixed">randoms</span> return a new
-          generator as well as a list? We could implement the <span class="fixed">randoms</span>
-          function very easily like this:</p>
+        <p>왜 <span class="fixed">randoms</span>는 새로운 난수 발생기를 리스트로 반환하지 않을까요? <span
+            class="fixed">randoms</span>함수를 다음과 같이 매우 쉽게 구현할 수 있습니다:</p>
         <pre name="code" class="haskell:hs">randoms' :: (RandomGen g, Random a) =&gt; g -&gt; [a]
 randoms' gen = let (value, newGen) = random gen in value:randoms' newGen
 </pre>
-        <p>A recursive definition. We get a random value and a new generator
-          from the current generator and then make a list that has the value as
-          its head and random numbers based on the new generator as its tail.
-          Because we have to be able to potentially generate an infinite amount
-          of numbers, we can't give the new random generator back.</p>
-        <p>We could make a function that generates a finite stream of numbers
-          and a new generator like this:</p>
+        <p>재귀적으로 정의하였습니다. 현재 난수 발생기에서 무작위 값과 새로운 난수 발생기를 얻어, head를 값으로 갖고 새로운 난수
+          발생기에 기반한 무작위 숫자를 tail로 하는 리스트를 만들었습니다. 잠재적으로 무한한 수를 생성하기에, 새로운 난수 발생기를
+          돌려 받을 수 없습니다.</p>
+        <p>다음과 갈이 숫자와 새로운 난수 발생기를 무한하게 생성하는 함수를 만들 수 있습니다:</p>
         <pre name="code" class="haskell:hs">finiteRandoms :: (RandomGen g, Random a, Num n) =&gt; n -&gt; g -&gt; ([a], g)
 finiteRandoms 0 gen = ([], gen)
 finiteRandoms n gen = 
@@ -1483,48 +1449,36 @@ finiteRandoms n gen =
         (restOfList, finalGen) = finiteRandoms (n-1) newGen
     in  (value:restOfList, finalGen)
 </pre>
-        <p>Again, a recursive definition. We say that if we want 0 numbers, we
-          just return an empty list and the generator that was given to us. For
-          any other number of random values, we first get one random number and
-          a new generator. That will be the head. Then we say that the tail will
-          be <i>n - 1</i> numbers generated with the new generator. Then we
-          return the head and the rest of the list joined and the final
-          generator that we got from getting the <i>n - 1</i> random numbers.</p>
-        <p>What if we want a random value in some sort of range? All the random
-          integers so far were outrageously big or small. What if we want to to
-          throw a die? Well, we use <span class="label function">randomR</span>
-          for that purpose. It has a type of <span class="fixed">randomR ::
-            (RandomGen g, Random a) :: (a, a) -&gt; g -&gt; (a, g)</span>,
-          meaning that it's kind of like <span class="fixed">random</span>,
-          only it takes as its first parameter a pair of values that set the
-          lower and upper bounds and the final value produced will be within
-          those bounds.</p>
+        <p>이 역시 재귀적인 정의입니다. 숫자가 0이라면, 비어있는 리스트와 넘겨준 난수 발생기를 반환받는다고 하였습니다. 다른
+          숫자라면, 무작위 수와 새로운 난수 발생기를 얻게됩니다. 여기서 무작위 수는 head가 될 것입니다. 그리고 tail은 새로운
+          난수발생기로 생성된 <i>n - 1</i>개의 숫자가 될 것입니다. 그런 다음 head와 나머지 리스트를 합친것과, <i>n
+            - 1</i>번째 난수에서 얻은 마지막 난수발생기를 반환합니다.</p>
+        <p>어떠한 범위안에서 무작위 값을 얻으려 한다면 어떻게 할까요? 지금까지 난수들은 매우 크거나 작았습니다. 주사위를 던진다고
+          가정하면 어떨까요? 흠, 이러한 목적에는 <span class="label function">randomR</span>을
+          사용하는게 좋습니다. 타입은&nbsp; <span class="fixed">random</span>과 비슷한<span class="fixed">randomR
+            :: (RandomGen g, Random a) :: (a, a) -&gt; g -&gt; (a, g)</span>이며,
+          상한값과 하한값의 쌍을 첫번째 인자로 받으며, 최종값은 이 범위 사이에 있는 값이 될 것입니다.</p>
         <p> </p>
         <pre name="code" class="haskell:hs">ghci&gt; randomR (1,6) (mkStdGen 359353)
 (6,1494289578 40692)
 ghci&gt; randomR (1,6) (mkStdGen 35935335)
 (3,1250031057 40692)
 </pre>
-        <p>There's also <span class="label function">randomRs</span>, which
-          produces a stream of random values within our defined ranges. Check
-          this out:</p>
+        <p>지정된 범위에서 난수 스트림을 생성하는 <span class="label function">randomRs</span>도
+          마찬가지 입니다. 확인해 봅시다:</p>
         <pre name="code" class="haskell:hs">ghci&gt; take 10 $ randomRs ('a','z') (mkStdGen 3) :: [Char]
 "ndkxbvmomg"
 </pre>
-        <p>Nice, looks like a super secret password or something.</p>
-        <p>You may be asking yourself, what does this section have to do with
-          I/O anyway? We haven't done anything concerning I/O so far. Well, so
-          far we've always made our random number generator manually by making
-          it with some arbitrary integer. The problem is, if we do that in our
-          real programs, they will always return the same random numbers, which
-          is no good for us. That's why <span class="fixed">System.Random</span>
-          offers the <span class="label function">getStdGen</span> I/O action,
-          which has a type of <span class="fixed">IO StdGen</span>. When your
-          program starts, it asks the system for a good random number generator
-          and stores that in a so called global generator. <span class="fixed">getStdGen</span>
-          fetches you that global random generator when you bind it to
-          something. </p>
-        <p>Here's a simple program that generates a random string.</p>
+        <p>멋집니다. 강력한 비밀번호처럼 보입니다.</p>
+        <p>여러분 스스로 되물어 볼 지도 모르겠습니다. what does this section have to do with I/O
+          anyway? 지금까지 I/O에 관한 어떠한 것오 하지 않았습니다. 또한, 지금까지 저희는 임의의 정수를 만듬으로써 난수
+          발생기를 수동으로 돌렸습니다. 문제는 실 프로그램에서 이렇게 한다면 항상 동일한 난수를 얻게 될 것이라는 것이며, 이는 좋지
+          않습니다. 이것이 바로 <span class="fixed">System.Random</span>이 <span class="fixed">IO
+            StdGen</span>의 타입을 지닌 <span class="label function">getStdGen</span>
+          I/O action을 제공하는 이유입니다. 프로그램이 시작하면, 이는 시스템에게 난수 발생기로 괜찮은 녀석을 얻어와서 전역
+          난수 발생기에 저장합니다. 이러한 전역 난수 발생기를 여러분이 무언가에 bind할때&nbsp; <span class="fixed">getStdGen</span>가
+          가져옵니다.</p>
+        <p>여기 문자열을 무작위로 생성하는 간단한 프로그램이 있습니다.</p>
         <pre name="code" class="haskell:hs">import System.Random
 
 main = do
@@ -1540,9 +1494,8 @@ nzdceoconysdgcyqjruo
 $ runhaskell random_string.hs
 bakzhnnuzrkgvesqplrx
 </pre>
-        <p>Be careful though, just performing <span class="fixed">getStdGen</span>
-          twice will ask the system for the same global generator twice. If you
-          do this:</p>
+        <p><span class="fixed">getStdGen</span>를 두번 수행하는 것은 시스템에 동일한 전역 난수발생기 두번
+          요청하는 것이기에 주의하시기 바랍니다. 다음과 같이 한다 가정해 봅시다:</p>
         <pre name="code" class="haskell:hs">import System.Random
 
 main = do
@@ -1551,14 +1504,10 @@ main = do
     gen2 &lt;- getStdGen
     putStr $ take 20 (randomRs ('a','z') gen2)
 </pre>
-        <p>you will get the same string printed out twice! One way to get two
-          different strings of length 20 is to set up an infinite stream and
-          then take the first 20 characters and print them out in one line and
-          then take the second set of 20 characters and print them out in the
-          second line. For this, we can use the <span class="fixed">splitAt</span>
-          function from <span class="fixed">Data.List</span>, which splits a
-          list at some index and returns a tuple that has the first part as the
-          first component and the second part as the second component.</p>
+        <p>두번 모두 출력된 문자열이 같을 것입니다! 길이가 20인 서로 다른 문자열을 얻기 위해선, 스트림을 무한하게 설정하여 처음
+          20문자를 취하여 출력한 다음, 두번째로 20문자를 취해 다음 줄에 출력하는 것입니다. 이러한 일에, 리스트를 어떠한 인덱스로
+          나누어 튜플로 반환하는 <span class="fixed">Data.List</span>의 <span class="fixed">splitAt</span>를
+          사용할 수 있습니다.</p>
         <pre name="code" class="haskell:hs">import System.Random
 import Data.List
 
@@ -1570,10 +1519,8 @@ main = do
     putStrLn first20
     putStr second20
 </pre>
-        <p>Another way is to use the <span class="label function">newStdGen</span>
-          action, which splits our current random generator into two generators.
-          It updates the global random generator with one of them and
-          encapsulates the other as its result.</p>
+        <p>또 다른 방법은 현재 난수 발생기를 두개로 나누는 <span class="label function">newStdGen</span>
+          action을 이용하는 것입니다. 이는 전역 난수 발생기를 갱신하여 새로운 것을 결과로 감싸도록 하는 것입니다.</p>
         <pre name="code" class="haskell:hs">import System.Random
 
 main = do   
@@ -1582,12 +1529,10 @@ main = do
     gen' &lt;- newStdGen
     putStr $ take 20 (randomRs ('a','z') gen')   
 </pre>
-        <p>Not only do we get a new random generator when we bind <span class="fixed">newStdGen</span>
-          to something, the global one gets updated as well, so if we do <span
-            class="fixed">getStdGen</span> again and bind it to something, we'll
-          get a generator that's not the same as <span class="fixed">gen</span>.</p>
-        <p>Here's a little program that will make the user guess which number
-          it's thinking of.</p>
+        <p><span class="fixed">newStdGen</span>를 다른 것에 bind하면 새로운 난수 발생기를 얻을 뿐만
+          아니라 전역 난수 발생기 갱신되므로,&nbsp; <span class="fixed">getStdGen</span>을 하여
+          다른 것에 bind한다면 <span class="fixed">gen</span>과는 다른 난수 발생기를 얻게 될 것입니다.</p>
+        <p>여기 사용자가 숫자를 알아맞추는 자그마한 프로그램이 있습니다.</p>
         <pre name="code" class="haskell:hs">import System.Random
 import Control.Monad(when)
 
@@ -1608,25 +1553,21 @@ askForNumber gen = do
         askForNumber newGen
 </pre> <img src="http://s3.amazonaws.com/lyah/jackofdiamonds.png" alt="jack of diamonds"
           class="left" height="280" width="313">
-        <p>We make a function <span class="fixed">askForNumber</span>, which
-          takes a random number generator and returns an I/O action that will
-          prompt the user for a number and tell him if he guessed it right. In
-          that function, we first generate a random number and a new generator
-          based on the generator that we got as a parameter and call them <span
-            class="fixed">randNumber</span> and <span class="fixed">newGen</span>.
-          Let's say that the number generated was <span class="fixed">7</span>.
-          Then we tell the user to guess which number we're thinking of. We
-          perform <span class="fixed">getLine</span> and bind its result to <span
-            class="fixed">numberString</span>. When the user enters <span class="fixed">7</span>,
-          <span class="fixed">numberString</span> becomes <span class="fixed">"7"</span>.
-          Next, we use <span class="fixed">when</span> to check if the string
-          the user entered is an empty string. If it is, an empty I/O action of
-          <span class="fixed">return ()</span> is performed, which effectively
-          ends the program. If it isn't, the action consisting of that <i>do</i>
-          block right there gets performed. We use <span class="fixed">read</span>
-          on <span class="fixed">numberString</span> to convert it to a number,
-          so <span class="fixed">number</span> is now <span class="fixed">7</span>.</p>
-        <div class="hintbox"><b>Excuse me!</b> If the user gives us some input
+        <p><span class="fixed">askForNumber</span>란 함수를 만들었는데, 이 함수는 난수 발생기를
+          취해&nbsp; 사용자에게 숫자를 물어 추측한 값이 맞는지 알려주는 I/O action을 반환합니다. 이 함수에서, 저희는
+          우선 인자로 받은 난수발생기로 난수와 새로운 난수 발생기를 생성하고 이들을 <span class="fixed">randNumber</span>와
+          <span class="fixed">newGen</span>로 하였습니다. Let's say 생성된 숫자가 <span class="fixed">7</span>이
+          라고 가정해 봅시다.&nbsp; 사용자에게 저희가 생각한 수가 무엇인지 물어볼 것입니다. <span class="fixed">getLine</span>을
+          수행하여 결과를 <span class="fixed">numberString</span>에 bind하였습니다.
+          사용자가&nbsp; <span class="fixed">7</span>을 입력하면, <span class="fixed">numberString</span>는
+          <span class="fixed">"7"</span>이 될 것입니다. 다음으로, 사용자가 입력한 문자열이 빈 문자열인지
+          확인하기 위해&nbsp; <span class="fixed">when</span>을 이용하였습니다. 빈 문자열이라면, 사실상
+          프로그램을 종료하는 빈 I/O action인 <span class="fixed">return ()</span>이 수행됩니다.
+          빈 문자열이 아니라면, 바로 옆에 있는 <i>do</i>블록이 구성하고 있는 action이 수행됩니다. 다음으로 <span
+            class="fixed">numberString</span>에 <span class="fixed">read</span>를
+          사용하여 숫자로 변환시켜, <span class="fixed">number</span>는 이제&nbsp; <span class="fixed">7</span>이
+          됬습니다.</p>
+        <div class="hintbox"><b>잠시만요!</b> :TODO If the user gives us some input
           here that <span class="fixed">read</span> can't read (like <span class="fixed">"haha"</span>),
           our program will crash with an ugly error message. If you don't want
           your program to crash on erronous input, use <span class="label function">reads</span>,
@@ -1674,8 +1615,9 @@ main = do
         main
 </pre>
         <p>It's very similar to the previous version, only instead of making a
-          function that takes a generator and then calls itself recursively with
-          the new updated generator, we do all the work in <span class="fixed">main</span>.
+          function that takes a generator 난수 발생기를 취해, 새롭게 갱신된 난수발생기로 재귀적으로 호출하는
+          함수를 만든 점을 제외하면and then calls itself recursively with the new updated
+          generator, we do all the work in <span class="fixed">main</span>.
           After telling the user whether they were correct in their guess or
           not, we update the global generator and then call <span class="fixed">main</span>
           again. Both approaches are valid but I like the first one more since
@@ -1685,15 +1627,13 @@ main = do
         <h2>Bytestrings</h2>
         <img src="http://s3.amazonaws.com/lyah/chainchomp.png" alt="like normal string, only they byte ... what a pedestrian pun this is"
           class="right" height="390" width="306">
-        <p>리스트는 훌륭하고 유용한 자료구조입니다. 저희는 지금까지 이를 잘 써왔습니다. There are a multitude of
-          functions that operate on them and Haskell's laziness allows us to
-          exchange the for and while loops of other languages for filtering and
-          mapping over lists, because evaluation will only happen once it really
-          needs to, so things like infinite lists (and even infinite lists of
-          infinite lists!) are no problem for us. That's why lists can also be
-          used to represent streams, either when reading from the standard input
-          or when reading from files. We can just open a file and read it as a
-          string, even though it will only be accessed when the need arises.</p>
+        <p>리스트는 훌륭하고 유용한 자료구조입니다. 저희는 지금까지 이를 잘 써왔습니다. 리스트를 다루는 다양한 함수들이 있으며
+          Haskell의 laziness로 인해 리스트를 filtering하거나 mapping하기 위한 다른언어에서의 for나
+          while 루프의 대용으로 쓸수 있으며, 오직 필요할 시에만 평가가 이루어 지기 때문에 무한 리스트도(심지어 무한리스트의
+          무한리스트도!) 문제가 되지 않습니다. That's why lists can also be used to represent
+          streams, either when reading from the standard input or when reading
+          from files. We can just open a file and read it as a string, even
+          though it will only be accessed when the need arises.</p>
         <p>However, processing files as strings has one drawback: it tends to be
           slow. 아시다시피 <span class="fixed">String</span>은 <span class="fixed">[Char]</span>와
           같습니다. <span class="fixed">Char</span>는 몇바이트를 취해 유니코드와 같은 문자를 표현하기에
