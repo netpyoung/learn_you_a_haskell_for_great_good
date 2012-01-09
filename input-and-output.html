@@ -1616,8 +1616,8 @@ main = do
         <img src="http://s3.amazonaws.com/lyah/chainchomp.png" alt="like normal string, only they byte ... what a pedestrian pun this is"
           class="right" height="390" width="306">
         <p>리스트는 훌륭하고 유용한 자료구조입니다. 저희는 지금까지 이를 잘 써왔습니다. 리스트를 다루는 다양한 함수들이 있으며
-          Haskell의 laziness로 인해 리스트를 filtering하거나 mapping하기 위한 다른언어에서의 for나
-          while 루프의 대용으로 쓸수 있으며, 오직 필요할 시에만 평가가 이루어 지기 때문에 무한 리스트도(심지어 무한리스트의
+          Haskell의 laziness로 인해 다른언어에서의 for나 while 루프의 대용으로 리스트를 filtering하거나
+          mapping하도록 사용할 수 있으며, 오직 필요할 시에만 평가가 이루어지기에 무한 리스트도(심지어 무한리스트의
           무한리스트도!) 문제가 되지 않습니다. 이것이 바로, 표준 입력이나 파일에서 무언가를 읽을시 스트림을 표현하는데 리스트를
           사용할 수 있는 이유입니다. 필요시에만 접근할 수 있지만, 저희는 파일을 열어 문자열로 읽을 수도 있습니다.</p>
         <p>하지만, 파일을 문자열로 처리하는데 있어 한가지 문제점이 있습니다: 느려지는 경향이 있습니다. 아시다시피 <span class="fixed">String</span>은
@@ -1627,12 +1627,9 @@ main = do
           따라서 이 리스트 전체는 예비 리스트와 갔습니다. <span class="fixed">[1,2,3,4]</span>는&nbsp;
           <span class="fixed">1:2:3:4:[]</span>에 대한 syntax suger라는 것을 명심하시기
           바랍니다. 리스트의 첫번째 원소가 (출력하여)평가되더라도, 나머지 리스트 <span class="fixed">2:3:4:[]</span>는
-          여전히 예비리스트로 남아있습니다. 따라서 저희는 리스트를 예비리스트라 생각할 수 있습니다 So you can think of
-          lists as promises that the next element will be delivered once it
-          really has to and along with it, the promise of the element after it.
-          It doesn't take a big mental leap to conclude that processing a simple
-          list of numbers as a series of promises might not be the most
-          efficient thing in the world.</p>
+          여전히 예비리스트로 남아있습니다. 따라서 저희는 리스트를 필요시 다음 원소가 배달되는 예비리스트라 생각할 수 있습니다.
+          :FIXME 예약 목록들과 같이 간단한 숫자 리스트를 처리하는 것은 세상에서 가장 효율적이지 않을 것이라고 결정 내리는 데에는
+          길게 생각할 필요도 없을 것입니다..</p>
         <p>대부분의 경우 이러한 오버헤드가 저희를 괴롭히는건 아니지만, 큰 파일을 읽거나 다룰때 골칫거리로 대두됩니다. 이것이 바로
           하스켈이 <em>bytestrings</em>을 지니고 있는 까닭입니다. Bytestring은 리스트와 비슷하지만, 각
           항목이 1바이트(8비트)의 크기를 갖습니다. 또한 laziness를 다루는 방식 역시 다릅니다.</p>
@@ -1643,38 +1640,31 @@ main = do
           나타내는)thunk가 관여하지 않기에 오버헤드가 적습니다. 부정적인 면은 한번에 메모리에 읽어들이게에 메모리를 빨리 체운다는
           것입니다.</p>
         <p><span class="fixed">Data.ByteString.Lazy</span>에는 또다른 bytestring 변종이
-          살고 있습니다. 이 변종은 lazy하지만, lists의 lazy만큼은 아닙니다. 전에 말했던 것처럼, 원소처럼 there
-          are as many thunks in a list as there are elements. That's what makes
-          them kind of slow for some purposes. Lazy bytestrings take a different
-          approach — they are stored in chunks (not to be confused with
-          thunks!), each chunk has a size of 64K. So if you evaluate a byte in a
-          lazy bytestring (by printing it or something), the first 64K will be
-          evaluated. After that, it's just a promise for the rest of the chunks.
-          Lazy bytestrings are kind of like lists of strict bytestrings with a
-          size of 64K. When you process a file with lazy bytestrings, it will be
-          read chunk by chunk. This is cool because it won't cause the memory
-          usage to skyrocket and the 64K probably fits neatly into your CPU's L2
-          cache.</p>
+          살고 있습니다. 이 변종은 lazy하지만, lists의 lazy만큼은 아닙니다. 전에 말했던 것처럼, 리스트의 원소처럼
+          많은수의 thunk가 있습니다. That's what makes them kind of slow for some
+          purposes. Lazy bytestrings은 다른 접근법을 취하였습니다 — 덩어리(chunks) 단위로 저장합니다
+          (thunks와 혼동하지 않길 바랍니다!), 각 덩어리는 64K의 크기를 가졌습니다. 따라서 lazy bytestring에
+          있는 byte를 평가한다면 (출력하거나 어떠한 일을 함으로써), 처음 64K가 평가될 것입니다. 그런다음, 나머지 덩어리들은
+          예비로 남아 있을 것입니다. Lazy bytestrings은 크기가 64K인 strict bytestrings인 리스트와
+          비슷합니다. lazy bytestrings으로 파일을 처리한다면, 덩어리 단위로 읽을 것입니다. 이는 상당히 멋진데, 메모리를
+          급격하게 많이 사용하지 않으며, 64K는 아마도 여러분의 CPU's L2 캐쉬에 거의 딱 맞을 것이기 때문입니다.<br>
+        </p>
         <p><span class="fixed">Data.ByteString.Lazy</span>에 대한 <a href="http://www.haskell.org/ghc/docs/latest/html/libraries/bytestring/Data-ByteString-Lazy.html">문
             서</a>를 살펴본다면, 상당수의 함수들이 <span class="fixed">Data.List</span>와 동일한
-          이름을 가졌다는 것을 발견할 것이며, 타입 서명만이 <span class="fixed">[a]</span>대신 <span
-            class="fixed">ByteString</span>, <span class="fixed">a</span>대신 <span
-            class="fixed">Word8</span>로 다르다는 점을 발견할 것입니다. The functions with the
-          same names mostly act the same as the ones that work on lists. Because
-          the names are the same, we're going to do a qualified import in a
-          script and then load that script into GHCI to play with bytestrings. </p>
+          이름을 가졌고, 타입 서명만이 <span class="fixed">[a]</span>대신 <span class="fixed">ByteString</span>,
+          <span class="fixed">a</span>대신 <span class="fixed">Word8</span>로 다르다는
+          점을 발견할 것입니다. 동일한 이름을 가진 함수들은 리스트에 동작한 것과 거의 동일한 일을 행합니다. 이름이 같기에,
+          스크립트에서 qualified import를 하여, bytestrings에 대해 동작하도록 GHCI에서 스크립트를
+          로드하였습니다. </p>
         <pre name="code" class="haskell:hs">import qualified Data.ByteString.Lazy as B
 import qualified Data.ByteString as S
 </pre>
-        <p><span class="fixed">B</span> has lazy bytestring types and functions,
-          whereas <span class="fixed">S</span> has strict ones. We'll mostly be
-          using the lazy version.</p>
+        <p><span class="fixed">B</span>는 lazy bytestring 타입들과 함수들을 지닌 반면, <span
+            class="fixed">S</span>는 strict한 것을 지녔습니다. 저희는 주로 lazy 버전을 사용할 것입니다.</p>
         <p><span class="function label">pack</span> 함수는 <span class="fixed">pack
             :: [Word8] -&gt; ByteString</span> 타입서명을 지녔습니다. 이는 <span class="fixed">Word8</span>타
           입인 byte 리스트를 취해 <span class="fixed">ByteString</span>을 반환한다는 것을
-          의미합니다. lazy한 리스트를 취해 덜 lazy하게 만든다고 생각하시면 됩니다You can think of it as
-          taking a list, which is lazy, and making it less lazy, so that it's
-          lazy only at 64K intervals.</p>
+          의미합니다. lazy한 리스트를 취해 64K에서만 lazy하도록 덜 lazy하게 만든다고 생각하시면 됩니다.</p>
         <p><span class="fixed">Word8</span>타입이 하는 일은 무엇일까요? 흠, 이는 더 적은 0-255 범위를
           갖는다는 점을 제외하면 <span class="fixed">Int</span>와 같습니다. 이는 8비트 숫자를 표현합니다.
           또한 <span class="fixed">Int</span>와 같이, <span class="fixed">Num</span>타
@@ -1686,13 +1676,12 @@ Chunk "can" Empty
 ghci&gt; B.pack [98..120]
 Chunk "bcdefghijklmnopqrstuvwx" Empty
 </pre>
-        <p>보시다시피, <span class="fixed">Word8</span>에 대해 별로 걱정할 필요가 없습니다too much,
-          because the type system can makes the numbers choose that type. <span
-            class="fixed">336</span>와 같이 큰 숫자에 <span class="fixed">Word8</span>을
+        <p>보시다시피, 타입 시스템이 그에 맞는 타입을 선택하도록 만들어 주기에, <span class="fixed">Word8</span>에
+          대해 별로 걱정할 필요가 없습니다. <span class="fixed">336</span>와 같이 큰 숫자에 <span class="fixed">Word8</span>을
           이용한다면, <span class="fixed">80</span>은 떨어져 나갈 것입니다.</p>
-        <p>We packed only a handful of values into a <span class="fixed">ByteString</span>,
-          so they fit inside one chunk. <span class="fixed">Empty</span>는 리스트의
-          <span class="fixed">[]</span>와 같습니다.</p>
+        <p>저희는 <span class="fixed">ByteString</span>에 유효한 값들만 pack하였으므로, 덩어리
+          하나에 꼭 맞게 됩니다. <span class="fixed">Empty</span>는 리스트의 <span class="fixed">[]</span>와
+          같습니다.</p>
         <p><span class="label function">unpack</span>은&nbsp; <span class="fixed">pack</span>의
           반대되는 함수입니다. bytestring을 취해 byte 리스트로 변환시킵니다.</p>
         <p><span class="label function">fromChunks</span>는 strict bytestring
@@ -1705,12 +1694,10 @@ Chunk "()*" (Chunk "+,-" (Chunk "./0" Empty))
         <p>많은수의 자그마한 strict bytestring들을 가졌고,&nbsp; 메모리에 하나의 커다란 strict
           bytestring으로 합치지 않고 효율적으로 처리하길 원한다면 이러한 방식이 좋습니다.</p>
         <p>bytestring의 <span class="fixed">:</span>는 <span class="label function">cons</span>라
-          불리며, byte와 bytestring을 취해 byte를 bytestring앞에 놓습니다. It's lazy though,
-          so it will make a new chunk even if the first chunk in the bytestring
-          isn't full. That's why it's better to use the strict version of <span
-            class="fixed">cons</span>, <span class="label function">cons'</span>
-          if you're going to be inserting a lot of bytes at the beginning of a
-          bytestring.</p>
+          불리며, byte와 bytestring을 취해 byte를 bytestring앞에 놓습니다. 이 또한 lazy이기에,
+          bytestring의 첫번째 덩어리가 꽉 차지 않더라도 새로운 덩어리를 만들 것입니다. 이것이 바로, bytestring 앞에
+          커다란 byte를 삽입하고자 한다면 strict한 <span class="fixed">cons</span>인, <span
+            class="label function">cons'</span>를 사용하는게 좋은 이유입니다.</p>
         <pre name="code" class="haskell:hs">ghci&gt; B.cons 85 $ B.pack [80,81,82,84]
 Chunk "U" (Chunk "PQRT" Empty)
 ghci&gt; B.cons' 85 $ B.pack [80,81,82,84]
@@ -1723,36 +1710,28 @@ Chunk "23456789:;&lt;" Empty
 </pre>
         <p>보시다시피, <span class="label function">empty</span>는 비어있는 bytestring을
           만듭니다.&nbsp; <span class="fixed">cons</span>와 <span class="fixed">cons'</span>의
-          차이점을 아십니까? With the <span class="fixed">foldr</span>, we started with
-          an empty bytestring and then went over the list of numbers from the
-          right, adding each number to the beginning of the bytestring. When we
-          used <span class="fixed">cons</span>, we ended up with one chunk for
-          every byte, which kind of defeats the purpose.</p>
-        <p>Otherwise, the bytestring modules have a load of functions that are
-          analogous to those in <span class="fixed">Data.List</span>,
-          including, but not limited to, <span class="fixed">head</span>, <span
-            class="fixed">tail</span>, <span class="fixed">init</span>, <span
-            class="fixed">null</span>, <span class="fixed">length</span>, <span
-            class="fixed">map</span>, <span class="fixed">reverse</span>, <span
-            class="fixed">foldl</span>, <span class="fixed">foldr</span>, <span
-            class="fixed">concat</span>, <span class="fixed">takeWhile</span>,
-          <span class="fixed">filter</span>, etc. </p>
-        <p>It also has functions that have the same name and behave the same as
-          some functions found in <span class="fixed">System.IO</span>, only <span
-            class="fixed">String</span>s are replaced with <span class="fixed">ByteString</span>s.
-          For instance, the <span class="fixed">readFile</span> function in <span
-            class="fixed">System.IO</span> has a type of <span class="fixed">readFile
-            :: FilePath -&gt; IO String</span>, while the <span class="label function">readFile</span>
-          from the bytestring modules has a type of <span class="fixed">readFile
-            :: FilePath -&gt; IO ByteString</span>. Watch out, if you're using
-          strict bytestrings and you attempt to read a file, it will read it
-          into memory at once! With lazy bytestrings, it will read it into neat
-          chunks.</p>
-        <p>Let's make a simple program that takes two filenames as command-line
-          arguments and copies the first file into the second file. Note that <span
-            class="fixed">System.Directory</span> already has a function called
-          <span class="fixed">copyFile</span>, but we're going to implement our
-          own file copying function and program anyway.</p>
+          차이점을 아십니까? <span class="fixed">foldr</span>로, 비어있는 bytestring에서 시작하여
+          우측에서 숫자 리스트를 넘겨받아 각 숫자를 bytestring의 시작부분에 추가하였습니다. <span class="fixed">cons</span>을
+          사용하게 되면 목적에 반하게 바이트마다 chunk가 들어가게 됩니다.</p>
+        <p>반면 bytestring 모듈은 <span class="fixed">head</span>, <span class="fixed">tail</span>,
+          <span class="fixed">init</span>, <span class="fixed">null</span>, <span
+            class="fixed">length</span>, <span class="fixed">map</span>, <span
+            class="fixed">reverse</span>, <span class="fixed">foldl</span>, <span
+            class="fixed">foldr</span>, <span class="fixed">concat</span>, <span
+            class="fixed">takeWhile</span>, <span class="fixed">filter</span>,
+          등등을 포함하여 <span class="fixed">Data.List</span>에 있는 것들과 유사한 함수들을 지니고 있을
+          뿐만 아니라, 다른 것들도 포함하고 있습니다. </p>
+        <p>또한 <span class="fixed">String</span>이 <span class="fixed">ByteString</span>로
+          바뀐점을 제외하면, <span class="fixed">System.IO</span>에서 발견할 수 있는 함수들과 동일한
+          행동을 하는 동일한 이름의 함수를 갖고 있습니다. 예를들어,<span class="fixed">System.IO</span>에
+          있는 <span class="fixed">readFile</span>함수가 <span class="fixed">readFile
+            :: FilePath -&gt; IO String</span>타입을 가진 반면, bytestring 모듈의 <span class="label function">readFile</span>은&nbsp;
+          <span class="fixed">readFile :: FilePath -&gt; IO ByteString</span>타입을
+          가졌습니다. strict bytestrings을 사용하여 파일을 읽고자 한다면, 메모리에 한번에 올려질 것이므로 주의하시기
+          바랍니다! lazy bytestrings으로 한다면, 적당한 덩어리로 읽을 것입니다.</p>
+        <p>명령 라인 인자로 두 파일 이름을 받아 첫번째 파일을 두번째 파일로 복사하는 간단한 프로그램을 만들어 봅시다. <span
+            class="fixed">System.Directory</span>가 이미 <span class="fixed">copyFile</span>를
+          가졌지만, 저희는 저희만의 파일 복사 함수와 프로그램을 만들 것입니다.</p>
         <pre name="code" class="haskell:hs">import System.Environment
 import qualified Data.ByteString.Lazy as B
 
@@ -1765,29 +1744,22 @@ copyFile source dest = do
     contents &lt;- B.readFile source
     B.writeFile dest contents
 </pre>
-        <p>We make our own function that takes two <span class="fixed">FilePath</span>s
-          (remember, <span class="fixed">FilePath</span> is just a synonym for
-          <span class="fixed">String</span>) and returns an I/O action that will
-          copy one file into another using bytestring. In the <span class="fixed">main</span>
-          function, we just get the arguments and call our function with them to
-          get the I/O action, which is then performed.</p>
+        <p>저희는 두개의 <span class="fixed">FilePath</span>를 취해 (<span class="fixed">FilePath</span>는
+          단순히 <span class="fixed">String</span>와 동의어란 것을 기억하시기 바랍니다)&nbsp;
+          bytestring을 이용하여 하나의 파일을 다른 파일로 복사하는 I/O action을 반환하는 함수를 만들었습니다. <span
+            class="fixed">main</span>함수에서, 저희는 단순히 인자를 취해, 어떠한 일을 수행하는 I/O
+          action을 호출하였습니다.</p>
         <pre name="code" class="plain">$ runhaskell bytestringcopy.hs something.txt ../../something.txt
 </pre>
-        <p>Notice that a program that doesn't use bytestrings could look just
-          like this, the only difference is that we used <span class="fixed">readFile</span>과
+        <p>bytestrings을 사용하지 않는 프로그램도 이와 비슷할 수 도 있지만, <span class="fixed">readFile</span>과
           <span class="fixed">writeFile</span>대신 <span class="fixed">B.readFile</span>와
-          <span class="fixed">B.writeFile</span>를 사용한다는 점만이 다릅니다. Many times,
-          you can convert a program that uses 평범한 문자열을 이용하는 프로그램을 bytestring을
-          이용하는 프로그램으로 normal strings to a program that uses bytestrings by just
-          doing the necessary imports and then putting the qualified module
-          names in front of some functions. 종종, you have to convert functions
-          that you wrote to work on strings 문자열에 동작하도록 만든 프로그램을 so that they
-          work on bytestrings, but that's not hard.</p>
-        <p>Whenever you need better performance in a program that reads a lot of
-          data into strings, give bytestrings a try, chances are you'll get some
-          good performance boosts with very little effort on your part. I
-          usually write programs by using normal strings and then convert them
-          to use bytestrings if the performance is not satisfactory.</p>
+          <span class="fixed">B.writeFile</span>를 사용한다는 점이 다릅니다. 대부분의 경우, 필요한
+          것들을 imports를 하고 qualified 모듈 이름들을 함수 앞에 놓음으로써, 평범한 문자열을 이용하는 프로그램을
+          bytestring을 이용하는 프로그램으로 바꿀 수 있습니다. 종종, 문자열에 동작하도록 만든 함수들을 bytestring에
+          동작하도록 변환시켜야 하지만, 이 역시 어렵진 않습니다.</p>
+        <p>데이터를 문자열로 읽어들이는 프로그램에서 더 낳은 성능이 필요한다면, bytestrings을 줘본다면 적은 노력으로도
+          만족할만한 성능을 얻을 수 있을 것입니다 저는 보통 평범한 문자열을 이용하여 프로그램을 작성한 다음, 성능이 만족할만하지
+          않으면 bytestring을 사용하도록 바꿉니다.</p>
         <a name="exceptions"></a>
         <h2>예외</h2>
         <img src="http://s3.amazonaws.com/lyah/timber.png" class="left" alt="timberr!!!!"
@@ -1795,52 +1767,45 @@ copyFile source dest = do
         <p>모든 언어는 프로시져, 함수, 예외를 다루는 코드를 갖고있습니다. 이는 어쩔수 없는 현실입니다. 댜양한 언어들이 다양한
           방식으로 에러를 처리합니다. C에서는 함수가 평범한 값으로 취급할 수 없는 값을 반환하는 것을 나타내기 위해 보통&nbsp;
           ( <span class="fixed">-1</span>이나 널 포인터와 같은) 이상한 반환값을 사용하기도 합니다. 반면,
-          Java와 C#에선 예외를 이용하여 실패를 다룹니다. 예외가 발생하면, When an exception is thrown,
-          제어 흐름 the control flow jumps to some code that we've defined that does
-          some cleanup and then maybe re-throws the exception so that some other
-          error handling code can take care of some other stuff.</p>
+          Java와 C#에선 예외를 이용하여 실패를 다룹니다. 예외가 발생하면, 제어 흐름은 치우는 작업을 정의한 코드로 넘어가서
+          예외를 되던지게되어 또 다른 예외 처리 코드가 어떠한 작업을 떠맏을 수 있게됩니다.</p>
         <p>하스켈은 매우 훌륭한 타입 시스템입니다. 대수적 자료구조는 <span class="fixed">Maybe</span>나 <span
             class="fixed">Either</span>와 같은 타입을 허용하며, 결과를 표현하기 위해 이러한 타입의 값을 이용할
           수 있습니다. C에서는 실패시 <span class="fixed">-1</span>를 반환하는것이 관습처럼 굳어졌습니다.
-          It only has special meaning to humans. If we're not careful, we might
-          treat these abnormal values as ordinary ones and then they can cause
-          havoc and dismay in our code. Haskell's type system gives us some
-          much-needed safety in that aspect. A function <span class="fixed">a
-            -&gt; Maybe b</span> clearly indicates that it it may produce a <span
-            class="fixed">b</span> wrapped in <span class="fixed">Just</span>
-          or that it may return <span class="fixed">Nothing</span>. The type is
-          different from just plain <span class="fixed">a -&gt; b</span> and if
-          we try to use those two functions interchangeably, the compiler will
-          complain at us.</p>
-        <p>Despite having expressive types that support failed computations,
-          Haskell still has support for exceptions, because they make more sense
-          in I/O contexts. A lot of things can go wrong when dealing with the
-          outside world because it is so unreliable. For instance, when opening
-          a file, a bunch of things can go wrong. The file might be locked, it
-          might not be there at all or the hard disk drive or something might
-          not be there at all. So it's good to be able to jump to some error
-          handling part of our code when such an error occurs.</p>
-        <p>Okay, so I/O code (i.e. impure code) can throw exceptions. It makes
-          sense. But what about pure code? Well, it can throw exceptions too.
-          Think about the <span class="fixed">div</span> and <span class="fixed">head</span>
-          functions. They have types of <span class="fixed">(Integral a) =&gt;
-            a -&gt; a -&gt; a</span> and <span class="fixed">[a] -&gt; a</span>,
-          respectively. No <span class="fixed">Maybe</span> or <span class="fixed">Either</span>
-          in their return type and yet they can both fail! <span class="fixed">div</span>
-          explodes in your face if you try to divide by zero and <span class="fixed">head</span>
-          throws a tantrum when you give it an empty list.</p>
+          이는 오직 인간에게만 특별한 의미를 지닙니다. If we're not careful, we might treat these
+          abnormal 비정상적인 값을 values as ordinary ones and then they can cause
+          havoc and dismay in our code. 하스켈의 타입시스템은 이러한 측면에서 좀더 필수적인 안전을 제공해줍니다.
+          함수 <span class="fixed">a -&gt; Maybe b</span>은 <span class="fixed">Just</span>로
+          감싸진&nbsp; <span class="fixed">b</span>를 생성하거나 <span class="fixed">Nothing</span>을
+          반환한 다는 것을 명확히 나타내고 있습니다. <span class="fixed">a -&gt; Maybe b</span>
+          타입은 단순한 <span class="fixed">a -&gt; b</span>타입과 다를 뿐만아니라&nbsp; 만일 이 두
+          함수를 돌려쓴다면, 컴파일러는 불만을 토로할 것입니다.</p>
+        <p>잘못된 계산을 대비하기 위한 표현력있는 타입을 가졌음에도 불구하고,
+          I/O contexts에서는 그게 이치에 맞기에 하스켈은 역시 예외를 지원합니다. 불안한 외부세계랑 작업하는 많은 일들이
+          잘못될 수 있습니다. 예를들어, 파일을 열때 분기가 잘못될 수 있습니다. 파일이 잠겨있거나, 아에 없거나, 하드디스트나
+          무언가가 존재하지 않을지도 모릅니다. 따라서 이와 같은 에러가 발생했을때 에러를 다룰 수 있는 곳으로 갈 수 있다면 좋을
+          것입니다.</p>
+        <p>따라서 I/O 코드는 (즉, 불순한 코드는) 예외를 던질 수 있습다. 이는 이치에 맞습니다. 하지만 순수한 코드는 어떨까요?
+          흠, 이 역시 예외를 던질 수 있습니다. <span class="fixed">div</span>와 <span class="fixed">head</span>함
+          수에 대해 생각해 보시기 바랍니다. 이 둘은 각각 <span class="fixed">(Integral a) =&gt; a
+            -&gt; a -&gt; a</span> 과 <span class="fixed">[a] -&gt; a</span>타입으로
+          지니고 있습니다. No <span class="fixed">Maybe</span>나 <span class="fixed">Either</span>은
+          반환 값이 될 수 없으며 in their return type and yet they can both fail! <span
+            class="fixed">div</span> explodes in your face if you try to divide
+          by zero 0으로 나누려 한다면 <span class="fixed">div</span>는 광분할 것이며and <span
+            class="fixed">head</span> throws a tantrum when you give it an empty
+          list.</p>
         <pre name="code" class="haskell:hs">ghci&gt; 4 `div` 0
 *** Exception: divide by zero
 ghci&gt; head []
 *** Exception: Prelude.head: empty list
 </pre> <img src="http://s3.amazonaws.com/lyah/police.png" alt="Stop right there, criminal scum! Nobody breaks the law on my watch! Now pay your fine or it's off to jail."
           class="left" height="328" width="241">
-        <p>Pure code can throw exceptions, but it they can only be caught in the
-          I/O part of our code (when we're inside a <i>do</i> block that goes
-          into <span class="fixed">main</span>). That's because you don't know
-          when (or if) anything will be evaluated in pure code, because it is
-          lazy and doesn't have a well-defined order of execution, whereas I/O
-          code does.</p>
+        <p>순수한 코드는 예외를 던질 수 있지만, but it they can only be caught in the I/O part
+          of our code (when we're inside a <i>do</i> block that goes into <span
+            class="fixed">main</span>). That's because you don't know when (or
+          if) anything will be evaluated in pure code, because it is lazy and
+          doesn't have a well-defined order of execution, whereas I/O code does.</p>
         <p>Earlier, we talked about how we should spend as little time as
           possible in the I/O part of our program. The logic of our program
           should reside mostly within our pure functions, because their results
@@ -1861,13 +1826,13 @@ ghci&gt; head []
             class="fixed">Either</span> and <span class="fixed">Maybe</span> to
           represent results that may have failed.</p>
         <p>That's why we'll just be looking at how to use I/O exceptions for
-          now. I/O exceptions are exceptions that are caused when something goes
-          wrong while we are communicating with the outside world in an I/O
-          action that's part of <span class="fixed">main</span>. For example,
-          we can try opening a file and then it turns out that the file has been
-          deleted or something. Take a look at this program that opens a file
-          whose name is given to it as a command line argument and tells us how
-          many lines the file has.</p>
+          now. I/O 예외는 예외들 입니다 무언가 잘못 돌아갈때 발생할 수 있는&nbsp; that are caused when
+          something goes wrong while we are communicating with the outside world
+          in an I/O action that's part of <span class="fixed">main</span>. For
+          example, we can try opening a file and then it turns out that the file
+          has been deleted or something. Take a look at this program that opens
+          a file whose name is given to it as a command line argument and tells
+          us how many lines the file has.</p>
         <pre name="code" class="haskell:hs">import System.Environment
 import System.IO
 
@@ -1875,23 +1840,19 @@ main = do (fileName:_) &lt;- getArgs
           contents &lt;- readFile fileName
           putStrLn $ "The file has " ++ show (length (lines contents)) ++ " lines!"
 </pre>
-        <p>A very simple program. We perform the <span class="fixed">getArgs</span>
-          I/O action and bind the first string in the list that it yields to <span
-            class="fixed">fileName</span>. Then we call the contents of the file
-          with that name <span class="fixed">contents</span>. Lastly, we apply
-          <span class="fixed">lines</span> to those contents to get a list of
-          lines and then we get the length of that list and give it to <span class="fixed">show</span>
-          to get a string representation of that number. It works as expected,
-          but what happens when we give it the name of a file that doesn't
-          exist?</p>
+        <p>매우 단순한 프로그램입니다. <span class="fixed">getArgs</span> I/O action을 수행하고
+          생성된&nbsp; 리스트의 첫번째 문자열을 <span class="fixed">fileName</span>에
+          bind하였습니다. 그런 다음 파일의 내용을 <span class="fixed">contents</span>라 하였습니다.
+          마지막으로, 그 내용을 리스트로 얻기 위해&nbsp; <span class="fixed">lines</span>를 적용하고
+          리스트의 길이를 얻어&nbsp; <span class="fixed">show</span>로 넘겨 수를 문자열로 표현했습니다.
+          예상대로 동작하지만, 존재하지 않는 파일 이름을 넘겨준다면 어떻게 될까요?</p>
         <pre name="code" class="plain">$ runhaskell linecount.hs i_dont_exist.txt
 linecount.hs: i_dont_exist.txt: openFile: does not exist (No such file or directory)
 </pre>
-        <p>Aha, we get an error from GHC, telling us that the file does not
-          exist. Our program crashes. What if we wanted to print out a nicer
-          message if the file doesn't exist? One way to do that is to check if
-          the file exists before trying to open it by using the <span class="label function">doesFileExist</span>
-          function from <span class="fixed">System.Directory</span>.</p>
+        <p>아하, 저희는 GHC에서 파일이 존재하지 않는다는 에러를 얻었습니다. 저희 프로그램은 멈췄습니다. 파일이 존재하지 않는 경우
+          좀더 깔끔한 메시지를 출력하고자 한다면 어떻할까요? <span class="fixed">System.Directory</span>의
+          <span class="label function">doesFileExist</span> 함수를 이용하여 파일을 열기 전에
+          파일이 존재하는지 검사하는 방법이 있을 것입니다.</p>
         <pre name="code" class="haskell:hs">import System.Environment
 import System.IO
 import System.Directory
@@ -1903,47 +1864,45 @@ main = do (fileName:_) &lt;- getArgs
                       putStrLn $ "The file has " ++ show (length (lines contents)) ++ " lines!"
               else do putStrLn "The file doesn't exist!"
 </pre>
-        <p>We did <span class="fixed">fileExists &lt;- doesFileExist fileName</span>
-          because <span class="fixed">doesFileExist</span> has a type of <span
-            class="fixed">doesFileExist :: FilePath -&gt; IO Bool</span>, which
-          means that it returns an I/O action that has as its result a boolean
-          value which tells us if the file exists. We can't just use <span class="fixed">doesFileExist</span>
-          in an <i>if</i> expression directly.</p>
-        <p>Another solution here would be to use exceptions. It's perfectly
-          acceptable to use them in this context. A file not existing is an
-          exception that arises from I/O, so catching it in I/O is fine and
-          dandy.</p>
+        <p> <span class="fixed">doesFileExist</span>가 <span class="fixed">doesFileExist
+            :: FilePath -&gt; IO Bool</span>을 타입을 갖기에 <span class="fixed">fileExists
+            &lt;- doesFileExist fileName</span>을 하였으며, 이는 파일이 존재하는지 부울 값을 결과로 갖는
+          I/O action을 반환한 다는 것을 의미합니다. 저희는 <i>if</i> 표현식에서 <span class="fixed">doesFileExist</span>을
+          직접 사용할 수는 없습니다.</p>
+        <p>또 다른 해결책은 예외를 사용하는 것입니다. 이러한 상황에서 예외를 사용하는 것은 상당히 괜찮아 보입니다. 파일이 존재하지
+          않는 것은 I/O에서 발생한 예외이므로, 이를 I/O 에서 잡는 것은 꽤 괜찮은 방법입니다.</p>
         <p>To deal with this by using exceptions, we're going to take advantage
           of the <span class="label function">catch</span> function from <span
-            class="fixed">System.IO.Error</span>. Its type is <span class="fixed">catch
-            :: IO a -&gt; (IOError -&gt; IO a) -&gt; IO a</span>. It takes two
-          parameters. The first one is an I/O action. For instance, it could be
-          an I/O action that tries to open a file. The second one is the
-          so-called handler. If the first I/O action passed to <span class="fixed">catch</span>
-          throws an I/O exception, that exception gets passed to the handler,
-          which then decides what to do. So the final result is an I/O action
-          that will either act the same as the first parameter or it will do
-          what the handler tells it if the first I/O action throws an exception.</p>
+            class="fixed">System.IO.Error</span>. 이의 타입은 <span class="fixed">catch
+            :: IO a -&gt; (IOError -&gt; IO a) -&gt; IO a</span>입니다. 이는 두 인자를
+          취합니다. 하나는 I/O action입니다. 예를들어&nbsp; 이는 파일을 열려고 하는 I/O action이 될 수
+          있습니다. 두번째는 핸들러라 불리는 것입니다. 첫번째 I/O action이 If the first I/O action
+          passed to <span class="fixed">catch</span> throws an I/O exception,
+          that exception gets passed to the handler, which then decides what to
+          do. So the final result is an I/O action that will either act the same
+          as the first parameter or it will do what the handler tells it if the
+          first I/O action throws an exception.</p>
         <img src="http://s3.amazonaws.com/lyah/puppy.png" alt="non sequitor" class="right"
           height="240" width="334">
-        <p>If you're familiar with <i>try-catch</i> blocks in languages like
-          Java or Python, the <span class="fixed">catch</span> function is
-          similar to them. The first parameter is the thing to try, kind of like
-          the stuff in the <i>try</i> block in other, imperative languages. The
-          second parameter is the handler that takes an exception, just like
-          most <i>catch</i> blocks take exceptions that you can then examine to
-          see what happened. The handler is invoked if an exception is thrown.</p>
-        <p>The handler takes a value of type <span class="fixed">IOError</span>,
-          which is a value that signifies that an I/O exception occurred. It
-          also carries information regarding the type of the exception that was
-          thrown. How this type is implemented depends on the implementation of
-          the language itself, which means that we can't inspect values of the
-          type <span class="fixed">IOError</span> by pattern matching against
-          them, just like we can't pattern match against values of type <span class="fixed">IO
-            <i>something</i></span>. We can use a bunch of useful predicates to
-          find out stuff about values of type <span class="fixed">IOError</span>
-          as we'll learn in a second.</p>
-        <p>So let's put our new friend <span class="fixed">catch</span> to use!</p>
+        <p>Java나 Python과 같은 언어에서의&nbsp; <i>try-catch</i> 블록과 <span class="fixed">catch</span>함
+          수는 유사합니다. 첫번째 인자는&nbsp; The first parameter is the thing to try, kind
+          of like the stuff in the <i>try</i> block in other, imperative
+          languages. The second parameter is the handler that takes an
+          exception, just like most <i>catch</i> blocks take exceptions that
+          you can then examine to see what happened. The handler is invoked if
+          an exception is thrown.</p>
+        <p>The handler takes a value of type <span class="fixed">IOError</span>타
+          입 값을 갖습니다, which is a value that signifies that an I/O exception
+          occurred. It also carries information regarding the type of the
+          exception that was thrown. How this type is implemented depends on the
+          implementation of the language itself, which means that we can't
+          inspect values of the type <span class="fixed">IOError</span> by
+          pattern matching against them, just like we can't pattern match
+          against values of type <span class="fixed">IO <i>something</i></span>.
+          We can use a bunch of useful predicates to find out stuff about values
+          of type <span class="fixed">IOError</span> as we'll learn in a
+          second.</p>
+        <p>그러면, 새로운 친구 <span class="fixed">catch</span>를 사용해 봅시다!</p>
         <pre name="code" class="haskell:hs">import System.Environment
 import System.IO
 import System.IO.Error
