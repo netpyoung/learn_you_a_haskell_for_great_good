@@ -3,7 +3,7 @@
 - [[http://learnyouahaskell.com][learnyouahaskell.com]] 에서 나온 온라인 책을 번역중입니다.
 - 본 번역은 [[http://ensky0.egloos.com/][꽃돌이푸]] 님과 함께하고 있습니다.
 * [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/chapters][Learn You a Haskell For Great Good!]]
-** 진행상황 [35%]
+** 진행상황 [42%]
 1. [X] [[http://ensky0.egloos.com/5511527][머리말]]
 2. [X] [[http://ensky0.egloos.com/5518698][시작]]
 3. [X] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/types-and-typeclasses][타입과 타입클래스]]
@@ -12,8 +12,8 @@
 6. [ ] Higher Order Functions
 7. [X] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/modules][모듈]]
 8. [ ] Making Our Own Types and Typeclasses
-9. [ ] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/input-and-output][입력과 출력]]
-10. [ ] Functionally Solving Problems
+9. [X] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/input-and-output][입력과 출력]]
+10. [ ] [[http://netpyoung.github.com/learn_you_a_haskell_for_great_good/functionally-solving-problems][함수형 문제 해결법]]
 11. [ ] Functors, Applicative Functors and Monoids
 12. [ ] A Fistful of Monads
 13. [ ] For a Few Monads More
