@@ -1772,16 +1772,16 @@ copyFile source dest = do
         <p>하스켈은 매우 훌륭한 타입 시스템입니다. 대수적 자료구조는 <span class="fixed">Maybe</span>나 <span
             class="fixed">Either</span>와 같은 타입을 허용하며, 결과를 표현하기 위해 이러한 타입의 값을 이용할
           수 있습니다. C에서는 실패시 <span class="fixed">-1</span>를 반환하는것이 관습처럼 굳어졌습니다.
-          이는 오직 인간에게만 특별한 의미를 지닙니다. 만약 주의하지 않은다면, 이러한 비정상적인 값을 다른 평범한 것처럼 다루게되
-          크나큰 혼란을 야기할 것입니다. 하스켈의 타입시스템은 이러한 측면에서 좀더 튼튼한 안전망을 제공해줍니다. 함수 <span class="fixed">a
-            -&gt; Maybe b</span>은 <span class="fixed">Just</span>로 감싸진&nbsp; <span
-            class="fixed">b</span>를 생성하거나 <span class="fixed">Nothing</span>을
+          이는 오직 인간에게만 특별한 의미를 지닙니다. 주의를 기울이지 않는다면, 이러한 비정상적인 값을 다른 평범한 것처럼 다루게되어
+          크나 큰 혼란을 야기할 것입니다. 하스켈의 타입시스템은 이러한 측면에서 좀 더 튼튼한 안전망을 제공해줍니다. 함수 <span
+            class="fixed">a -&gt; Maybe b</span>은 <span class="fixed">Just</span>로
+          감싸진&nbsp; <span class="fixed">b</span>를 생성하거나 <span class="fixed">Nothing</span>을
           반환한 다는 것을 명확히 나타내고 있습니다. <span class="fixed">a -&gt; Maybe b</span>
           타입은 단순한 <span class="fixed">a -&gt; b</span>타입과 다를 뿐만아니라&nbsp; 만일 이 두
           함수를 돌려쓴다면, 컴파일러는 불만을 토로할 것입니다.</p>
-        <p>잘못된 계산을 대비하기 위한 표현력있는 타입을 가졌음에도 불구하고, I/O contexts에서는 그게 이치에 맞기에 하스켈은
-          역시 예외를 지원합니다. 불안한 외부세계랑 작업하는 많은 일들이 잘못될 수 있습니다. 예를들어, 파일을 열때 분기가 잘못될 수
-          있습니다. 파일이 잠겨있거나, 아에 없거나, 하드디스트나 무언가가 존재하지 않을지도 모릅니다. 따라서 이와 같은 에러가
+        <p>잘못된 계산을 대비하기 위한 표현력있는 타입을 가졌음에도 불구하고, I/O contexts에서는 그게 이치에 맞기에 하스켈
+          역시 예외를 지원합니다. 불안한 외부세계랑 작업하는 많은 일들이 잘못될 수 있습니다. 예를들어, 파일을 열어볼때 분기가 잘못될
+          수 있습니다. 파일이 잠겨있거나, 아에 없거나, 하드디스트나 무언가가 존재하지 않을지도 모릅니다. 따라서 이와 같은 에러가
           발생했을때 에러를 다룰 수 있는 곳으로 갈 수 있다면 좋을 것입니다.</p>
         <p>따라서 I/O 코드는 (즉, 불순한 코드는) 예외를 던질 수 있습다. 이는 이치에 맞습니다. 하지만 순수한 코드는 어떨까요?
           흠, 이 역시 예외를 던질 수 있습니다. <span class="fixed">div</span>와 <span class="fixed">head</span>함
@@ -1789,7 +1789,7 @@ copyFile source dest = do
             -&gt; a -&gt; a</span> 과 <span class="fixed">[a] -&gt; a</span>타입으로
           지니고 있습니다. 반환 값이 <span class="fixed">Maybe</span>나 <span class="fixed">Either</span>이
           아니므로 이 둘 모두 실패할 수 있습니다! 0으로 나누려 한다면 <span class="fixed">div</span>는
-          광분할 것이며 <span class="fixed">head</span>에 비어있는 리스트를 넘겨준다면 짜증낼 것입니다.</p>
+          광분할 것이며, <span class="fixed">head</span>에 비어있는 리스트를 넘겨준다면 짜증낼 것입니다.</p>
         <pre name="code" class="haskell:hs">ghci&gt; 4 `div` 0
 *** Exception: divide by zero
 ghci&gt; head []
@@ -1798,29 +1798,23 @@ ghci&gt; head []
           class="left" height="328" width="241">
         <p>순수한 코드는 예외를 던질 수 있지만, 예외는 I/O 코드에서만(<span class="fixed">main</span>에
           들어가는 <i>do</i> 블록에 있는 경우) 잡을 수 있습니다 . 이는 저희가 순수한 코드에서 어떠한 것이 평가되는 시점을
-          모르기 때문이며, I/O 코드가 실행 순서가 잘 정의된 반면 순수한 코드는 그렇지 않을 뿐더러 lazy하기 때문입니다.</p>
+          모르기 때문이며, I/O 코드의 실행 순서가 잘 정의된 반면 순수한 코드는 그렇지 않을 뿐더러 lazy하기 때문입니다.</p>
         <p>전에, 저희는 저희 프로그램의 I/O 부분에 관해서 어떻게 가능한 적은 시간을 소비할 것인가에 대해 예기를 나눴습니다. 저희
           프로그램의 로직은 거의 대부분 순수한 함수에 의존하고 있는데, 결과가 오직 함수가 호출되는 인자에 기반하기 때문입니다. 순수한
-          함수를 다룰 때에는, 함수가 어떠한 일도 할 수 없기에 반환하는 값만 신경쓰면 됩니다. 이는 저희의 삶을 보다 쉽게 만들어
-          줍니다. (파일을 여는것과 같은) I/O로된 로직이 필요할 지라도, 가급적 최소화가 될 것입니다. 순수한 함수는 기본적으로
-          lazy합니다. :FIXME 이는 언제 평가되는지 Pure functions are lazy by default, which
-          means that we don't know when they will be evaluated and that it
-          really shouldn't matter. 하지만, 일단 순수한 함수가 예외를 던지면 However, once pure
-          functions start throwing exceptions, it matters when they are
-          evaluated. That's why we can only catch exceptions thrown from pure
-          functions in the I/O part of our code. And that's bad, because we want
-          to keep the I/O part as small as possible. However, if we don't catch
-          them in the I/O part of our code, our program crashes. The solution?
-          Don't mix exceptions and pure code. Take advantage of Haskell's
-          powerful type system and use types like <span class="fixed">Either</span>
-          and <span class="fixed">Maybe</span> to represent results that may
-          have failed.</p>
-        <p>That's why we'll just be looking at how to use I/O exceptions for
-          now. I/O exception은 <span class="fixed">main</span>의 일부인 I/O action에서
-          외부 세계랑 소통하면서 무언가 잘못 돌아갈때 발생할 수 있는 예외입니다. 예를들자면, 파일을 열ㅇwe can try
-          opening a file and then it turns out that the file has been deleted or
-          something. 명령 라인 인자로 들어온 이름을 받아 파일을 열어, 얼마나 많은 라인을 가지고 있는비 보여주는 프로그램을
-          살펴보도록 하겠습니다.<br>
+          함수를 다룰 때에는, 함수가 어떠한 일을 하는게 아니기에 반환하는 값에만 신경쓰면 됩니다. 이는 저희의 삶을 보다 쉽게 만들어
+          줍니다. (파일을 여는것과 같은) I/O로된 로직이 필요할 지라도 가급적 최소한이 될 것입니다. 순수한 함수는 기본적으로
+          lazy합니다. 이는 언제 평가되는지 모른다는 것이지만, 사실 별로 문제가 되지 않습니다. 하지만, 일단 순수한 함수가 예외를
+          던지기 시작하면, 평가할때 문제가 발생합니다. 이것이 바로 코드의 I/O부분에서 순수한 함수의 에러를 잡아야만 하는
+          까닭입니다. 하지만 저희는 I/O 부분을 가능한 적게 유지하고 싶기에, 이 방법은 별로입니다. 그렇지만, 저희가 이를 I/O
+          부분에서 잡지 않는다면,&nbsp; 저희 프로그램은 멈추게 될 것입니다. 그렇다면 해결책은 뭘까요? 순수한 코드와 예외를 같이
+          섞지 않는 것입니다. 하스켈의 강력한 타입 시스템의 이점을 최대한 활용하여, 실패할 수 있는 결과의 표현하기 위해선 <span
+            class="fixed">Either</span>나 <span class="fixed">Maybe</span>와 같은
+          타입을 사용하시기 바랍니다.</p>
+        <p>&nbsp;이것이 바로 지금 저희가 왜 I/O 예외의 사용법을 살펴보는지에 대한 이유입니다. I/O exception은 <span
+            class="fixed">main</span>의 일부인 I/O action에서 외부 세계랑 소통하면서 무언가 잘못 돌아갈때
+          발생할 수 있는 예외입니다. 예를들자면, 파일을 열어보고자 한다면, 파일이 삭제되었다거나 어떠한 상태에 있는지 확인할 수
+          있습니다. 명령 라인 인자로 들어온 이름을 받아 파일을 열어, 얼마나 많은 라인을 가지고 있는지 보여주는 프로그램을 살펴보도록
+          하겠습니다.<br>
         </p>
         <pre name="code" class="haskell:hs">import System.Environment
 import System.IO
@@ -1838,7 +1832,7 @@ main = do (fileName:_) &lt;- getArgs
         <pre name="code" class="plain">$ runhaskell linecount.hs i_dont_exist.txt
 linecount.hs: i_dont_exist.txt: openFile: does not exist (No such file or directory)
 </pre>
-        <p>아하, 저희는 GHC에서 파일이 존재하지 않는다는 에러를 얻었습니다. 저희 프로그램은 멈췄습니다. 파일이 존재하지 않는 경우
+        <p>아하, 저희는 GHC에서 파일이 존재하지 않는다는 에러를 얻고, 프로그램은 멈추어 바렸습니다. 파일이 존재하지 않는 경우
           좀더 깔끔한 메시지를 출력하고자 한다면 어떻할까요? <span class="fixed">System.Directory</span>의
           <span class="label function">doesFileExist</span> 함수를 이용하여 파일을 열기 전에
           파일이 존재하는지 검사하는 방법이 있을 것입니다.</p>
@@ -1857,38 +1851,29 @@ main = do (fileName:_) &lt;- getArgs
             :: FilePath -&gt; IO Bool</span>을 타입을 갖기에 <span class="fixed">fileExists
             &lt;- doesFileExist fileName</span>을 하였으며, 이는 파일이 존재하는지 부울 값을 결과로 갖는
           I/O action을 반환한 다는 것을 의미합니다. 따라서 저희는 <i>if</i> 표현식에서 <span class="fixed">doesFileExist</span>을
-          직접 사용할 수는 없습니다.</p>
+          직접 사용하지는 못합니다.</p>
         <p>또 다른 해결책은 예외를 사용하는 것입니다. 이러한 상황에서 예외를 사용하는 것은 상당히 괜찮아 보입니다. 파일이 존재하지
           않는 것은 I/O에서 발생한 예외이므로, 이를 I/O 에서 잡는 것은 꽤 괜찮은 방법입니다.</p>
-        <p>To deal with this by using exceptions 예외를 이용하여 이를 처리하기 위해선,&nbsp; <span
-            class="fixed">System.IO.Error</span>의 <span class="label function">catch</span>
-          함수를 살펴봐야 합니다. 이의 타입은 <span class="fixed">catch :: IO a -&gt; (IOError
-            -&gt; IO a) -&gt; IO a</span>입니다. 이는 두 인자를 취합니다. 하나는 I/O action입니다.
-          예를들자면 파일을 열려고 하는 I/O action이 될 수 있습니다. 두번째는 핸들러라 불리는 것입니다. 첫번째 I/O
-          action이 If the first I/O action passed to <span class="fixed">catch</span>
-          throws an I/O exception, that exception gets passed to the handler,
-          which then decides what to do. 따라서 최종 결과는 첫번째 인자와 같거나 So the final
-          result is an I/O action that will either act the same as the first
-          parameter or it will do what the handler tells it if the first I/O
-          action throws an exception.</p>
+        <p>예외를 이용하여 이를 처리하기 위해선,&nbsp; <span class="fixed">System.IO.Error</span>의
+          <span class="label function">catch</span> 함수를 살펴봐야 합니다. 이의 타입은 <span
+            class="fixed">catch :: IO a -&gt; (IOError -&gt; IO a) -&gt; IO a</span>입
+          니다. 이는 두 인자를 취합니다. 하나는 I/O action입니다. 예로, 파일을 여는 I/O action이 될 수 있습니다.
+          두번째는 핸들러라 불리는 것입니다. <span class="fixed">catch</span>를 거친&nbsp; 첫번째
+          I/O action이 I/O exception을 던지면, 그 exception은 핸들러에게 넘겨져 무엇을 할지 결정하게
+          됩니다. 따라서 최종 결과는 첫번째 인자와 동일한 I/O action이거나, 예외를 던지면 핸들러가 행하는 I/O
+          action이 됩니다.</p>
         <img src="http://s3.amazonaws.com/lyah/puppy.png" alt="non sequitor" class="right"
           height="240" width="334">
         <p> <span class="fixed">catch</span>함수는 Java나 Python과 같은 언어에서의 <i>try-catch</i>
-          블록과 유사합니다. 첫번째 인자는&nbsp; The first parameter is the thing to try, kind
-          of like the stuff in the <i>try</i> block in other, . The second
-          parameter is the handler that takes an exception, just like most <i>catch</i>
-          blocks take exceptions that you can then examine to see what happened.
-          The handler is invoked if an exception is thrown.</p>
-        <p>핸들러는 I/O exception이 발생했다는 것을 알려주는 <span class="fixed">IOError</span>타
-          입 값을 취합니다. It also carries information regarding the type of the
-          exception that was thrown. How this type is implemented depends on the
-          implementation of the language itself, which means that we can't
-          inspect values of the type <span class="fixed">IOError</span> by
-          pattern matching against them, just like we can't pattern match
-          against values of type <span class="fixed">IO <i>something</i></span>.
-          We can use a bunch of useful predicates to find out stuff about values
-          of type <span class="fixed">IOError</span> as we'll learn in a
-          second.</p>
+          블록과 유사합니다. 첫번째 인자는 시도할려고 하는 일이며, 이는 다른 언어에서의 <i>try</i>블록에 있는 것과
+          같습니다. 두번째 인자는 예외를 취하는 핸들러이며, 이는 예외가 발생하면 다음에 무슨일이 일어나는지 추정할 수 있는 <i>catch</i>블
+          록과 매우 유사합니다. 핸들러는 예외가 던져지면 동작합니다.</p>
+        <p>&nbsp;핸들러는 I/O exception이 발생했다는 것을 알려주는 <span class="fixed">IOError</span>타
+          입 값을 취합니다. 또, 던져진 예외에 관한 정보도 수반합니다. 이러한 타입은 언어 자체 구현에 의존하며, 이는 곧&nbsp;
+          <span class="fixed">IO <i>something</i></span> 타입의 값에 대해 패턴 매칭을 할 수
+          없듯이,&nbsp; 패턴 매칭을 통해 <span class="fixed">IOError</span> 타입의 값을 추론할 수
+          없다는 것을 의미합니다. 저희는 유용한 predicates 분기를 이용하여, 곧 배우게될 <span class="fixed">IOError</span>타
+          입 값에 대해 무언가를 발견해낼 수 도 있습니다. </p>
         <p>그러면, 새로운 친구 <span class="fixed">catch</span>를 사용해 봅시다!</p>
         <pre name="code" class="haskell:hs">import System.Environment
 import System.IO
@@ -1904,32 +1889,26 @@ toTry = do (fileName:_) &lt;- getArgs
 handler :: IOError -&gt; IO ()
 handler e = putStrLn "Whoops, had some trouble!"
 </pre>
-        <p>First of all, you'll see that put backticks around it so that we can
-          use it as an infix function, because it takes two parameters. Using it
-          as an infix function makes it more readable. So <span class="fixed">toTry
-            `catch` handler</span> is the same as <span class="fixed">catch
-            toTry handler</span>, which fits well with its type. <span class="fixed">toTry</span>
-          is the I/O action that we try to carry out and <span class="fixed">handler</span>
-          is the function that takes an <span class="fixed">IOError</span> and
-          returns an action to be carried out in case of an exception.</p>
-        <p>Let's give this a go:</p>
+        <p>우선, 역따옴표를 넣어 중위 함수로 사용해 인자를 2개 받은것을 보실 수 있을 것입니다. 중위 함수를 이용하는 것은 코드를
+          더욱 읽기 편하게 해줍니다. 따라서 <span class="fixed">toTry `catch` handler</span>는
+          <span class="fixed">catch toTry handler</span>와 같습니다. <span class="fixed">toTry</span>는
+          저희가 수행하고자 하는 I/O action이며, <span class="fixed">handler</span>는 <span
+            class="fixed">IOError</span>을 받아 그에 해당하는 예외를 수행하는 action을 반환하는
+          함수입니다.</p>
+        <p>한번 돌려 봅시다:</p>
         <pre name="code" class="plain">$ runhaskell count_lines.hs i_exist.txt
 The file has 3 lines!
 
 $ runhaskell count_lines.hs i_dont_exist.txt
 Whoops, had some trouble!
 </pre>
-        <p>In the handler, we didn't check to see what kind of <span class="fixed">IOError</span>
-          we got. We just say <span class="fixed">"Whoops, had some trouble!"</span>
-          for any kind of error. Just catching all types of exceptions in one
-          handler is bad practice in Haskell just like it is in most other
-          languages. What if some other exception happens that we don't want to
-          catch, like us interrupting the program or something? That's why we're
-          going to do the same thing that's usually done in other languages as
-          well: we'll check to see what kind of exception we got. If it's the
-          kind of exception we're waiting to catch, we do our stuff. If it's
-          not, we throw that exception back into the wild. Let's modify our
-          program to catch only the exceptions caused by a file not existing.</p>
+        <p>&nbsp;핸들러에선 저희가 얻은 <span class="fixed">IOError</span>이 어떤 종류인지확인할 수
+          없었습니다. 단지 어떠한 에러에 대해 <span class="fixed">"Whoops, had some trouble!"</span>라
+          말할 뿐이였습니다. 다른 언어에서처럼 하스켈에선 하나의 핸들러에서 모든 종류의 예외를 잡는 것은 좋지 않습니다. 프로그램을
+          중단(interrupt)시키는 것과 같은 예외를 잡지 않으려면 어떻게 해야할까요? 이것이 바로&nbsp; 다른 언어들이
+          처리하는 방식과 유사한 일을 해야 하는 이유입니다: 저희가 받은 예외의 종류를 확인해 볼 것입니다. 잡고자하는 예외가 있으면,
+          저희 방식대로 처리할 것입니다. 그렇지 않는 예외들은 야생으로 돌려 보낼 것입니다.&nbsp; 그러면 파일이 존재하지 않을
+          경우에만 예외를 잡아내도록 프로그램을 수정해 봅시다.</p>
         <pre name="code" class="haskell:hs">import System.Environment
 import System.IO
 import System.IO.Error
@@ -1946,33 +1925,27 @@ handler e
     | isDoesNotExistError e = putStrLn "The file doesn't exist!"
     | otherwise = ioError e
 </pre>
-        <p>Everything stays the same except the handler, which we modified to
-          only catch a certain group of I/O exceptions. Here we used two new
-          functions from <span class="fixed">System.IO.Error</span> — <span class="label function">isDoesNotExistError</span>
-          and <span class="label function">ioError</span>. <span class="fixed">isDoesNotExistError</span>
-          is a predicate over <span class="fixed">IOError</span>s, which means
-          that it's a function that takes an <span class="fixed">IOError</span>
-          and returns a <span class="fixed">True</span> or <span class="fixed">False</span>,
-          meaning it has a type of <span class="fixed">isDoesNotExistError ::
-            IOError -&gt; Bool</span>. We use it on the exception that gets
-          passed to our handler to see if it's an error caused by a file not
-          existing. We use <a href="syntax-in-functions#guards-guards">guard</a>
-          syntax here, but we could have also used an <i>if else</i>. If it's
-          not caused by a file not existing, we re-throw the exception that was
-          passed by the handler with the <span class="fixed">ioError</span>
-          function. It has a type of <span class="fixed">ioError :: IOException
-            -&gt; IO a</span>, so it takes an <span class="fixed">IOError</span>
-          and produces an I/O action that will throw it. The I/O action has a
-          type of <span class="fixed">IO a</span>, because it never actually
-          yields a result, so it can act as <span class="fixed">IO <i>anything</i></span>.</p>
-        <p>So the exception thrown in the <span class="fixed">toTry</span> I/O
-          action that we glued together with a <i>do</i> block isn't caused by
-          a file existing, <span class="fixed">toTry `catch` handler</span>
-          will catch that and then re-throw it. Pretty cool, huh?</p>
-        <p>There are several predicates that act on <span class="fixed">IOError</span>
-          and if a guard doesn't evaluate to <span class="fixed">True</span>,
-          evaluation falls through to the next guard. The predicates that act on
-          <span class="fixed">IOError</span> are:</p>
+        <p>특정 I/O exception그룹을 잡도록 수정한 핸들러를 제외하고는 모두 그대로 있습니다. 여기 <span class="fixed">System.IO.Error</span>에
+          서 사용한 새로운 두 함수가 있습니다 — <span class="label function">isDoesNotExistError</span>와
+          <span class="label function">ioError</span>. <span class="fixed">isDoesNotExistError</span>는
+          <span class="fixed">IOError</span>들에 대한 predicate이며, 이는 <span class="fixed">IOError</span>을
+          취해 <span class="fixed">True</span>나 <span class="fixed">False</span>를
+          반환하며, 이는 곧 <span class="fixed">isDoesNotExistError :: IOError -&gt;
+            Bool</span>타입을 지녔다는 것을 의미합니다. 저희는 이를 파일이 존재하지 않아 발생된 에러인지 확인하기 위해,
+          핸들러로 넘어온 예외에 사용하였습니다. 여기서 저희는&nbsp; <a href="syntax-in-functions#guards-guards">guard</a>문
+          법을 사용하였지만, <i>if else</i> 또한 사용할 수 있습니다. 파일이 존재하지 않아 발생된 것이 아니라면,
+          핸들러를 통과한 예외를 <span class="fixed">ioError</span>함수로 다시 던집니다. 이는 <span
+            class="fixed">ioError :: IOException -&gt; IO a</span> 타입을 가졌으므로,
+          이는&nbsp; <span class="fixed">IOError</span>을 취해, 던져지게될 I/O action을
+          생성합니다. 이 I/O action은 <span class="fixed">IO a</span>을 가지는데, 실제론 결과를
+          산출해 내지 않으므로, <span class="fixed">IO <i>anything</i></span>와 동일한 일을
+          합니다.</p>
+        <p>&nbsp;따라서 파일이 존재하는데, <i>do</i> 블록으로 서로 묶은 <span class="fixed">toTry</span>
+          I/O action에서 발생된 예외가 발생하면,&nbsp;&nbsp; <span class="fixed">toTry
+            `catch` handler</span>는 그러한 예외를 잡아 되던질 것입니다.&nbsp; 멋지지 않습니까?</p>
+        <p><span class="fixed">IOError</span>에 대해 여러 predicate들이 있으며, 가드가 <span
+            class="fixed">True</span>로 평가되지 않으면 평가하는 작업은 다음 가드로 넘어가게됩니다. <span
+            class="fixed">IOError</span>에 대한 predicate들은 다음과 같습니다:</p>
         <ul>
           <li><span class="function label">isAlreadyExistsError</span></li>
           <li><span class="function label">isDoesNotExistError</span></li>
@@ -1983,16 +1956,13 @@ handler e
           <li><span class="function label">isPermissionError</span></li>
           <li><span class="function label">isUserError</span></li>
         </ul>
-        <p>Most of these are pretty self-explanatory. <span class="fixed">isUserError</span>
-          evaluates to <span class="fixed">True</span> when we use the function
-          <span class="label function">userError</span> to make the exception,
-          which is used for making exceptions from our code and equipping them
-          with a string. For instance, you can do <span class="fixed">ioError $
-            userError "remote computer unplugged!"</span>, although It's
-          prefered you use types like <span class="fixed">Either</span> and <span
-            class="fixed">Maybe</span> to express possible failure instead of
-          throwing exceptions yourself with <span class="fixed">userError</span>.</p>
-        <p>So you could have a handler that looks something like this:</p>
+        <p>이들 대다수는 자기 자신을 매우 잘 설명해 주고 있습니다. 코드에서 문자열이 내장된 예외를 만들기 위해 <span class="label function">userError</span>사
+          용하면,&nbsp; <span class="fixed">isUserError</span>는 <span class="fixed">True</span>로
+          평가됩니다. 예를들어, 가능한 실패를 표현하기 위해 <span class="fixed">userError</span>로
+          예외를 던지는 대신, <span class="fixed">Either</span>와 <span class="fixed">Maybe</span>와
+          같은 타입을 사용하면 더 좋았을지 모르지만, <span class="fixed">ioError $ userError
+            "remote computer unplugged!"</span>라 할 수 도 있습니다</p>
+        <p>따라서 저희는 다음과 같은 핸들러를 가질 수 있습니다:</p>
         <pre name="code" class="haskell:hs">handler :: IOError -&gt; IO ()
 handler e
     | isDoesNotExistError e = putStrLn "The file doesn't exist!"
@@ -2000,29 +1970,21 @@ handler e
     | isIllegalOperation e = notifyCops
     | otherwise = ioError e
 </pre>
-        <p>Where <span class="fixed">notifyCops</span> and <span class="fixed">freeSomeSpace</span>
-          are some I/O actions that you define. Be sure to re-throw exceptions
-          if they don't match any of your criteria, otherwise you're causing
-          your program to fail silently in some cases where it shouldn't.</p>
-        <p><span class="fixed">System.IO.Error</span> also exports functions
-          that enable us to ask our exceptions for some attributes, like what
-          the handle of the file that caused the error is, or what the filename
-          is. These start with <span class="fixed">ioe</span> and you can see a
-          <a href="http://www.haskell.org/ghc/docs/6.10.1/html/libraries/base/System-IO-Error.html#3">full
-            list of them</a> in the documentation. Say we want to print the
-          filename that caused our error. We can't print the <span class="fixed">fileName</span>
-          that we got from <span class="fixed">getArgs</span>, because only the
-          <span class="fixed">IOError</span> is passed to the handler and the
-          handler doesn't know about anything else. A function depends only on
-          the parameters it was called with. That's why we can use the <span class="label function">ioeGetFileName</span>
-          function, which has a type of <span class="fixed">ioeGetFileName ::
-            IOError -&gt; Maybe FilePath</span>. It takes an <span class="fixed">IOError</span>
-          as a parameter and maybe returns a <span class="fixed">FilePath</span>
-          (which is just a type synonym for <span class="fixed">String</span>,
-          remember, so it's kind of the same thing). Basically, what it does is
-          it extracts the file path from the <span class="fixed">IOError</span>,
-          if it can. Let's modify our program to print out the file path that's
-          responsible for the exception occurring. </p>
+        <p>여기있는 <span class="fixed">notifyCops</span>와 <span class="fixed">freeSomeSpace</span>는
+          여러분이 정의한 I/O action입니다. 여러분이 만든 규정과 일치하지 않는다면, 프로그램이 조용히 멈춰버릴 수도 있기에
+          예외를 꼭 다시 되던지시기 바랍니다.</p>
+        <p><span class="fixed">System.IO.Error</span> 또한 파일의 핸들이나 파일 이름과 같은 어떠한
+          특징을 얻어올 수 있는 함수들을 제공해줍니다. 이들은 <span class="fixed">ioe</span>로 시작을 하며,
+          문서안의 <a href="http://www.haskell.org/ghc/docs/6.10.1/html/libraries/base/System-IO-Error.html#3">전
+            체 목록</a>을 확인할 수 있습니다. 에러를 유발한 파일명을 출력하고자 원한다고 가정해 봅시다. <span class="fixed">IOError</span>은
+          핸들러를 통과할 뿐, 핸들러는 어떠한 것도 알지 못하기에, <span class="fixed">getArgs</span>에서
+          얻은 <span class="fixed">fileName</span>은 출력할 수 없습니다. 함수는 호출한 인자에 전적으로
+          의존합니다. 이것이 바로 <span class="fixed">ioeGetFileName :: IOError -&gt;
+            Maybe FilePath</span> 타입을 지닌 <span class="label function">ioeGetFileName</span>함
+          수를 사용해야 하는 이유입니다. 이는 <span class="fixed">IOError</span>을 인자로 취해,
+          아마도(maybe) (<span class="fixed">String</span>와 동일한 타입인) <span class="fixed">FilePath</span>을
+          반환합니다. 기본적으로, 가능하다면 <span class="fixed">IOError</span>에서 파일 경로를 추출하는
+          일을 합니다. 예외가 발생하면 그에 대응하는 파일 경로를 출력하도록 프로그램을 수정해 봅시다.</p>
         <pre name="code" class="haskell:hs">import System.Environment   
 import System.IO   
 import System.IO.Error   
@@ -2041,46 +2003,35 @@ handler e
                                  Nothing -&gt; putStrLn "Whoops! File does not exist at unknown location!"
     | otherwise = ioError e   
 </pre>
-        <p>In the guard where <span class="fixed">isDoesNotExistError</span> is
-          <span class="fixed">True</span>, we used a <i>case</i> expression to
-          call <span class="fixed">ioeGetFileName</span> with <span class="fixed">e</span>
-          and then pattern match against the <span class="fixed">Maybe</span>
-          value that it returned. Using <i>case</i> expressions is commonly
-          used when you want to pattern match against something without bringing
-          in a new function.</p>
-        <p>You don't have to use one handler to <span class="fixed">catch</span>
-          exceptions in your whole I/O part. You can just cover certain parts of
-          your I/O code with <span class="fixed">catch</span> or you can cover
-          several of them with <span class="fixed">catch</span> and use
-          different handlers for them, like so:</p>
+        <p>&nbsp;가드안에 있는 <span class="fixed">isDoesNotExistError</span>는 <span
+            class="fixed">True</span>이며, <i>case</i> 표현식을 사용하여 <span class="fixed">ioeGetFileName</span>로
+          <span class="fixed">e</span>를 호출후 반환된 <span class="fixed">Maybe</span>값에
+          대해 패턴매칭을 하였습니다. <i>case</i> 표현식의 사용은 주로 패턴 매칭 새로운 함수를 수반하지 않는 함수에 대해
+          패턴 매칭을 사용할때 쓰여집니다.<br>
+        </p>
+        <p>전체 I/O에 대한 예외를 잡아내기 위해 하나의 핸들러만을 사용해서는 안됩니다.&nbsp; <span class="fixed">catch</span>로
+          I/O코드의 특정 부분을 다루거나, 다음처럼, 여러개의 <span class="fixed">catch</span>로 감싸
+          서로 다른 핸들러를 이용해야 합니다:</p>
         <pre name="code" class="haskell:hs">main = do toTry `catch` handler1
           thenTryThis `catch` handler2
           launchRockets
 </pre>
         <p>여기서, <span class="fixed">toTry</span>는 <span class="fixed">handler1</span>을,
           <span class="fixed">thenTryThis</span>는 <span class="fixed">handler2</span>를
-          handler로 이용합니다. <span class="fixed">launchRockets</span>는 isn't a
-          parameter to <span class="fixed">catch</span>의 매개변수가 아니므로, so
-          whichever exceptions it might throw will likely crash our program,
-          unless <span class="fixed">launchRockets</span> uses <span class="fixed">catch</span>
-          internally to handle its own exceptions. Of course <span class="fixed">toTry</span>,
-          <span class="fixed">thenTryThis</span> and <span class="fixed">launchRockets</span>
-          are I/O actions that have been glued together using <i>do</i> syntax
-          and hypothetically defined somewhere else. This is kind of similar to
-          <i>try-catch</i> blocks of other languages, where you can surround
-          your whole program in a single <i>try-catch</i> or you can use a more
-          fine-grained approach and use different ones in different parts of
-          your code to control what kind of error handling happens where.</p>
-        <p>여러분은 이제 어떻게 I/O exception을 처리하는지를 배웠습니다! 순수한 코드에서 예외를 던지고 처리하는 것은
-          Throwing exceptions from pure code and dealing with them hasn't been
-          covered here, mainly because, like we said, Haskell은 더 낳은 방법 에러를
-          나타내는&nbsp; offers much better ways to indicate errors than reverting
-          to I/O to catch them. Even when glueing together I/O actions that
-          might fail, I prefer to have their type be something like <span class="fixed">IO
-            (Either a b)</span>, meaning that they're normal I/O actions but the
-          result that they yield when performed is of type <span class="fixed">Either
-            a b</span>, meaning it's either <span class="fixed">Left a</span>
-          or <span class="fixed">Right b</span>.</p>
+          핸들러로 이용합니다. <span class="fixed">launchRockets</span>는 <span class="fixed">catch</span>의
+          매개변수가 아니므로, <span class="fixed">launchRockets</span>가 예외를 다루기 위해
+          내부적으로 <span class="fixed">catch</span>를 사용하지 않으면, 예외가 던저졌을시 프로그램이 멈출
+          것입니다. 물론, <i>do</i> 문법으로 서로 묶여있는 <span class="fixed">toTry</span>, <span
+            class="fixed">thenTryThis</span>, <span class="fixed">launchRockets</span>들
+          은 가상으로 어딘가에 정의된 I/O action들입니다. 이는 다른 언어에서의<i> try-catch</i>블록과 유사하며,
+          저희는 단일 <i>try-catch</i>로 감싸거나, 어딘가에 발생한 에러를 다루기 위해 잘 다듬어진 접근법을 이용하여
+          코드 중&nbsp; 특정한 부분을 이용할 수 도 있습니다.</p>
+        <p>&nbsp;이제 여러분은 I/O exception을 처리하는 법을 배웠습니다! 여기선 순수한 코드에서 예외를 던지고 처리하는
+          법을 주요하게 다루지 않았는데, 전에 말했듯이 Haskell은 에러를 잡아내기 위해 I/O를 뒤집는 것보다 보다 쉬운 에러를
+          판별법을 제공하기 때문입니다. 실패할지도 모르는 I/O action들을 서로 묶을지라도, 저는 평범한 I/O
+          action들이지만 수행되서 나오는 결과의 타입은 <span class="fixed">Left a</span>, <span
+            class="fixed">Right b</span>을 의미하는 <span class="fixed">Either a b</span>인,&nbsp;
+          <span class="fixed">IO (Either a b)</span>와 같은 타입을 갖는 것을 선호합니다.</p>
         <div class="footdiv">
           <ul>
             <li style="text-align:left"> <a href="making-our-own-types-and-typeclasses"
